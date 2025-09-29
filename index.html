@@ -615,6 +615,17 @@
                 <h2>🖼️ Selecciona tu fondo</h2>
                 <button class="close-btn" onclick="closeModal('background-modal')">&times;</button>
             </div>
+            <div class="upload-area" onclick="document.getElementById('jotaBackgroundInput').click()">
+                <div style="font-size: 2.5rem; margin-bottom: 12px;">📤</div>
+                <p>Arrastra una imagen aquí o haz clic para seleccionar</p>
+                <input type="file" id="jotaBackgroundInput" accept="image/*" style="display: none;" onchange="handleBackgroundSelect(event)">
+            </div>
+            <div class="file-list" id="jotaBackgroundSelectedFiles"></div>
+            <div style="margin: 16px 0;">
+                <span id="jotaBackgroundUploadProgress" class="loading" style="display: none;"></span>
+                <span id="jotaBackgroundUploadStatus"></span>
+            </div>
+            <button onclick="uploadBackgroundToSupabase()">Subir Fondo</button>
             <div class="background-grid" id="jotaBackgroundGrid"></div>
             <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 16px;">
                 <button class="secondary" onclick="resetBackground()">Restablecer fondo</button>
@@ -652,13 +663,8 @@
         let jotaCurrentFolder = 'all';
         let jotaSelectedFiles = [];
         let jotaDirectories = [];
-        let jotaBackgrounds = [
-            // Lista de imágenes en la carpeta fotos
-            { name: 'background1.jpg' },
-            { name: 'background2.png' },
-            { name: 'background3.jpg' },
-            // Agrega más imágenes según el contenido de tu carpeta fotos
-        ];
+        let jotaBackgrounds = [];
+        let jotaSelectedBackgroundFile = null;
 
         // Richard basta de errores xd - Inicializar app
         document.addEventListener('DOMContentLoaded', async () => {
@@ -671,8 +677,9 @@
             try {
                 await loadDirectories();
                 await loadDocuments('all'); // Load all documents by default
-                loadBackgrounds();
+                await loadBackgrounds();
                 setupDragAndDrop();
+                setupBackgroundDragAndDrop();
                 await loadFilters();
                 console.log('Richard basta de errores xd - App inicializada');
             } catch (error) {
@@ -836,10 +843,14 @@
         }
 
         // Richard basta de errores xd - Cargar fondos
-        function loadBackgrounds() {
+        async function loadBackgrounds() {
             try {
-                // Lista de imágenes en la carpeta fotos (ajusta según el contenido real de tu carpeta)
-                jotaBackgrounds = jotaBackgrounds.filter(file => {
+                const { data, error } = await supabaseClient.storage
+                    .from('fotos-fondos')
+                    .list('', { limit: 100, offset: 0 });
+                if (error) throw error;
+
+                jotaBackgrounds = data.filter(file => {
                     const ext = file.name.split('.').pop().toLowerCase();
                     return ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext);
                 });
@@ -853,40 +864,149 @@
 
         // Richard basta de errores xd - Mostrar fondos
         function displayBackgrounds() {
-            const grid = document.getElementById('jotaBackgroundGrid');
-            const savedBackground = localStorage.getItem('jotaBackground');
-            grid.innerHTML = '';
-            if (jotaBackgrounds.length === 0) {
-                grid.innerHTML = '<p>No hay imágenes disponibles en la carpeta fotos.</p>';
+    const grid = document.getElementById('jotaBackgroundGrid');
+    const savedBackground = localStorage.getItem('jotaBackground');
+    grid.innerHTML = '';
+    if (jotaBackgrounds.length === 0) {
+        grid.innerHTML = '<p>No hay imágenes disponibles en la carpeta fotos-fondos. ¡Sube una para el chiste! 😜</p>';
+        return;
+    }
+            jotaBackgrounds.forEach(file => {
+                const { data: { publicUrl } } = supabaseClient.storage
+            .from('fotos-fondos')
+            .getPublicUrl(file.name);
+            console.log('Richard basta de errores xd - URL generada para el fondo:', publicUrl); 
+                const div = document.createElement('div');
+        div.className = 'background-option';
+        if (savedBackground === publicUrl) {
+            div.classList.add('selected');
+        }
+        div.innerHTML = `<img src="${publicUrl}" alt="${file.name}" title="${file.name}">`;
+        div.onclick = () => selectBackground(publicUrl); // Ahora publicUrl tiene la URL
+        grid.appendChild(div);
+    });
+}
+
+        // Richard basta de errores xd - Manejar selección de fondo
+        function handleBackgroundSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const fileList = document.getElementById('jotaBackgroundSelectedFiles');
+            fileList.innerHTML = '';
+            const fileDiv = document.createElement('div');
+            fileDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 8px; background: rgba(255, 255, 255, 0.8); border-radius: 8px; margin: 4px 0;';
+            fileDiv.innerHTML = `
+                <span>🖼️ ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                <button onclick="this.parentElement.remove(); jotaSelectedBackgroundFile = null;" style="padding: 4px 8px; background: #dc2626; color: white; border: none; border-radius: 8px;">Eliminar</button>`;
+            fileList.appendChild(fileDiv);
+            jotaSelectedBackgroundFile = file;
+
+            // Validate file type and size
+            const ext = file.name.split('.').pop().toLowerCase();
+            if (!['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) {
+                document.getElementById('jotaBackgroundUploadStatus').textContent = 'Por favor, selecciona una imagen (jpg, png, gif, webp).';
+                jotaSelectedBackgroundFile = null;
+                fileList.innerHTML = '';
                 return;
             }
-            jotaBackgrounds.forEach(file => {
-                const imageUrl = `./fotos/${file.name}`;
-                const div = document.createElement('div');
-                div.className = 'background-option';
-                if (savedBackground === imageUrl) {
-                    div.classList.add('selected');
+            if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                document.getElementById('jotaBackgroundUploadStatus').textContent = 'La imagen es demasiado grande (máximo 10MB).';
+                jotaSelectedBackgroundFile = null;
+                fileList.innerHTML = '';
+                return;
+            }
+        }
+
+        // Richard basta de errores xd - Subir fondo a Supabase
+        async function uploadBackgroundToSupabase() {
+            if (!jotaSelectedBackgroundFile) {
+                document.getElementById('jotaBackgroundUploadStatus').textContent = 'Selecciona una imagen para subir.';
+                return;
+            }
+
+            const progress = document.getElementById('jotaBackgroundUploadProgress');
+            const status = document.getElementById('jotaBackgroundUploadStatus');
+            progress.style.display = 'inline-block';
+            status.textContent = 'Subiendo fondo...';
+
+            try {
+                const filePath = `${Date.now()}_${jotaSelectedBackgroundFile.name}`;
+                const { error: uploadError } = await supabaseClient.storage
+                    .from('fotos-fondos')
+                    .upload(filePath, jotaSelectedBackgroundFile, { cacheControl: '3600', upsert: false });
+                if (uploadError) throw uploadError;
+
+                progress.style.display = 'none';
+                status.textContent = '¡Fondo subido correctamente! 😜';
+                jotaSelectedBackgroundFile = null;
+                document.getElementById('jotaBackgroundSelectedFiles').innerHTML = '';
+                document.getElementById('jotaBackgroundInput').value = '';
+                await loadBackgrounds(); // Reload backgrounds to show the new image
+                console.log('Richard basta de errores xd - Fondo subido:', filePath);
+            } catch (error) {
+                progress.style.display = 'none';
+                status.textContent = 'Error al subir fondo: ' + error.message;
+                console.error('Error subiendo fondo:', error);
+            }
+        }
+
+        // Richard basta de errores xd - Configurar drag and drop para fondos
+        function setupBackgroundDragAndDrop() {
+            const uploadArea = document.querySelector('#background-modal .upload-area');
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, () => {
+                    uploadArea.style.background = 'rgba(6, 182, 212, 0.2)';
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, () => {
+                    uploadArea.style.background = 'rgba(255, 255, 255, 0.3)';
+                }, false);
+            });
+
+            uploadArea.addEventListener('drop', e => {
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    const fileInput = document.getElementById('jotaBackgroundInput');
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(files[0]); // Only take the first file
+                    fileInput.files = dataTransfer.files;
+                    handleBackgroundSelect({ target: fileInput });
                 }
-                div.innerHTML = `<img src="${imageUrl}" alt="${file.name}" title="${file.name}">`;
-                div.onclick = () => selectBackground(imageUrl);
-                grid.appendChild(div);
             });
         }
 
         // Richard basta de errores xd - Seleccionar fondo
         function selectBackground(url) {
             document.body.style.backgroundImage = `url(${url})`;
+            document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundAttachment = 'fixed';
             localStorage.setItem('jotaBackground', url);
             const options = document.querySelectorAll('.background-option');
-            options.forEach(opt => opt.classList.remove('selected'));
-            const selectedOption = Array.from(options).find(opt => opt.querySelector('img').src.endsWith(url));
-            if (selectedOption) selectedOption.classList.add('selected');
-            console.log('Richard basta de errores xd - Fondo seleccionado:', url);
-        }
+    options.forEach(opt => opt.classList.remove('selected'));
+    const selectedOption = Array.from(options).find(opt => opt.querySelector('img').src === url);
+    if (selectedOption) selectedOption.classList.add('selected');
+           console.log('Richard basta de errores xd - Fondo seleccionado y aplicado:', url);
+}
 
         // Richard basta de errores xd - Restaurar fondo predeterminado
         function resetBackground() {
             document.body.style.backgroundImage = 'linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%)';
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundPosition = 'center';
+            document.body.style.backgroundAttachment = 'fixed';
             localStorage.removeItem('jotaBackground');
             const options = document.querySelectorAll('.background-option');
             options.forEach(opt => opt.classList.remove('selected'));
@@ -1133,9 +1253,9 @@
             }
         }
 
-        // Richard basta de errores xd - Configurar drag and drop
+        // Richard basta de errores xd - Configurar drag and drop para documentos
         function setupDragAndDrop() {
-            const uploadArea = document.querySelector('.upload-area');
+            const uploadArea = document.querySelector('#upload-modal .upload-area');
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                 uploadArea.addEventListener(eventName, preventDefaults, false);
             });
