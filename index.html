@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TempFiles</title>
-    <!-- Richard basta de errores xd - Cargar Supabase desde CDN -->
+    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
     <style>
-        /* Richard basta de errores xd - Setting up modern global styles */
+        
         :root {
-            --jota-primary-color: #4f46e5; /* Watermarked by Jota - Deep indigo */
-            --jota-secondary-color: #ecfeff; /* Watermarked by Jota - Soft cyan */
-            --jota-accent-color: #06b6d4; /* Watermarked by Jota - Vibrant teal */
+            --jota-primary-color: #4f46e5; 
+            --jota-secondary-color: #ecfeff; 
+            --jota-accent-color: #06b6d4; 
             --jota-text-color: #1f2937;
-            --jota-background: #f3f4f6; /* Default background */
+            --jota-background: #f3f4f6; 
             --jota-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            --jota-border-radius: 16px; /* Watermarked by Jota */
-            --jota-font-family: 'Inter', 'Roboto', system-ui, -apple-system, sans-serif; /* Grok-inspired */
+            --jota-border-radius: 16px; 
+            --jota-font-family: 'Inter', 'Roboto', system-ui, -apple-system, sans-serif; 
         }
 
-        /* Richard basta de errores xd - Reset and base styles */
+        
         * {
             margin: 0;
             padding: 0;
@@ -29,7 +29,7 @@
 
         body {
             background-color: var(--jota-background);
-            background-image: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%); /* Default gradient */
+            background-image: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%); 
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -38,10 +38,10 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            transition: background-image 0.5s ease; /* Smooth background transition */
+            transition: background-image 0.5s ease; 
         }
 
-        /* Richard basta de errores xd - Top navigation */
+        
         .top-nav {
             background: var(--jota-secondary-color);
             padding: 16px 24px;
@@ -86,7 +86,7 @@
             outline: none;
         }
 
-        /* Richard basta de errores xd - Main layout */
+        
         .main-container {
             display: flex;
             flex-grow: 1;
@@ -95,7 +95,7 @@
             max-width: 1400px;
             margin: 0 auto;
             width: 100%;
-            transition: margin-left 0.3s ease; /* Smooth shift when folder tree collapses */
+            transition: margin-left 0.3s ease; 
         }
 
         .folder-tree {
@@ -116,7 +116,7 @@
         }
 
         .main-container.folder-collapsed {
-            margin-left: -250px; /* Shift content to the left when folder tree is collapsed */
+            margin-left: -250px; 
         }
 
         .folder-tree h2 {
@@ -159,7 +159,7 @@
             background: var(--jota-accent-color);
         }
 
-        /* Richard basta de errores xd - Content area */
+        
         .content-area {
             flex-grow: 1;
             padding: 20px;
@@ -213,7 +213,7 @@
             margin-top: 8px;
         }
 
-        /* Richard basta de errores xd - Buttons */
+        
         button {
             padding: 10px 16px;
             border: none;
@@ -241,7 +241,7 @@
             color: #fff;
         }
 
-        /* Richard basta de errores xd - Modals */
+        
         .modal {
             display: none;
             position: fixed;
@@ -351,7 +351,7 @@
             margin-bottom: 16px;
         }
 
-        /* Richard basta de errores xd - Background selector */
+        
         .background-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -394,7 +394,7 @@
             font-size: 14px;
         }
 
-        /* Richard basta de errores xd - Footer */
+        
         .footer {
             position: sticky;
             bottom: 0;
@@ -410,7 +410,7 @@
             font-size: 1.2rem;
         }
 
-        /* Richard basta de errores xd - Loading and error states */
+        
         .loading {
             display: inline-block;
             width: 24px;
@@ -434,12 +434,12 @@
             margin: 16px 0;
         }
 
-        /* Richard basta de errores xd - Responsive design */
+        
         @media (max-width: 768px) {
             .main-container {
                 flex-direction: column;
                 padding: 16px;
-                margin-left: 0 !important; /* Override margin for mobile */
+                margin-left: 0 !important; 
             }
 
             .folder-tree {
@@ -493,10 +493,629 @@
             background: var(--jota-accent-color);
             border-radius: 5px;
         }
+
+        
+        .color-customization {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .color-picker-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .color-picker-group label {
+            font-weight: 600;
+            color: var(--jota-text-color);
+            font-size: 0.9rem;
+        }
+
+        .color-picker-group input[type="color"] {
+            width: 100%;
+            height: 50px;
+            border: 2px solid var(--jota-accent-color);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        
+        .background-position-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .position-control {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .position-control label {
+            font-weight: 600;
+            color: var(--jota-text-color);
+            font-size: 0.9rem;
+        }
+
+        .position-control input[type="range"] {
+            width: 100%;
+        }
+
+        .position-control select {
+            padding: 8px;
+            border-radius: 8px;
+            border: 2px solid var(--jota-accent-color);
+        }
+
+        
+        .background-preview-editor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 3000;
+            display: none;
+            flex-direction: column;
+        }
+
+        .background-preview-editor.active {
+            display: flex;
+        }
+
+        .preview-header {
+            background: var(--jota-primary-color);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .preview-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .preview-canvas-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        .preview-canvas {
+            position: relative;
+            width: 90%;
+            height: 90%;
+            border: 3px solid var(--jota-accent-color);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .preview-image {
+            position: absolute;
+            cursor: move;
+            user-select: none;
+            transition: none;
+        }
+
+        .preview-controls {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            border-top: 2px solid var(--jota-accent-color);
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            color: var(--jota-text-color);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-group input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #e5e7eb;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .control-group input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--jota-accent-color);
+            cursor: pointer;
+        }
+
+        .control-value {
+            font-weight: 700;
+            color: var(--jota-accent-color);
+            font-size: 1rem;
+        }
+
+        .preview-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .preview-actions button {
+            padding: 12px 32px;
+            font-size: 1.1rem;
+        }
+
+        .zoom-indicator {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .help-text {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        
+        .chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 380px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: none;
+            flex-direction: column;
+            z-index: 1500;
+            overflow: hidden;
+        }
+
+        .chat-container.active {
+            display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .chat-header {
+            background: var(--jota-primary-color);
+            color: white;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .chat-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-online-count {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #f9fafb;
+        }
+
+        .chat-message {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-message.own {
+            align-items: flex-end;
+        }
+
+        .chat-message-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+
+        .chat-message.own .chat-message-header {
+            flex-direction: row-reverse;
+        }
+
+        .chat-user-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-username {
+            font-weight: 600;
+            color: var(--jota-text-color);
+        }
+
+        .chat-timestamp {
+            color: #9ca3af;
+            font-size: 0.75rem;
+        }
+
+        .chat-message-content {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 12px;
+            max-width: 80%;
+            word-wrap: break-word;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-message.own .chat-message-content {
+            background: var(--jota-primary-color);
+            color: white;
+        }
+
+        .chat-input-container {
+            padding: 16px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: var(--jota-accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
+        }
+
+        .chat-send-btn {
+            padding: 10px 20px;
+            background: var(--jota-accent-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .chat-send-btn:hover {
+            background: var(--jota-primary-color);
+            transform: scale(1.05);
+        }
+
+        .chat-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--jota-accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 16px rgba(6, 182, 212, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1400;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.6);
+        }
+
+        .chat-toggle-btn.active {
+            display: none;
+        }
+
+        .chat-notification {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #dc2626;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                width: calc(100% - 40px);
+                height: calc(100% - 40px);
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        
+        .chat-setup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .chat-setup-modal.active {
+            display: flex;
+        }
+
+        .chat-setup-content {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.4s ease;
+        }
+
+        .chat-setup-content h2 {
+            margin: 0 0 8px 0;
+            color: var(--jota-primary-color);
+            font-size: 1.8rem;
+        }
+
+        .chat-setup-content p {
+            color: #6b7280;
+            margin-bottom: 24px;
+        }
+
+        .chat-setup-field {
+            margin-bottom: 20px;
+        }
+
+        .chat-setup-field label {
+            display: block;
+            font-weight: 600;
+            color: var(--jota-text-color);
+            margin-bottom: 8px;
+        }
+
+        .chat-setup-field input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .chat-setup-field input:focus {
+            border-color: var(--jota-accent-color);
+            outline: none;
+        }
+
+        .color-preview {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .color-preview input[type="color"] {
+            width: 60px;
+            height: 40px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .color-preview-box {
+            flex: 1;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .chat-setup-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .chat-setup-actions button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chat-setup-actions button.primary {
+            background: var(--jota-accent-color);
+            color: white;
+        }
+
+        .chat-setup-actions button.primary:hover {
+            background: var(--jota-primary-color);
+        }
+
+        
+        .chat-notification-toast {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 2500;
+            min-width: 300px;
+            max-width: 400px;
+            animation: slideInRight 0.3s ease;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chat-notification-toast:hover {
+            transform: translateX(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-notification-toast.active {
+            display: flex;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .chat-notification-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .chat-notification-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chat-notification-name {
+            font-weight: 700;
+            color: var(--jota-text-color);
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .chat-notification-message {
+            color: #6b7280;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-notification-close {
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+        }
+
+        .chat-notification-close:hover {
+            color: var(--jota-text-color);
+        }
     </style>
 </head>
 <body>
-    <!-- Richard basta de errores xd - Top navigation -->
+    
     <div class="top-nav">
         <h1>TempFiles</h1>
         <div class="nav-actions">
@@ -513,12 +1132,14 @@
             </select>
             <button onclick="openModal('upload-modal')">📤 Subir Documento</button>
             <button onclick="openModal('background-modal')">🖼️ Selecciona tu fondo</button>
+            <button onclick="openModal('customization-modal')">🎨 Personalizar</button>
+            <button onclick="toggleChat()">💬 Chat en Vivo</button>
             <button onclick="toggleMobileView()">📱 Vista Móvil</button>
             <button onclick="exportSelection()">📋 Exportar</button>
         </div>
     </div>
 
-    <!-- Richard basta de errores xd - Main container -->
+    
     <div class="main-container">
         <div class="folder-tree" id="jotaFolderTree">
             <button class="toggle-folder-btn" onclick="toggleFolderTree()">⇆</button>
@@ -544,7 +1165,7 @@
         </div>
     </div>
 
-    <!-- Richard basta de errores xd - Upload Modal -->
+    
     <div class="modal" id="upload-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -575,7 +1196,7 @@
         </div>
     </div>
 
-    <!-- Richard basta de errores xd - Preview Modal -->
+    
     <div class="modal" id="preview-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -590,7 +1211,7 @@
         </div>
     </div>
 
-    <!-- Richard basta de errores xd - New Folder Modal -->
+    
     <div class="modal" id="new-folder-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -608,7 +1229,7 @@
         </div>
     </div>
 
-    <!-- Richard basta de errores xd - Background Selector Modal -->
+    
     <div class="modal" id="background-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -627,6 +1248,7 @@
             </div>
             <button onclick="uploadBackgroundToSupabase()">Subir Fondo</button>
             <div class="background-grid" id="jotaBackgroundGrid"></div>
+            
             <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 16px;">
                 <button class="secondary" onclick="resetBackground()">Restablecer fondo</button>
                 <button onclick="closeModal('background-modal')">Cerrar</button>
@@ -634,61 +1256,196 @@
         </div>
     </div>
 
-    <!-- Richard basta de errores xd - Footer -->
+    
+    <div class="background-preview-editor" id="backgroundPreviewEditor">
+        <div class="preview-header">
+            <h2>🎨 Ajustar Fondo de Pantalla</h2>
+            <button onclick="closeBackgroundEditor()" style="background: #dc2626; border: none; color: white; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;">✖ Cancelar</button>
+        </div>
+        <div class="preview-canvas-container">
+            <div class="preview-canvas" id="previewCanvas">
+                <img id="previewImage" class="preview-image" src="" alt="Preview" draggable="false">
+                <div class="zoom-indicator" id="zoomIndicator">Zoom: 100%</div>
+                <div class="help-text">
+                    🔍 Arrastra la imagen para posicionarla | 🎨 Usa los controles para ajustar
+                </div>
+            </div>
+        </div>
+        <div class="preview-controls">
+            <div class="control-group">
+                <label>🔍 Zoom: <span class="control-value" id="zoomValue">100%</span></label>
+                <input type="range" id="zoomSlider" min="50" max="200" value="100" oninput="updatePreview()">
+            </div>
+            <div class="control-group">
+                <label>🔄 Rotación: <span class="control-value" id="rotationValue">0°</span></label>
+                <input type="range" id="rotationSlider" min="0" max="360" value="0" oninput="updatePreview()">
+            </div>
+            <div class="control-group">
+                <label>☀️ Brillo: <span class="control-value" id="brightnessValue">100%</span></label>
+                <input type="range" id="brightnessSlider" min="50" max="150" value="100" oninput="updatePreview()">
+            </div>
+            <div class="control-group">
+                <label>🎨 Contraste: <span class="control-value" id="contrastValue">100%</span></label>
+                <input type="range" id="contrastSlider" min="50" max="150" value="100" oninput="updatePreview()">
+            </div>
+        </div>
+        <div class="preview-actions">
+            <button class="secondary" onclick="resetPreviewSettings()">🔄 Restablecer</button>
+            <button onclick="applyBackgroundSettings()" style="background: var(--jota-accent-color);">✔ Confirmar y Aplicar</button>
+        </div>
+    </div>
+
+    
+    <div class="modal" id="customization-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🎨 Personalizar Colores</h2>
+                <button class="close-btn" onclick="closeModal('customization-modal')">&times;</button>
+            </div>
+            <p style="color: #6b7280; margin-bottom: 16px;">Personaliza los colores de la aplicación. Los cambios se guardan automáticamente en tu navegador.</p>
+            <div class="color-customization">
+                <div class="color-picker-group">
+                    <label>Color Principal</label>
+                    <input type="color" id="primaryColor" value="#4f46e5" onchange="updateColors()">
+                </div>
+                <div class="color-picker-group">
+                    <label>Color Secundario</label>
+                    <input type="color" id="secondaryColor" value="#ecfeff" onchange="updateColors()">
+                </div>
+                <div class="color-picker-group">
+                    <label>Color de Acento</label>
+                    <input type="color" id="accentColor" value="#06b6d4" onchange="updateColors()">
+                </div>
+                <div class="color-picker-group">
+                    <label>Color de Texto</label>
+                    <input type="color" id="textColor" value="#1f2937" onchange="updateColors()">
+                </div>
+            </div>
+            <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 16px;">
+                <button class="secondary" onclick="resetColors()">Restablecer Colores</button>
+                <button onclick="closeModal('customization-modal')">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="chat-setup-modal" id="chatSetupModal">
+        <div class="chat-setup-content">
+            <h2>💬 Configurar Chat</h2>
+            <p>Personaliza tu identidad antes de comenzar a chatear</p>
+            
+            <div class="chat-setup-field">
+                <label>👤 Tu nombre:</label>
+                <input type="text" id="chatSetupName" placeholder="Ingresa tu nombre" maxlength="20" value="Usuario">
+            </div>
+            
+            <div class="chat-setup-field">
+                <label>🎨 Tu color:</label>
+                <div class="color-preview">
+                    <input type="color" id="chatSetupColor" value="#4f46e5" onchange="updateColorPreview()">
+                    <div class="color-preview-box" id="colorPreviewBox" style="background: #4f46e5;">
+                        Vista previa
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-setup-actions">
+                <button class="primary" onclick="saveChatSetup()">✔ Comenzar a Chatear</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <button class="chat-toggle-btn" id="chatToggleBtn" onclick="toggleChat()">
+        💬
+        <span class="chat-notification" id="chatNotification" style="display: none;">0</span>
+    </button>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <h3>
+                💬 PajasChat (beta)
+                <span class="chat-online-count" id="chatOnlineCount">1 online</span>
+            </h3>
+            <button onclick="toggleChat()" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">✖</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div style="text-align: center; color: #9ca3af; padding: 20px;">
+                <p> ¡Bienvenido al chat pajero ql!</p>
+                <p style="font-size: 0.9rem;">Escribe un mensaje para comenzar</p>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <input 
+                type="text" 
+                class="chat-input" 
+                id="chatInput" 
+                placeholder="Escribe un mensaje..." 
+                maxlength="500"
+                onkeypress="if(event.key === 'Enter') sendMessage()"
+            >
+            <button class="chat-send-btn" onclick="sendMessage()">📤</button>
+        </div>
+    </div>
+
+    
+    <div class="chat-notification-toast" id="chatNotificationToast" onclick="openChatFromNotification()">
+        <div class="chat-notification-avatar" id="notificationAvatar">💬</div>
+        <div class="chat-notification-content">
+            <div class="chat-notification-name" id="notificationName">Usuario</div>
+            <div class="chat-notification-message" id="notificationMessage">Mensaje...</div>
+        </div>
+        <button class="chat-notification-close" onclick="closeNotificationToast(event)">✖</button>
+    </div>
+
+    
     <div class="footer">
         Made in Jota <span>😎</span>
     </div>
 
-    <!-- Richard basta de errores xd - Supabase Configuration -->
+    
     <script>
-        // Richard basta de errores xd - Supabase Configuration
         const SUPABASE_URL = 'https://ejxiejvziizgmsibhbfr.supabase.co'; 
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqeGllanZ6aWl6Z21zaWJoYmZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ2NzU3ODYsImV4cCI6MjA3MDI1MTc4Nn0.BTdDPoUh53RKdw-QMAuQKsjn1n-Qxkq8Dhl1VyDQJVg'; 
 
-        // 🟢 ¡SOLUCIÓN! Declara supabaseClient AQUÍ.
-        let supabaseClient; 
-
-        // Richard basta de errores xd - Inicializar Supabase
+        let supabaseClient;
         if (typeof supabase === 'undefined') {
-        console.error('Richard basta de errores xd - Supabase no está definido. Verifica el CDN.');
+        
         showError('Error crítico: No se pudo cargar Supabase. Revisa tu conexión.');
     } else {
-        // Asignación correcta, ya que la variable fue declarada arriba.
+
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); 
-        console.log('Richard basta de errores xd - Supabase inicializado correctamente');
+        
     }
 
-        // Variables globales con marca de agua jota
         let jotaCurrentDocuments = [];
         let jotaCurrentFolder = 'all';
         let jotaSelectedFiles = [];
         let jotaDirectories = [];
         let jotaBackgrounds = [];
         let jotaSelectedBackgroundFile = null;
-
-        // Richard basta de errores xd - Inicializar app
         document.addEventListener('DOMContentLoaded', async () => {
             if (typeof supabase === 'undefined') return showError('Supabase no disponible');
             await initializeApp();
             applySavedBackground();
+            applySavedColors();
+            loadBackgroundPosition();
         });
 
         async function initializeApp() {
             try {
                 await loadDirectories();
-                await loadDocuments('all'); // Load all documents by default
+                await loadDocuments('all');
                 await loadBackgrounds();
                 setupDragAndDrop();
                 setupBackgroundDragAndDrop();
                 await loadFilters();
-                console.log('Richard basta de errores xd - App inicializada');
+                
             } catch (error) {
                 console.error('Error inicializando:', error);
                 showError('Error al iniciar la aplicación: ' + error.message);
             }
         }
-
-        // Richard basta de errores xd - Cargar directorios
         async function loadDirectories() {
             try {
                 const { data, error } = await supabaseClient
@@ -722,8 +1479,6 @@
                 showError('Error al cargar directorios: ' + error.message);
             }
         }
-
-        // Richard basta de errores xd - Cargar documentos
         async function loadDocuments(folderId = 'all') {
             try {
                 document.getElementById('jotaContent').innerHTML = '<div class="loading" style="margin: 40px auto; text-align: center;"></div>';
@@ -752,8 +1507,6 @@
                 showError('Error al cargar documentos: ' + error.message);
             }
         }
-
-        // Richard basta de errores xd - Mostrar documentos
         function displayDocuments(documents) {
             const content = document.getElementById('jotaContent');
             if (!documents || documents.length === 0) {
@@ -797,8 +1550,6 @@
             });
             content.innerHTML = html;
         }
-
-        // Richard basta de errores xd - Obtener tipo de archivo
         function getFileType(filename) {
             const ext = filename.split('.').pop().toLowerCase();
             if (['pdf'].includes(ext)) return 'pdf';
@@ -807,8 +1558,6 @@
             if (['mp3', 'wav', 'ogg'].includes(ext)) return 'audio';
             return 'other';
         }
-
-        // Richard basta de errores xd - Obtener icono
         function getFileIcon(type) {
             const icons = {
                 pdf: '📄',
@@ -819,8 +1568,6 @@
             };
             return icons[type] || '📎';
         }
-
-        // Richard basta de errores xd - Cargar filtros
         async function loadFilters() {
             try {
                 const { data: modules, error } = await supabaseClient
@@ -841,8 +1588,6 @@
                 showError('Error al cargar módulos: ' + error.message);
             }
         }
-
-        // Richard basta de errores xd - Cargar fondos
         async function loadBackgrounds() {
             try {
                 const { data, error } = await supabaseClient.storage
@@ -861,8 +1606,6 @@
                 showError('Error al cargar fondos: ' + error.message);
             }
         }
-
-        // Richard basta de errores xd - Mostrar fondos
         function displayBackgrounds() {
     const grid = document.getElementById('jotaBackgroundGrid');
     const savedBackground = localStorage.getItem('jotaBackground');
@@ -882,12 +1625,10 @@
             div.classList.add('selected');
         }
         div.innerHTML = `<img src="${publicUrl}" alt="${file.name}" title="${file.name}">`;
-        div.onclick = () => selectBackground(publicUrl); // Ahora publicUrl tiene la URL
+        div.onclick = () => selectBackground(publicUrl);
         grid.appendChild(div);
     });
 }
-
-        // Richard basta de errores xd - Manejar selección de fondo
         function handleBackgroundSelect(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -902,7 +1643,6 @@
             fileList.appendChild(fileDiv);
             jotaSelectedBackgroundFile = file;
 
-            // Validate file type and size
             const ext = file.name.split('.').pop().toLowerCase();
             if (!['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) {
                 document.getElementById('jotaBackgroundUploadStatus').textContent = 'Por favor, selecciona una imagen (jpg, png, gif, webp).';
@@ -910,15 +1650,13 @@
                 fileList.innerHTML = '';
                 return;
             }
-            if (file.size > 10 * 1024 * 1024) { // 10MB limit
+            if (file.size > 10 * 1024 * 1024) {
                 document.getElementById('jotaBackgroundUploadStatus').textContent = 'La imagen es demasiado grande (máximo 10MB).';
                 jotaSelectedBackgroundFile = null;
                 fileList.innerHTML = '';
                 return;
             }
         }
-
-        // Richard basta de errores xd - Subir fondo a Supabase
         async function uploadBackgroundToSupabase() {
             if (!jotaSelectedBackgroundFile) {
                 document.getElementById('jotaBackgroundUploadStatus').textContent = 'Selecciona una imagen para subir.';
@@ -942,7 +1680,7 @@
                 jotaSelectedBackgroundFile = null;
                 document.getElementById('jotaBackgroundSelectedFiles').innerHTML = '';
                 document.getElementById('jotaBackgroundInput').value = '';
-                await loadBackgrounds(); // Reload backgrounds to show the new image
+                await loadBackgrounds();
                 console.log('Richard basta de errores xd - Fondo subido:', filePath);
             } catch (error) {
                 progress.style.display = 'none';
@@ -950,8 +1688,6 @@
                 console.error('Error subiendo fondo:', error);
             }
         }
-
-        // Richard basta de errores xd - Configurar drag and drop para fondos
         function setupBackgroundDragAndDrop() {
             const uploadArea = document.querySelector('#background-modal .upload-area');
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -980,28 +1716,17 @@
                 if (files.length > 0) {
                     const fileInput = document.getElementById('jotaBackgroundInput');
                     const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(files[0]); // Only take the first file
+                    dataTransfer.items.add(files[0]);
                     fileInput.files = dataTransfer.files;
                     handleBackgroundSelect({ target: fileInput });
                 }
             });
         }
-
-        // Richard basta de errores xd - Seleccionar fondo
         function selectBackground(url) {
-            document.body.style.backgroundImage = `url(${url})`;
-            document.body.style.backgroundSize = 'cover';
-    document.body.style.backgroundPosition = 'center';
-    document.body.style.backgroundAttachment = 'fixed';
-            localStorage.setItem('jotaBackground', url);
-            const options = document.querySelectorAll('.background-option');
-    options.forEach(opt => opt.classList.remove('selected'));
-    const selectedOption = Array.from(options).find(opt => opt.querySelector('img').src === url);
-    if (selectedOption) selectedOption.classList.add('selected');
-           console.log('Richard basta de errores xd - Fondo seleccionado y aplicado:', url);
-}
 
-        // Richard basta de errores xd - Restaurar fondo predeterminado
+            openBackgroundEditor(url);
+            closeModal('background-modal');
+        }
         function resetBackground() {
             document.body.style.backgroundImage = 'linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%)';
             document.body.style.backgroundSize = 'cover';
@@ -1010,18 +1735,336 @@
             localStorage.removeItem('jotaBackground');
             const options = document.querySelectorAll('.background-option');
             options.forEach(opt => opt.classList.remove('selected'));
-            console.log('Richard basta de errores xd - Fondo restaurado');
+            
+        }
+        function applySavedBackground() {
+            const savedSettings = localStorage.getItem('jotaBackgroundSettings');
+            if (savedSettings) {
+                try {
+                    const settings = JSON.parse(savedSettings);
+                    applyBackgroundFromSettings(settings);
+                } catch (e) {
+                    console.error('Error aplicando fondo guardado:', e);
+
+                    const savedBackground = localStorage.getItem('jotaBackground');
+                    if (savedBackground) {
+                        document.body.style.backgroundImage = `url(${savedBackground})`;
+                    }
+                }
+            }
+        }
+        let previewImageElement;
+        let previewCanvasElement;
+        let currentBackgroundUrl = '';
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let imageX = 0;
+        let imageY = 0;
+        let currentZoom = 100;
+        let currentRotation = 0;
+        let currentBrightness = 100;
+        let currentContrast = 100;
+        function openBackgroundEditor(url) {
+            currentBackgroundUrl = url;
+            document.getElementById('backgroundPreviewEditor').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            previewImageElement = document.getElementById('previewImage');
+            previewCanvasElement = document.getElementById('previewCanvas');
+
+            previewImageElement.src = url;
+            previewImageElement.onload = () => {
+
+                const canvasRect = previewCanvasElement.getBoundingClientRect();
+                const imgRect = previewImageElement.getBoundingClientRect();
+                imageX = (canvasRect.width - imgRect.width) / 2;
+                imageY = (canvasRect.height - imgRect.height) / 2;
+                previewImageElement.style.left = imageX + 'px';
+                previewImageElement.style.top = imageY + 'px';
+
+                loadSavedBackgroundSettings();
+            };
+
+            setupDragEvents();
+        }
+        function closeBackgroundEditor() {
+            document.getElementById('backgroundPreviewEditor').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            resetPreviewSettings();
+        }
+        function setupDragEvents() {
+            previewImageElement.addEventListener('mousedown', startDrag);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
+
+            previewImageElement.addEventListener('touchstart', (e) => {
+                const touch = e.touches[0];
+                startDrag({ clientX: touch.clientX, clientY: touch.clientY });
+            });
+            document.addEventListener('touchmove', (e) => {
+                if (isDragging) {
+                    const touch = e.touches[0];
+                    drag({ clientX: touch.clientX, clientY: touch.clientY });
+                }
+            });
+            document.addEventListener('touchend', stopDrag);
+        }
+        function startDrag(e) {
+            isDragging = true;
+            dragStartX = e.clientX - imageX;
+            dragStartY = e.clientY - imageY;
+            previewImageElement.style.cursor = 'grabbing';
+        }
+        function drag(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            imageX = e.clientX - dragStartX;
+            imageY = e.clientY - dragStartY;
+            previewImageElement.style.left = imageX + 'px';
+            previewImageElement.style.top = imageY + 'px';
+        }
+        function stopDrag() {
+            isDragging = false;
+            previewImageElement.style.cursor = 'move';
+        }
+        function updatePreview() {
+            currentZoom = document.getElementById('zoomSlider').value;
+            currentRotation = document.getElementById('rotationSlider').value;
+            currentBrightness = document.getElementById('brightnessSlider').value;
+            currentContrast = document.getElementById('contrastSlider').value;
+
+            document.getElementById('zoomValue').textContent = currentZoom + '%';
+            document.getElementById('rotationValue').textContent = currentRotation + '°';
+            document.getElementById('brightnessValue').textContent = currentBrightness + '%';
+            document.getElementById('contrastValue').textContent = currentContrast + '%';
+            document.getElementById('zoomIndicator').textContent = 'Zoom: ' + currentZoom + '%';
+
+            const scale = currentZoom / 100;
+            const filter = `brightness(${currentBrightness}%) contrast(${currentContrast}%)`;
+            previewImageElement.style.transform = `scale(${scale}) rotate(${currentRotation}deg)`;
+            previewImageElement.style.filter = filter;
+        }
+        function resetPreviewSettings() {
+            document.getElementById('zoomSlider').value = 100;
+            document.getElementById('rotationSlider').value = 0;
+            document.getElementById('brightnessSlider').value = 100;
+            document.getElementById('contrastSlider').value = 100;
+
+            if (previewImageElement && previewCanvasElement) {
+                const canvasRect = previewCanvasElement.getBoundingClientRect();
+                const imgRect = previewImageElement.getBoundingClientRect();
+                imageX = (canvasRect.width - imgRect.width) / 2;
+                imageY = (canvasRect.height - imgRect.height) / 2;
+                previewImageElement.style.left = imageX + 'px';
+                previewImageElement.style.top = imageY + 'px';
+            }
+            
+            updatePreview();
+        }
+        function applyBackgroundSettings() {
+
+            const previewRect = previewCanvasElement.getBoundingClientRect();
+            const imgRect = previewImageElement.getBoundingClientRect();
+
+            const imgCenterX = imgRect.left + imgRect.width / 2;
+            const imgCenterY = imgRect.top + imgRect.height / 2;
+
+            const previewCenterX = previewRect.left + previewRect.width / 2;
+            const previewCenterY = previewRect.top + previewRect.height / 2;
+
+            const offsetX = imgCenterX - previewCenterX;
+            const offsetY = imgCenterY - previewCenterY;
+
+            const percentX = 50 + (offsetX / previewRect.width * 100);
+            const percentY = 50 + (offsetY / previewRect.height * 100);
+
+            const settings = {
+                url: currentBackgroundUrl,
+                zoom: currentZoom,
+                rotation: currentRotation,
+                brightness: currentBrightness,
+                contrast: currentContrast,
+                positionX: percentX,
+                positionY: percentY
+            };
+            
+            localStorage.setItem('jotaBackgroundSettings', JSON.stringify(settings));
+            localStorage.setItem('jotaBackground', currentBackgroundUrl);
+
+            applyBackgroundFromSettings(settings);
+
+            const options = document.querySelectorAll('.background-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            const selectedOption = Array.from(options).find(opt => opt.querySelector('img').src === currentBackgroundUrl);
+            if (selectedOption) selectedOption.classList.add('selected');
+            
+            closeBackgroundEditor();
+            
+        }
+        function applyBackgroundFromSettings(settings) {
+
+            const oldOverlay = document.getElementById('bgOverlay');
+            if (oldOverlay) oldOverlay.remove();
+
+            const bgOverlay = document.createElement('div');
+            bgOverlay.id = 'bgOverlay';
+            
+            const scale = (settings.zoom || 100) / 100;
+            const rotation = settings.rotation || 0;
+            const brightness = settings.brightness || 100;
+            const contrast = settings.contrast || 100;
+            const posX = settings.positionX || 50;
+            const posY = settings.positionY || 50;
+            
+            bgOverlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                pointer-events: none;
+                background-image: url(${settings.url});
+                background-size: ${scale * 100}%;
+                background-position: ${posX}% ${posY}%;
+                background-repeat: no-repeat;
+                filter: brightness(${brightness}%) contrast(${contrast}%);
+                transform: rotate(${rotation}deg);
+                transform-origin: center;
+            `;
+            
+            document.body.prepend(bgOverlay);
+            document.body.style.backgroundImage = 'none';
+        }
+        function loadSavedBackgroundSettings() {
+            const savedSettings = localStorage.getItem('jotaBackgroundSettings');
+            if (savedSettings) {
+                try {
+                    const settings = JSON.parse(savedSettings);
+                    if (settings.url === currentBackgroundUrl) {
+                        document.getElementById('zoomSlider').value = settings.zoom || 100;
+                        document.getElementById('rotationSlider').value = settings.rotation || 0;
+                        document.getElementById('brightnessSlider').value = settings.brightness || 100;
+                        document.getElementById('contrastSlider').value = settings.contrast || 100;
+                        imageX = settings.posX || imageX;
+                        imageY = settings.posY || imageY;
+                        previewImageElement.style.left = imageX + 'px';
+                        previewImageElement.style.top = imageY + 'px';
+                        updatePreview();
+                    }
+                } catch (e) {
+                    console.error('Error cargando configuración:', e);
+                }
+            }
+        }
+        function updateColors() {
+            const primaryColor = document.getElementById('primaryColor').value;
+            const secondaryColor = document.getElementById('secondaryColor').value;
+            const accentColor = document.getElementById('accentColor').value;
+            const textColor = document.getElementById('textColor').value;
+
+            document.documentElement.style.setProperty('--jota-primary-color', primaryColor);
+            document.documentElement.style.setProperty('--jota-secondary-color', secondaryColor);
+            document.documentElement.style.setProperty('--jota-accent-color', accentColor);
+            document.documentElement.style.setProperty('--jota-text-color', textColor);
+
+            localStorage.setItem('jotaPrimaryColor', primaryColor);
+            localStorage.setItem('jotaSecondaryColor', secondaryColor);
+            localStorage.setItem('jotaAccentColor', accentColor);
+            localStorage.setItem('jotaTextColor', textColor);
+
+            
         }
 
-        // Richard basta de errores xd - Aplicar fondo guardado
-        function applySavedBackground() {
-            const savedBackground = localStorage.getItem('jotaBackground');
-            if (savedBackground) {
-                document.body.style.backgroundImage = `url(${savedBackground})`;
+        function applySavedColors() {
+            const primaryColor = localStorage.getItem('jotaPrimaryColor');
+            const secondaryColor = localStorage.getItem('jotaSecondaryColor');
+            const accentColor = localStorage.getItem('jotaAccentColor');
+            const textColor = localStorage.getItem('jotaTextColor');
+
+            if (primaryColor) {
+                document.documentElement.style.setProperty('--jota-primary-color', primaryColor);
+                document.getElementById('primaryColor').value = primaryColor;
+            }
+            if (secondaryColor) {
+                document.documentElement.style.setProperty('--jota-secondary-color', secondaryColor);
+                document.getElementById('secondaryColor').value = secondaryColor;
+            }
+            if (accentColor) {
+                document.documentElement.style.setProperty('--jota-accent-color', accentColor);
+                document.getElementById('accentColor').value = accentColor;
+            }
+            if (textColor) {
+                document.documentElement.style.setProperty('--jota-text-color', textColor);
+                document.getElementById('textColor').value = textColor;
             }
         }
 
-        // Richard basta de errores xd - Aplicar filtros
+        function resetColors() {
+            const defaults = {
+                primary: '#4f46e5',
+                secondary: '#ecfeff',
+                accent: '#06b6d4',
+                text: '#1f2937'
+            };
+
+            document.getElementById('primaryColor').value = defaults.primary;
+            document.getElementById('secondaryColor').value = defaults.secondary;
+            document.getElementById('accentColor').value = defaults.accent;
+            document.getElementById('textColor').value = defaults.text;
+
+            document.documentElement.style.setProperty('--jota-primary-color', defaults.primary);
+            document.documentElement.style.setProperty('--jota-secondary-color', defaults.secondary);
+            document.documentElement.style.setProperty('--jota-accent-color', defaults.accent);
+            document.documentElement.style.setProperty('--jota-text-color', defaults.text);
+
+            localStorage.removeItem('jotaPrimaryColor');
+            localStorage.removeItem('jotaSecondaryColor');
+            localStorage.removeItem('jotaAccentColor');
+            localStorage.removeItem('jotaTextColor');
+
+            
+        }
+        function updateBackgroundPosition() {
+            const posX = document.getElementById('bgPosX').value;
+            const posY = document.getElementById('bgPosY').value;
+            const size = document.getElementById('bgSize').value;
+            const repeat = document.getElementById('bgRepeat').value;
+
+            document.getElementById('bgPosXValue').textContent = posX + '%';
+            document.getElementById('bgPosYValue').textContent = posY + '%';
+
+            document.body.style.backgroundPosition = `${posX}% ${posY}%`;
+            document.body.style.backgroundSize = size;
+            document.body.style.backgroundRepeat = repeat;
+
+            localStorage.setItem('jotaBgPosX', posX);
+            localStorage.setItem('jotaBgPosY', posY);
+            localStorage.setItem('jotaBgSize', size);
+            localStorage.setItem('jotaBgRepeat', repeat);
+
+            
+        }
+
+        function loadBackgroundPosition() {
+            const posX = localStorage.getItem('jotaBgPosX') || '50';
+            const posY = localStorage.getItem('jotaBgPosY') || '50';
+            const size = localStorage.getItem('jotaBgSize') || 'cover';
+            const repeat = localStorage.getItem('jotaBgRepeat') || 'no-repeat';
+
+            document.getElementById('bgPosX').value = posX;
+            document.getElementById('bgPosY').value = posY;
+            document.getElementById('bgSize').value = size;
+            document.getElementById('bgRepeat').value = repeat;
+
+            document.getElementById('bgPosXValue').textContent = posX + '%';
+            document.getElementById('bgPosYValue').textContent = posY + '%';
+
+            document.body.style.backgroundPosition = `${posX}% ${posY}%`;
+            document.body.style.backgroundSize = size;
+            document.body.style.backgroundRepeat = repeat;
+        }
         function applyFilters() {
             const searchTerm = document.getElementById('jotaSearchInput').value.toLowerCase();
             const moduleFilter = document.getElementById('jotaModuleFilter').value;
@@ -1042,8 +2085,6 @@
             }
             displayDocuments(filteredDocs);
         }
-
-        // Richard basta de errores xd - Manejar selección de archivos
         function handleFileSelect(event) {
             const files = Array.from(event.target.files);
             const fileList = document.getElementById('jotaSelectedFiles');
@@ -1060,8 +2101,6 @@
             jotaSelectedFiles = jotaSelectedFiles.filter(f => f);
             document.getElementById('jotaFileName').value = files[0]?.name || '';
         }
-
-        // Richard basta de errores xd - Subir documento a Supabase
         async function uploadFileToSupabase() {
             if (jotaSelectedFiles.length === 0) {
                 alert('Selecciona al menos un documento');
@@ -1118,8 +2157,8 @@
 
                 progress.style.display = 'none';
                 status.textContent = '¡Documento subido correctamente!';
-                await loadDocuments(jotaCurrentFolder); // Reload current folder to show new document
-                closeModal('upload-modal'); // Close modal immediately
+                await loadDocuments(jotaCurrentFolder);
+                closeModal('upload-modal');
                 resetUploadForm();
                 console.log('Richard basta de errores xd - Documento subido:', data);
             } catch (error) {
@@ -1128,8 +2167,6 @@
                 console.error('Error subiendo:', error);
             }
         }
-
-        // Richard basta de errores xd - Crear carpeta
         async function createFolder() {
             const folderName = document.getElementById('jotaFolderName').value.trim();
             const parentFolderId = document.getElementById('jotaParentFolder').value;
@@ -1159,8 +2196,6 @@
                 console.error('Error creando carpeta:', error);
             }
         }
-
-        // Richard basta de errores xd - Vista previa
         async function previewDocument(docId) {
             try {
                 const { data, error } = await supabaseClient
@@ -1198,8 +2233,6 @@
                 alert('Error al cargar vista previa: ' + error.message);
             }
         }
-
-        // Richard basta de errores xd - Descargar documento
         async function downloadDocument(docId) {
             try {
                 const { data } = await supabaseClient
@@ -1216,14 +2249,12 @@
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                console.log('Richard basta de errores xd - Documento descargado');
+                
             } catch (error) {
                 console.error('Error descargando:', error);
                 alert('Error al descargar: ' + error.message);
             }
         }
-
-        // Richard basta de errores xd - Eliminar documento
         async function deleteDocument(docId) {
             if (!confirm('¿Seguro que quieres eliminar este documento?')) return;
 
@@ -1246,14 +2277,12 @@
                 if (error) throw error;
 
                 await loadDocuments(jotaCurrentFolder);
-                console.log('Richard basta de errores xd - Documento eliminado');
+                
             } catch (error) {
                 console.error('Error eliminando:', error);
                 alert('Error al eliminar: ' + error.message);
             }
         }
-
-        // Richard basta de errores xd - Configurar drag and drop para documentos
         function setupDragAndDrop() {
             const uploadArea = document.querySelector('#upload-modal .upload-area');
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -1290,8 +2319,6 @@
                 }
             });
         }
-
-        // Richard basta de errores xd - Funciones de modal
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -1308,8 +2335,6 @@
                 document.body.style.overflow = 'auto';
             }
         });
-
-        // Richard basta de errores xd - Otras funciones
         function loadFolder(folderId) {
             loadDocuments(folderId);
         }
@@ -1346,7 +2371,7 @@
             a.download = `tempfiles-export-${new Date().toISOString().split('T')[0]}.json`;
             a.click();
             URL.revokeObjectURL(url);
-            console.log('Richard basta de errores xd - Exportación completada');
+            
         }
 
         function resetUploadForm() {
@@ -1364,13 +2389,367 @@
         function showError(message) {
             document.getElementById('jotaContent').innerHTML = `<div class="error-message">${message}</div>`;
         }
-
-        // Richard basta de errores xd - Manejo de errores global
         window.addEventListener('error', e => {
             console.error('Error global:', e.error);
             if (e.error.message.includes('Supabase')) {
                 showError('Error de conexión con Supabase. Verifica tu configuración.');
             }
+        });
+        let chatChannel = null;
+        let chatUserId = null;
+        let chatUserName = '';
+        let chatUserColor = '';
+        let chatUnreadCount = 0;
+        let chatIsOpen = false;
+        function initializeChat() {
+
+            chatUserId = localStorage.getItem('jotaChatUserId') || 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('jotaChatUserId', chatUserId);
+
+            chatUserName = localStorage.getItem('jotaPlayerName') || 'Usuario';
+            chatUserColor = localStorage.getItem('jotaPlayerColor') || '#4f46e5';
+
+            subscribeToChatChannel();
+
+            loadRecentMessages();
+        }
+        function subscribeToChatChannel() {
+            if (!supabaseClient) {
+                console.log('Chat en modo local - Sin tiempo real');
+                return;
+            }
+
+            try {
+                chatChannel = supabaseClient.channel('public_chat')
+                    .on('broadcast', { event: 'new_message' }, (payload) => {
+                        displayMessage(payload.payload, false);
+
+                        if (!chatIsOpen && payload.payload.user_id !== chatUserId) {
+                            chatUnreadCount++;
+                            updateChatNotification();
+
+                            showMessageNotification(payload.payload);
+                        }
+                    })
+                    .on('presence', { event: 'sync' }, () => {
+                        updateOnlineCount();
+                    })
+                    .subscribe(async (status) => {
+                        if (status === 'SUBSCRIBED') {
+
+                            await chatChannel.track({
+                                user_id: chatUserId,
+                                user_name: chatUserName,
+                                user_color: chatUserColor,
+                                online_at: new Date().toISOString()
+                            });
+                        }
+                    });
+
+                
+            } catch (error) {
+                console.error('Error suscribiéndose al chat:', error);
+            }
+        }
+        async function loadRecentMessages() {
+            if (!supabaseClient) return;
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('chat_messages')
+                    .select('*')
+                    .order('created_at', { ascending: false })
+                    .limit(50);
+
+                if (error && !error.message.includes('does not exist')) {
+                    console.error('Error cargando mensajes:', error);
+                    return;
+                }
+
+                if (data && data.length > 0) {
+
+                    document.getElementById('chatMessages').innerHTML = '';
+
+                    data.reverse().forEach(msg => {
+                        displayMessage({
+                            user_id: msg.user_id,
+                            user_name: msg.user_name,
+                            user_color: msg.user_color,
+                            message: msg.message,
+                            created_at: msg.created_at
+                        }, true);
+                    });
+                }
+            } catch (error) {
+                console.error('Error en loadRecentMessages:', error);
+            }
+        }
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            const messageData = {
+                user_id: chatUserId,
+                user_name: chatUserName,
+                user_color: chatUserColor,
+                message: message,
+                created_at: new Date().toISOString()
+            };
+
+            if (supabaseClient) {
+                try {
+                    const { error } = await supabaseClient
+                        .from('chat_messages')
+                        .insert([messageData]);
+
+                    if (error && !error.message.includes('does not exist')) {
+                        console.error('Error guardando mensaje:', error);
+                    }
+                } catch (error) {
+                    console.error('Error en sendMessage:', error);
+                }
+            }
+
+            if (chatChannel) {
+                chatChannel.send({
+                    type: 'broadcast',
+                    event: 'new_message',
+                    payload: messageData
+                });
+            }
+
+            displayMessage(messageData, false);
+
+            input.value = '';
+        }
+        function displayMessage(data, isHistory) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const isOwnMessage = data.user_id === chatUserId;
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${isOwnMessage ? 'own' : ''}`;
+
+            const timestamp = new Date(data.created_at).toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            messageDiv.innerHTML = `
+                <div class="chat-message-header">
+                    <div class="chat-user-color" style="background: ${data.user_color};"></div>
+                    <span class="chat-username">${data.user_name}</span>
+                    <span class="chat-timestamp">${timestamp}</span>
+                </div>
+                <div class="chat-message-content">${escapeHtml(data.message)}</div>
+            `;
+
+            messagesContainer.appendChild(messageDiv);
+
+            if (!isHistory) {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        }
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        function updateOnlineCount() {
+            if (!chatChannel) return;
+
+            const presenceState = chatChannel.presenceState();
+            const onlineCount = Object.keys(presenceState).length;
+            document.getElementById('chatOnlineCount').textContent = `${onlineCount} online`;
+        }
+        function updateChatNotification() {
+            const notification = document.getElementById('chatNotification');
+            if (chatUnreadCount > 0) {
+                notification.textContent = chatUnreadCount > 99 ? '99+' : chatUnreadCount;
+                notification.style.display = 'flex';
+            } else {
+                notification.style.display = 'none';
+            }
+        }
+        function toggleChat() {
+
+            const hasSetup = localStorage.getItem('jotaChatSetup');
+            
+            if (!hasSetup) {
+
+                openChatSetup();
+                return;
+            }
+            
+            const chatContainer = document.getElementById('chatContainer');
+            const chatToggleBtn = document.getElementById('chatToggleBtn');
+            
+            chatIsOpen = !chatIsOpen;
+            
+            if (chatIsOpen) {
+                chatContainer.classList.add('active');
+                chatToggleBtn.classList.add('active');
+                chatUnreadCount = 0;
+                updateChatNotification();
+
+                setTimeout(() => {
+                    const messagesContainer = document.getElementById('chatMessages');
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 100);
+            } else {
+                chatContainer.classList.remove('active');
+                chatToggleBtn.classList.remove('active');
+            }
+        }
+        function openChatSetup() {
+
+            const savedName = localStorage.getItem('jotaPlayerName') || 'Usuario';
+            const savedColor = localStorage.getItem('jotaPlayerColor') || '#4f46e5';
+            
+            document.getElementById('chatSetupName').value = savedName;
+            document.getElementById('chatSetupColor').value = savedColor;
+            document.getElementById('colorPreviewBox').style.background = savedColor;
+            
+            document.getElementById('chatSetupModal').classList.add('active');
+        }
+        function updateColorPreview() {
+            const color = document.getElementById('chatSetupColor').value;
+            document.getElementById('colorPreviewBox').style.background = color;
+        }
+        function saveChatSetup() {
+            const name = document.getElementById('chatSetupName').value.trim() || 'Usuario';
+            const color = document.getElementById('chatSetupColor').value;
+
+            localStorage.setItem('jotaPlayerName', name);
+            localStorage.setItem('jotaPlayerColor', color);
+            localStorage.setItem('jotaChatSetup', 'true');
+
+            chatUserName = name;
+            chatUserColor = color;
+
+            document.getElementById('chatSetupModal').classList.remove('active');
+
+            if (chatChannel) {
+                chatChannel.unsubscribe();
+            }
+            initializeChat();
+
+            setTimeout(() => {
+                toggleChat();
+            }, 300);
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                initializeChat();
+            }, 1000);
+        });
+        window.addEventListener('beforeunload', () => {
+            if (chatChannel) {
+                chatChannel.unsubscribe();
+            }
+        });
+        let notificationTimeout = null;
+        function requestNotificationPermission() {
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+        }
+        function showMessageNotification(messageData) {
+
+            showNotificationToast(messageData);
+
+            showDesktopNotification(messageData);
+
+            playNotificationSound();
+        }
+        function showNotificationToast(messageData) {
+            const toast = document.getElementById('chatNotificationToast');
+            const avatar = document.getElementById('notificationAvatar');
+            const name = document.getElementById('notificationName');
+            const message = document.getElementById('notificationMessage');
+
+            avatar.style.background = messageData.user_color;
+            avatar.textContent = messageData.user_name.charAt(0).toUpperCase();
+            name.textContent = messageData.user_name;
+            message.textContent = messageData.message;
+
+            toast.classList.add('active');
+
+            if (notificationTimeout) {
+                clearTimeout(notificationTimeout);
+            }
+            
+            notificationTimeout = setTimeout(() => {
+                toast.classList.remove('active');
+            }, 5000);
+        }
+        function showDesktopNotification(messageData) {
+            if ('Notification' in window && Notification.permission === 'granted') {
+                const notification = new Notification(`💬 ${messageData.user_name}`, {
+                    body: messageData.message,
+                    icon: '/favicon.ico',
+                    badge: '/favicon.ico',
+                    tag: 'chat-message',
+                    requireInteraction: false,
+                    silent: false
+                });
+
+                notification.onclick = () => {
+                    window.focus();
+                    if (!chatIsOpen) {
+                        toggleChat();
+                    }
+                    notification.close();
+                };
+
+                setTimeout(() => {
+                    notification.close();
+                }, 5000);
+            }
+        }
+        function playNotificationSound() {
+            try {
+
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 800;
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.2);
+            } catch (e) {
+
+            }
+        }
+        function closeNotificationToast(event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            document.getElementById('chatNotificationToast').classList.remove('active');
+            if (notificationTimeout) {
+                clearTimeout(notificationTimeout);
+            }
+        }
+        function openChatFromNotification() {
+            closeNotificationToast();
+            if (!chatIsOpen) {
+                toggleChat();
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+
+            setTimeout(() => {
+                requestNotificationPermission();
+            }, 3000);
         });
     </script>
 </body>
