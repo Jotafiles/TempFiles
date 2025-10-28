@@ -824,6 +824,119 @@
             border-top: 1px solid #e5e7eb;
             display: flex;
             gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chat-attach-btn {
+            padding: 10px;
+            background: #f3f4f6;
+            color: var(--jota-text-color);
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-attach-btn:hover {
+            background: var(--jota-accent-color);
+            color: white;
+            border-color: var(--jota-accent-color);
+        }
+
+        .chat-file-preview {
+            width: 100%;
+            padding: 8px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .chat-file-preview.active {
+            display: flex;
+        }
+
+        .chat-file-preview img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .chat-file-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chat-file-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--jota-text-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-file-size {
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        .chat-file-remove {
+            padding: 6px 12px;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .chat-file-remove:hover {
+            background: #b91c1c;
+        }
+
+        .chat-message-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            margin-top: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .chat-message-image:hover {
+            transform: scale(1.02);
+        }
+
+        .chat-timer {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(220, 38, 38, 0.9);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: pulse 2s infinite;
         }
 
         .chat-input {
@@ -1112,12 +1225,465 @@
         .chat-notification-close:hover {
             color: var(--jota-text-color);
         }
+
+        /* Estilos para selector de sonido */
+        .sound-selector {
+            margin: 16px 0;
+            padding: 16px;
+            background: #f3f4f6;
+            border-radius: 12px;
+        }
+
+        .sound-selector h4 {
+            margin: 0 0 12px 0;
+            color: var(--jota-text-color);
+            font-size: 1rem;
+        }
+
+        .sound-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .sound-option {
+            padding: 10px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .sound-option:hover {
+            border-color: var(--jota-accent-color);
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .sound-option.selected {
+            border-color: var(--jota-accent-color);
+            background: var(--jota-accent-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .custom-sound-upload {
+            margin-top: 12px;
+            padding: 12px;
+            background: white;
+            border: 2px dashed var(--jota-accent-color);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .custom-sound-upload:hover {
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .sound-preview {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        .sound-preview button {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+
+        /* Panel de administración oculto */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 450px;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            overflow-y: auto;
+        }
+
+        .admin-panel.active {
+            right: 0;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            padding: 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #7f1d1d;
+        }
+
+        .admin-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .admin-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .admin-content {
+            padding: 20px;
+        }
+
+        .admin-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-section h3 {
+            color: white;
+            margin: 0 0 15px 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .admin-input:focus {
+            outline: none;
+            border-color: #dc2626;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .admin-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .admin-select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .admin-select option {
+            background: #1e293b;
+            color: white;
+        }
+
+        .admin-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4);
+        }
+
+        .admin-btn.unban {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+        }
+
+        .admin-btn.unban:hover {
+            box-shadow: 0 5px 20px rgba(22, 163, 74, 0.4);
+        }
+
+        .banned-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .banned-user {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .banned-user-info {
+            color: white;
+        }
+
+        .banned-user-name {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .banned-user-time {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .unban-btn {
+            background: #16a34a;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .unban-btn:hover {
+            background: #15803d;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .admin-stat {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 5px;
+        }
+
+        .admin-stat-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Notificación de baneo en pantalla completa */
+        .ban-notification {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            animation: banFadeIn 0.5s ease;
+        }
+
+        .ban-notification.active {
+            display: flex;
+        }
+
+        @keyframes banFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .ban-content {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            padding: 60px;
+            border-radius: 24px;
+            text-align: center;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(220, 38, 38, 0.6);
+            border: 3px solid #7f1d1d;
+            animation: banShake 0.5s ease;
+        }
+
+        @keyframes banShake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+
+        .ban-icon {
+            font-size: 8rem;
+            margin-bottom: 20px;
+            animation: banPulse 2s infinite;
+        }
+
+        @keyframes banPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .ban-title {
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            margin: 0 0 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .ban-reason {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            border-left: 4px solid white;
+        }
+
+        .ban-time {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fef3c7;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+
+        .ban-message {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 30px;
+            line-height: 1.6;
+        }
+
+        .ban-countdown {
+            font-size: 1.3rem;
+            color: #fef3c7;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        /* Autocompletado de comandos y menciones */
+        .autocomplete-menu {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid var(--jota-accent-color);
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+        }
+
+        .autocomplete-menu.active {
+            display: block;
+        }
+
+        .autocomplete-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+
+        .autocomplete-item:hover,
+        .autocomplete-item.selected {
+            background: var(--jota-accent-color);
+            color: white;
+        }
+
+        .autocomplete-icon {
+            font-size: 1.2rem;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .autocomplete-main {
+            flex: 1;
+        }
+
+        .autocomplete-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .autocomplete-description {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+
+        .autocomplete-item:hover .autocomplete-description,
+        .autocomplete-item.selected .autocomplete-description {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
     
     <div class="top-nav">
-        <h1>TempFiles</h1>
+        <h1 id="adminTrigger" style="cursor: pointer; user-select: none;" title="TempFiles">TempFiles</h1>
         <div class="nav-actions">
             <input type="text" class="search-input" id="jotaSearchInput" placeholder="🔍 Buscar documentos..." oninput="applyFilters()">
             <select id="jotaModuleFilter" onchange="applyFilters()">
@@ -1331,8 +1897,8 @@
     
     <div class="chat-setup-modal" id="chatSetupModal">
         <div class="chat-setup-content">
-            <h2>💬 Configurar Chat</h2>
-            <p>Personaliza tu identidad antes de comenzar a chatear</p>
+            <h2>💬 Configurar ChatPajero</h2>
+            <p>Personaliza tu identidad antes de comenzar a chatear perro ql </p>
             
             <div class="chat-setup-field">
                 <label>👤 Tu nombre:</label>
@@ -1346,6 +1912,33 @@
                     <div class="color-preview-box" id="colorPreviewBox" style="background: #4f46e5;">
                         Vista previa
                     </div>
+                </div>
+            </div>
+
+            <div class="sound-selector">
+                <h4>🔔 Sonido de Notificación:</h4>
+                <div class="sound-options">
+                    <div class="sound-option selected" data-sound="sound1" onclick="selectNotificationSound('sound1')">
+                        🔔 Rizz Notification
+                    </div>
+                    <div class="sound-option" data-sound="sound2" onclick="selectNotificationSound('sound2')">
+                        🎵 Minecraft Notification
+                    </div>
+                    <div class="sound-option" data-sound="sound3" onclick="selectNotificationSound('sound3')">
+                        💫 Roblox Notification
+                    </div>
+                    <div class="sound-option" data-sound="sound4" onclick="selectNotificationSound('sound4')">
+                        🎼 QuePaja Notification
+                    </div>
+                    <div class="sound-option" data-sound="sound5" onclick="selectNotificationSound('sound5')">
+                        📢 Fortnite Notification
+                    </div>
+                    <div class="sound-option" data-sound="none" onclick="selectNotificationSound('none')">
+                        🔇 Silencio
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 8px; font-size: 0.85rem; color: #6b7280;">
+                    Click en un sonido para probarlo
                 </div>
             </div>
             
@@ -1367,7 +1960,10 @@
                 💬 PajasChat (beta)
                 <span class="chat-online-count" id="chatOnlineCount">1 online</span>
             </h3>
-            <button onclick="toggleChat()" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">✖</button>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="chat-timer" id="chatTimer" style="position: relative; top: 0; right: 0;">⏱️ <span id="chatTimerText">60:00</span></span>
+                <button onclick="toggleChat()" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">✖</button>
+            </div>
         </div>
         <div class="chat-messages" id="chatMessages">
             <div style="text-align: center; color: #9ca3af; padding: 20px;">
@@ -1375,16 +1971,30 @@
                 <p style="font-size: 0.9rem;">Escribe un mensaje para comenzar</p>
             </div>
         </div>
-        <div class="chat-input-container">
-            <input 
-                type="text" 
-                class="chat-input" 
-                id="chatInput" 
-                placeholder="Escribe un mensaje..." 
-                maxlength="500"
-                onkeypress="if(event.key === 'Enter') sendMessage()"
-            >
-            <button class="chat-send-btn" onclick="sendMessage()">📤</button>
+        <div class="chat-input-container" style="position: relative;">
+            <div class="autocomplete-menu" id="autocompleteMenu"></div>
+            <div class="chat-file-preview" id="chatFilePreview">
+                <img id="chatFilePreviewImg" src="" alt="Preview">
+                <div class="chat-file-info">
+                    <div class="chat-file-name" id="chatFileName">imagen.jpg</div>
+                    <div class="chat-file-size" id="chatFileSize">0 KB</div>
+                </div>
+                <button class="chat-file-remove" onclick="removeChatFile()">✖ Quitar</button>
+            </div>
+            <div class="chat-input-wrapper">
+                <button class="chat-attach-btn" onclick="document.getElementById('chatFileInput').click()" title="Adjuntar imagen o GIF">📎</button>
+                <input type="file" id="chatFileInput" accept="image/*,.gif" style="display: none;" onchange="handleChatFileSelect(event)">
+                <input 
+                    type="text" 
+                    class="chat-input" 
+                    id="chatInput" 
+                    placeholder="Escribe un mensaje..." 
+                    maxlength="500"
+                    oninput="handleAutocomplete(event)"
+                    onkeydown="handleAutocompleteKeydown(event)"
+                >
+                <button class="chat-send-btn" onclick="sendMessage()">📤</button>
+            </div>
         </div>
     </div>
 
@@ -1396,6 +2006,101 @@
             <div class="chat-notification-message" id="notificationMessage">Mensaje...</div>
         </div>
         <button class="chat-notification-close" onclick="closeNotificationToast(event)">✖</button>
+    </div>
+
+    <!-- Notificación de Baneo en Pantalla Completa -->
+    <div class="ban-notification" id="banNotification">
+        <div class="ban-content">
+            <div class="ban-icon">🚫</div>
+            <h1 class="ban-title">HAS SIDO BANEADO</h1>
+            <div class="ban-reason" id="banReasonText">
+                Razón: Sin razón especificada
+            </div>
+            <div class="ban-time" id="banTimeText">
+                Tiempo: Permanente
+            </div>
+            <div class="ban-countdown" id="banCountdown"></div>
+            <div class="ban-message">
+                No puedes enviar mensajes en el chat durante este tiempo.
+                <br>
+                La página se actualizará automáticamente cuando expire el ban.
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel de Administración Oculto -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h2>🔒 Panel Admin</h2>
+            <button class="admin-close" onclick="toggleAdminPanel()">✖</button>
+        </div>
+        <div class="admin-content">
+            <!-- Estadísticas -->
+            <div class="admin-section">
+                <h3>📊 Estadísticas</h3>
+                <div class="admin-stats">
+                    <div class="admin-stat">
+                        <div class="admin-stat-value" id="adminTotalBans">0</div>
+                        <div class="admin-stat-label">Bans Activos</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="admin-stat-value" id="adminOnlineUsers">0</div>
+                        <div class="admin-stat-label">Usuarios Online</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banear Usuario -->
+            <div class="admin-section">
+                <h3>🚫 Banear Usuario</h3>
+                <input 
+                    type="text" 
+                    class="admin-input" 
+                    id="adminBanUsername" 
+                    placeholder="Nombre del usuario a banear"
+                    list="activeUsersList"
+                >
+                <datalist id="activeUsersList"></datalist>
+                
+                <select class="admin-select" id="adminBanDuration">
+                    <option value="5">5 minutos</option>
+                    <option value="15">15 minutos</option>
+                    <option value="30" selected>30 minutos</option>
+                    <option value="60">1 hora</option>
+                    <option value="120">2 horas</option>
+                    <option value="360">6 horas</option>
+                    <option value="1440">24 horas</option>
+                    <option value="permanent">Permanente 🔥</option>
+                </select>
+                
+                <input 
+                    type="text" 
+                    class="admin-input" 
+                    id="adminBanReason" 
+                    placeholder="Razón del ban (opcional)"
+                >
+                
+                <button class="admin-btn" onclick="banUser()">🔨 BANEAR</button>
+            </div>
+
+            <!-- Lista de Baneados -->
+            <div class="admin-section">
+                <h3>📜 Usuarios Baneados</h3>
+                <div class="banned-list" id="bannedUsersList">
+                    <div style="text-align: center; color: rgba(255, 255, 255, 0.5); padding: 20px;">
+                        No hay usuarios baneados
+                    </div>
+                </div>
+                <button class="admin-btn unban" onclick="loadBannedUsers()">🔄 Actualizar Lista</button>
+            </div>
+
+            <!-- Acciones Rápidas -->
+            <div class="admin-section">
+                <h3>⚡ Acciones Rápidas</h3>
+                <button class="admin-btn unban" onclick="clearExpiredBans()">🧹 Limpiar Bans Expirados</button>
+                <button class="admin-btn" onclick="resetChatNow()" style="margin-top: 10px;">🔄 Resetear Chat Ahora</button>
+            </div>
+        </div>
     </div>
 
     
@@ -1862,7 +2567,7 @@
             
             updatePreview();
         }
-        function applyBackgroundSettings() {
+        async function applyBackgroundSettings() {
 
             const previewRect = previewCanvasElement.getBoundingClientRect();
             const imgRect = previewImageElement.getBoundingClientRect();
@@ -1893,6 +2598,8 @@
             localStorage.setItem('jotaBackground', currentBackgroundUrl);
 
             applyBackgroundFromSettings(settings);
+
+            await saveSharedBackground(settings);
 
             const options = document.querySelectorAll('.background-option');
             options.forEach(opt => opt.classList.remove('selected'));
@@ -2401,6 +3108,62 @@
         let chatUserColor = '';
         let chatUnreadCount = 0;
         let chatIsOpen = false;
+        let chatSelectedFile = null;
+        let chatTimerInterval = null;
+        let chatTimeRemaining = 3600;
+        let backgroundSyncChannel = null;
+        let notificationSound = 'sound1';
+        let audioContext = null;
+        function handleChatFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const maxSize = 5 * 1024 * 1024;
+            if (file.size > maxSize) {
+                alert('El archivo es demasiado grande. Máximo 5MB.');
+                return;
+            }
+
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+            if (!validTypes.includes(file.type)) {
+                alert('Solo se permiten imágenes (JPG, PNG, GIF, WEBP).');
+                return;
+            }
+
+            chatSelectedFile = file;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('chatFilePreviewImg').src = e.target.result;
+                document.getElementById('chatFileName').textContent = file.name;
+                document.getElementById('chatFileSize').textContent = (file.size / 1024).toFixed(2) + ' KB';
+                document.getElementById('chatFilePreview').classList.add('active');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeChatFile() {
+            chatSelectedFile = null;
+            document.getElementById('chatFileInput').value = '';
+            document.getElementById('chatFilePreview').classList.remove('active');
+        }
+
+        function selectNotificationSound(soundType) {
+            notificationSound = soundType;
+            localStorage.setItem('notificationSound', soundType);
+            
+            document.querySelectorAll('.sound-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            document.querySelector(`[data-sound="${soundType}"]`).classList.add('selected');
+            
+            testNotificationSound();
+        }
+
+        function testNotificationSound() {
+            playNotificationSound();
+        }
+
         function initializeChat() {
 
             chatUserId = localStorage.getItem('jotaChatUserId') || 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
@@ -2408,10 +3171,20 @@
 
             chatUserName = localStorage.getItem('jotaPlayerName') || 'Usuario';
             chatUserColor = localStorage.getItem('jotaPlayerColor') || '#4f46e5';
+            
+            notificationSound = localStorage.getItem('notificationSound') || 'sound1';
+            
+            document.querySelectorAll('.sound-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            const selectedOpt = document.querySelector(`[data-sound="${notificationSound}"]`);
+            if (selectedOpt) selectedOpt.classList.add('selected');
 
             subscribeToChatChannel();
-
+            subscribeToBackgroundSync();
+            startChatTimer();
             loadRecentMessages();
+            loadSharedBackground();
         }
         function subscribeToChatChannel() {
             if (!supabaseClient) {
@@ -2429,6 +3202,29 @@
                             updateChatNotification();
 
                             showMessageNotification(payload.payload);
+                        }
+                    })
+                    .on('broadcast', { event: 'chat_reset' }, (payload) => {
+                        document.getElementById('chatMessages').innerHTML = `
+                            <div style="text-align: center; color: #9ca3af; padding: 20px;">
+                                <p>🔄 Chat reseteado después de 1 hora</p>
+                                <p style="font-size: 0.9rem;">Escribe un mensaje para comenzar de nuevo</p>
+                            </div>`;
+                        localStorage.setItem('chatLastReset', Date.now().toString());
+                        chatTimeRemaining = 3600;
+                        if (chatTimerInterval) clearInterval(chatTimerInterval);
+                        startChatTimer();
+                    })
+                    .on('broadcast', { event: 'user_banned' }, (payload) => {
+                        const banData = payload.payload;
+                        if (banData.user_name === chatUserName) {
+                            showBanNotification(banData);
+                        }
+                    })
+                    .on('broadcast', { event: 'user_unbanned' }, (payload) => {
+                        const unbanData = payload.payload;
+                        if (unbanData.user_name === chatUserName) {
+                            hideBanNotification();
                         }
                     })
                     .on('presence', { event: 'sync' }, () => {
@@ -2476,6 +3272,8 @@
                             user_name: msg.user_name,
                             user_color: msg.user_color,
                             message: msg.message,
+                            file_url: msg.file_url,
+                            file_type: msg.file_type,
                             created_at: msg.created_at
                         }, true);
                     });
@@ -2488,13 +3286,58 @@
             const input = document.getElementById('chatInput');
             const message = input.value.trim();
 
-            if (!message) return;
+            if (!message && !chatSelectedFile) return;
+            
+            const isBanned = await checkIfUserIsBanned(chatUserName);
+            if (isBanned) {
+                alert('🚫 Estás baneado del chat. No puedes enviar mensajes.');
+                input.value = '';
+                removeChatFile();
+                return;
+            }
+            
+            if (message && message.startsWith('/')) {
+                const commandResult = await processCommand(message);
+                input.value = '';
+                if (commandResult) return;
+            }
+
+            let fileUrl = null;
+            let fileType = 'text';
+
+            if (chatSelectedFile) {
+                try {
+                    const filePath = `${Date.now()}_${chatUserId}_${chatSelectedFile.name}`;
+                    const { error: uploadError } = await supabaseClient.storage
+                        .from('chat-files')
+                        .upload(filePath, chatSelectedFile, { cacheControl: '3600', upsert: false });
+                    
+                    if (uploadError) {
+                        console.error('Error subiendo archivo:', uploadError);
+                        alert('Error al subir el archivo. Asegúrate de que el bucket "chat-files" existe y es público.');
+                        return;
+                    }
+
+                    const { data: { publicUrl } } = supabaseClient.storage
+                        .from('chat-files')
+                        .getPublicUrl(filePath);
+                    
+                    fileUrl = publicUrl;
+                    fileType = chatSelectedFile.type.includes('gif') ? 'gif' : 'image';
+                } catch (error) {
+                    console.error('Error procesando archivo:', error);
+                    alert('Error al procesar el archivo.');
+                    return;
+                }
+            }
 
             const messageData = {
                 user_id: chatUserId,
                 user_name: chatUserName,
                 user_color: chatUserColor,
-                message: message,
+                message: message || null,
+                file_url: fileUrl,
+                file_type: fileType,
                 created_at: new Date().toISOString()
             };
 
@@ -2523,6 +3366,7 @@
             displayMessage(messageData, false);
 
             input.value = '';
+            removeChatFile();
         }
         function displayMessage(data, isHistory) {
             const messagesContainer = document.getElementById('chatMessages');
@@ -2536,13 +3380,23 @@
                 minute: '2-digit'
             });
 
+            let contentHtml = '';
+            if (data.message) {
+                contentHtml += `<div class="chat-message-content">${escapeHtml(data.message)}</div>`;
+            }
+            if (data.file_url) {
+                contentHtml += `<div class="chat-message-content" style="padding: 4px;">
+                    <img src="${data.file_url}" class="chat-message-image" alt="Imagen" onclick="window.open('${data.file_url}', '_blank')">
+                </div>`;
+            }
+
             messageDiv.innerHTML = `
                 <div class="chat-message-header">
                     <div class="chat-user-color" style="background: ${data.user_color};"></div>
                     <span class="chat-username">${data.user_name}</span>
                     <span class="chat-timestamp">${timestamp}</span>
                 </div>
-                <div class="chat-message-content">${escapeHtml(data.message)}</div>
+                ${contentHtml}
             `;
 
             messagesContainer.appendChild(messageDiv);
@@ -2710,8 +3564,42 @@
         }
         function playNotificationSound() {
             try {
-
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                if (notificationSound === 'none') {
+                    return;
+                }
+                
+                const soundFiles = {
+                    'sound1': 'sounds/notificacion1.mp3',
+                    'sound2': 'sounds/notificacion2.mp3',
+                    'sound3': 'sounds/notificacion3.mp3',
+                    'sound4': 'sounds/notificacion4.mp3',
+                    'sound5': 'sounds/notificacion5.mp3'
+                };
+                
+                const soundFile = soundFiles[notificationSound];
+                
+                if (soundFile) {
+                    const audio = new Audio(soundFile);
+                    audio.volume = 0.6;
+                    audio.play().catch(e => {
+                        console.log('Error reproduciendo sonido:', e);
+                        playFallbackSound();
+                    });
+                } else {
+                    playFallbackSound();
+                }
+            } catch (e) {
+                console.log('Error reproduciendo sonido:', e);
+                playFallbackSound();
+            }
+        }
+        
+        function playFallbackSound() {
+            try {
+                if (!audioContext) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                
                 const oscillator = audioContext.createOscillator();
                 const gainNode = audioContext.createGain();
                 
@@ -2720,14 +3608,12 @@
                 
                 oscillator.frequency.value = 800;
                 oscillator.type = 'sine';
-                
                 gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
-                
                 oscillator.start(audioContext.currentTime);
                 oscillator.stop(audioContext.currentTime + 0.2);
             } catch (e) {
-
+                console.log('Error con sonido de respaldo:', e);
             }
         }
         function closeNotificationToast(event) {
@@ -2745,6 +3631,921 @@
                 toggleChat();
             }
         }
+        function startChatTimer() {
+            const lastResetTime = localStorage.getItem('chatLastReset');
+            const now = Date.now();
+            
+            if (lastResetTime) {
+                const elapsed = Math.floor((now - parseInt(lastResetTime)) / 1000);
+                chatTimeRemaining = Math.max(0, 3600 - elapsed);
+                
+                if (chatTimeRemaining === 0) {
+                    resetChat();
+                    return;
+                }
+            } else {
+                localStorage.setItem('chatLastReset', now.toString());
+                chatTimeRemaining = 3600;
+            }
+            
+            updateTimerDisplay();
+            
+            if (chatTimerInterval) {
+                clearInterval(chatTimerInterval);
+            }
+            
+            chatTimerInterval = setInterval(() => {
+                chatTimeRemaining--;
+                updateTimerDisplay();
+                
+                if (chatTimeRemaining <= 0) {
+                    resetChat();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(chatTimeRemaining / 60);
+            const seconds = chatTimeRemaining % 60;
+            const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('chatTimerText').textContent = display;
+            
+            if (chatTimeRemaining <= 300) {
+                document.getElementById('chatTimer').style.background = 'rgba(220, 38, 38, 0.9)';
+            } else if (chatTimeRemaining <= 600) {
+                document.getElementById('chatTimer').style.background = 'rgba(251, 146, 60, 0.9)';
+            } else {
+                document.getElementById('chatTimer').style.background = 'rgba(34, 197, 94, 0.9)';
+            }
+        }
+
+        async function resetChat() {
+            if (chatTimerInterval) {
+                clearInterval(chatTimerInterval);
+            }
+            
+            if (supabaseClient) {
+                try {
+                    const { error } = await supabaseClient
+                        .from('chat_messages')
+                        .delete()
+                        .neq('id', '00000000-0000-0000-0000-000000000000');
+                    
+                    if (error && !error.message.includes('does not exist')) {
+                        console.error('Error borrando mensajes:', error);
+                    }
+                } catch (error) {
+                    console.error('Error en resetChat:', error);
+                }
+            }
+            
+            document.getElementById('chatMessages').innerHTML = `
+                <div style="text-align: center; color: #9ca3af; padding: 20px;">
+                    <p>🔄 Chat reseteado después de 1 hora</p>
+                    <p style="font-size: 0.9rem;">Escribe un mensaje para comenzar de nuevo</p>
+                </div>`;
+            
+            localStorage.setItem('chatLastReset', Date.now().toString());
+            chatTimeRemaining = 3600;
+            startChatTimer();
+            
+            if (chatChannel) {
+                chatChannel.send({
+                    type: 'broadcast',
+                    event: 'chat_reset',
+                    payload: { reset_at: new Date().toISOString() }
+                });
+            }
+        }
+
+        function subscribeToBackgroundSync() {
+            if (!supabaseClient) return;
+            
+            try {
+                backgroundSyncChannel = supabaseClient.channel('background_sync')
+                    .on('broadcast', { event: 'background_changed' }, (payload) => {
+                        const settings = payload.payload;
+                        if (settings && settings.url) {
+                            applyBackgroundFromSettings(settings);
+                            localStorage.setItem('jotaBackgroundSettings', JSON.stringify(settings));
+                            localStorage.setItem('jotaBackground', settings.url);
+                        }
+                    })
+                    .subscribe();
+            } catch (error) {
+                console.error('Error suscribiéndose a sincronización de fondo:', error);
+            }
+        }
+
+        async function loadSharedBackground() {
+            if (!supabaseClient) return;
+            
+            try {
+                const { data, error } = await supabaseClient
+                    .from('shared_settings')
+                    .select('setting_value')
+                    .eq('setting_key', 'background_config')
+                    .single();
+                
+                if (error && !error.message.includes('does not exist')) {
+                    console.error('Error cargando fondo compartido:', error);
+                    return;
+                }
+                
+                if (data && data.setting_value && data.setting_value.url) {
+                    applyBackgroundFromSettings(data.setting_value);
+                    localStorage.setItem('jotaBackgroundSettings', JSON.stringify(data.setting_value));
+                    localStorage.setItem('jotaBackground', data.setting_value.url);
+                }
+            } catch (error) {
+                console.error('Error en loadSharedBackground:', error);
+            }
+        }
+
+        async function saveSharedBackground(settings) {
+            if (!supabaseClient) return;
+            
+            try {
+                const { error } = await supabaseClient
+                    .from('shared_settings')
+                    .update({ 
+                        setting_value: settings,
+                        updated_at: new Date().toISOString(),
+                        updated_by: chatUserId
+                    })
+                    .eq('setting_key', 'background_config');
+                
+                if (error && !error.message.includes('does not exist')) {
+                    console.error('Error guardando fondo compartido:', error);
+                    return;
+                }
+                
+                if (backgroundSyncChannel) {
+                    backgroundSyncChannel.send({
+                        type: 'broadcast',
+                        event: 'background_changed',
+                        payload: settings
+                    });
+                }
+            } catch (error) {
+                console.error('Error en saveSharedBackground:', error);
+            }
+        }
+
+        let adminClickCount = 0;
+        let adminClickTimer = null;
+        
+        document.getElementById('adminTrigger').addEventListener('click', () => {
+            adminClickCount++;
+            
+            if (adminClickTimer) clearTimeout(adminClickTimer);
+            
+            if (adminClickCount === 3) {
+                toggleAdminPanel();
+                adminClickCount = 0;
+            }
+            
+            adminClickTimer = setTimeout(() => {
+                adminClickCount = 0;
+            }, 500);
+        });
+        
+        function toggleAdminPanel() {
+            const panel = document.getElementById('adminPanel');
+            panel.classList.toggle('active');
+            
+            if (panel.classList.contains('active')) {
+                loadBannedUsers();
+                updateAdminStats();
+                loadActiveUsers();
+            }
+        }
+        
+        async function banUser() {
+            const username = document.getElementById('adminBanUsername').value.trim();
+            const duration = document.getElementById('adminBanDuration').value;
+            const reason = document.getElementById('adminBanReason').value.trim() || 'Sin razón especificada';
+            
+            if (!username) {
+                alert('⚠️ Ingresa el nombre del usuario a banear');
+                return;
+            }
+            
+            if (!confirm(`¿Seguro que quieres banear a "${username}"?`)) {
+                return;
+            }
+            
+            try {
+                const isPermanent = duration === 'permanent';
+                const bannedUntil = isPermanent ? null : new Date(Date.now() + parseInt(duration) * 60000).toISOString();
+                
+                const { data, error } = await supabaseClient
+                    .from('chat_bans')
+                    .insert([{
+                        user_name: username,
+                        reason: reason,
+                        banned_until: bannedUntil,
+                        is_permanent: isPermanent
+                    }])
+                    .select()
+                    .single();
+                
+                if (error) throw error;
+                
+                if (chatChannel) {
+                    chatChannel.send({
+                        type: 'broadcast',
+                        event: 'user_banned',
+                        payload: {
+                            user_name: username,
+                            reason: reason,
+                            banned_until: bannedUntil,
+                            is_permanent: isPermanent
+                        }
+                    });
+                }
+                
+                alert(`✅ ${username} ha sido baneado exitosamente!`);
+                
+                document.getElementById('adminBanUsername').value = '';
+                document.getElementById('adminBanReason').value = '';
+                
+                loadBannedUsers();
+                updateAdminStats();
+                
+            } catch (error) {
+                console.error('Error baneando usuario:', error);
+                alert('❌ Error al banear usuario: ' + error.message);
+            }
+        }
+        
+        async function unbanUser(banId, username) {
+            if (!confirm(`¿Desbanear a "${username}"?`)) return;
+            
+            try {
+                const { error } = await supabaseClient
+                    .from('chat_bans')
+                    .delete()
+                    .eq('id', banId);
+                
+                if (error) throw error;
+                
+                if (chatChannel) {
+                    chatChannel.send({
+                        type: 'broadcast',
+                        event: 'user_unbanned',
+                        payload: {
+                            user_name: username
+                        }
+                    });
+                }
+                
+                alert(`✅ ${username} ha sido desbaneado!`);
+                loadBannedUsers();
+                updateAdminStats();
+                
+            } catch (error) {
+                console.error('Error desbaneando usuario:', error);
+                alert('❌ Error: ' + error.message);
+            }
+        }
+        
+        async function loadBannedUsers() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('chat_bans')
+                    .select('*')
+                    .order('banned_at', { ascending: false });
+                
+                if (error) throw error;
+                
+                const container = document.getElementById('bannedUsersList');
+                
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; color: rgba(255, 255, 255, 0.5); padding: 20px;">No hay usuarios baneados</div>';
+                    return;
+                }
+                
+                const activeBans = data.filter(ban => {
+                    if (ban.is_permanent) return true;
+                    return new Date(ban.banned_until) > new Date();
+                });
+                
+                if (activeBans.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; color: rgba(255, 255, 255, 0.5); padding: 20px;">No hay bans activos</div>';
+                    return;
+                }
+                
+                container.innerHTML = activeBans.map(ban => {
+                    const timeLeft = ban.is_permanent ? 'Permanente' : getTimeRemaining(ban.banned_until);
+                    const banTypeIcons = {
+                        'admin': '🔒',
+                        'user_vote': '🗳️',
+                        'command': '⌨️'
+                    };
+                    const banTypeIcon = banTypeIcons[ban.ban_type] || '🚫';
+                    const bannedBy = ban.banned_by || 'admin';
+                    
+                    return `
+                        <div class="banned-user">
+                            <div class="banned-user-info">
+                                <div class="banned-user-name">🚫 ${ban.user_name} ${banTypeIcon}</div>
+                                <div class="banned-user-time">${timeLeft}</div>
+                                <div class="banned-user-time" style="font-size: 0.75rem;">${ban.reason}</div>
+                                <div class="banned-user-time" style="font-size: 0.7rem; opacity: 0.7;">Por: ${bannedBy}</div>
+                            </div>
+                            <button class="unban-btn" onclick="unbanUser('${ban.id}', '${ban.user_name}')">Desbanear</button>
+                        </div>
+                    `;
+                }).join('');
+                
+            } catch (error) {
+                console.error('Error cargando bans:', error);
+            }
+        }
+        
+        function getTimeRemaining(bannedUntil) {
+            const now = new Date();
+            const end = new Date(bannedUntil);
+            const diff = end - now;
+            
+            if (diff <= 0) return 'Expirado';
+            
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+            
+            if (days > 0) return `${days}d ${hours % 24}h restantes`;
+            if (hours > 0) return `${hours}h ${minutes % 60}m restantes`;
+            return `${minutes}m restantes`;
+        }
+        
+        async function updateAdminStats() {
+            try {
+                const { data: bans } = await supabaseClient
+                    .from('chat_bans')
+                    .select('*');
+                
+                const activeBans = bans ? bans.filter(ban => {
+                    if (ban.is_permanent) return true;
+                    return new Date(ban.banned_until) > new Date();
+                }).length : 0;
+                
+                document.getElementById('adminTotalBans').textContent = activeBans;
+                
+                if (chatChannel && chatChannel.presenceState) {
+                    const presenceState = chatChannel.presenceState();
+                    const onlineCount = Object.keys(presenceState).length;
+                    document.getElementById('adminOnlineUsers').textContent = onlineCount;
+                }
+                
+            } catch (error) {
+                console.error('Error actualizando stats:', error);
+            }
+        }
+        
+        async function loadActiveUsers() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('chat_messages')
+                    .select('user_name')
+                    .order('created_at', { ascending: false })
+                    .limit(50);
+                
+                if (error) throw error;
+                
+                const uniqueUsers = [...new Set(data.map(msg => msg.user_name))];
+                const datalist = document.getElementById('activeUsersList');
+                datalist.innerHTML = uniqueUsers.map(name => `<option value="${name}">`).join('');
+                
+            } catch (error) {
+                console.error('Error cargando usuarios:', error);
+            }
+        }
+        
+        async function clearExpiredBans() {
+            if (!confirm('¿Limpiar todos los bans expirados?')) return;
+            
+            try {
+                const { data, error } = await supabaseClient
+                    .from('chat_bans')
+                    .delete()
+                    .lt('banned_until', new Date().toISOString())
+                    .eq('is_permanent', false);
+                
+                if (error) throw error;
+                
+                alert('✅ Bans expirados limpiados!');
+                loadBannedUsers();
+                updateAdminStats();
+                
+            } catch (error) {
+                console.error('Error limpiando bans:', error);
+                alert('❌ Error: ' + error.message);
+            }
+        }
+        
+        function resetChatNow() {
+            if (!confirm('¿Resetear el chat AHORA? Esto borrará todos los mensajes.')) return;
+            resetChat();
+        }
+        
+        let banCountdownInterval = null;
+        
+        function showBanNotification(banData) {
+            const notification = document.getElementById('banNotification');
+            const reasonText = document.getElementById('banReasonText');
+            const timeText = document.getElementById('banTimeText');
+            const countdown = document.getElementById('banCountdown');
+            
+            reasonText.textContent = `Razón: ${banData.reason || 'Sin razón especificada'}`;
+            
+            if (banData.is_permanent) {
+                timeText.textContent = 'Tiempo: PERMANENTE 🔥';
+                countdown.textContent = 'Este ban es permanente. Contacta al administrador.';
+            } else {
+                const bannedUntil = new Date(banData.banned_until);
+                const now = new Date();
+                const totalMinutes = Math.floor((bannedUntil - now) / 60000);
+                
+                if (totalMinutes > 60) {
+                    const hours = Math.floor(totalMinutes / 60);
+                    const mins = totalMinutes % 60;
+                    timeText.textContent = `Tiempo: ${hours}h ${mins}m`;
+                } else {
+                    timeText.textContent = `Tiempo: ${totalMinutes} minutos`;
+                }
+                
+                if (banCountdownInterval) clearInterval(banCountdownInterval);
+                
+                banCountdownInterval = setInterval(() => {
+                    const now = new Date();
+                    const diff = bannedUntil - now;
+                    
+                    if (diff <= 0) {
+                        clearInterval(banCountdownInterval);
+                        hideBanNotification();
+                        location.reload();
+                        return;
+                    }
+                    
+                    const minutes = Math.floor(diff / 60000);
+                    const seconds = Math.floor((diff % 60000) / 1000);
+                    countdown.textContent = `Tiempo restante: ${minutes}m ${seconds}s`;
+                }, 1000);
+            }
+            
+            notification.classList.add('active');
+            
+            document.getElementById('chatInput').disabled = true;
+            document.getElementById('chatFileInput').disabled = true;
+        }
+        
+        function hideBanNotification() {
+            const notification = document.getElementById('banNotification');
+            notification.classList.remove('active');
+            
+            if (banCountdownInterval) {
+                clearInterval(banCountdownInterval);
+                banCountdownInterval = null;
+            }
+            
+            document.getElementById('chatInput').disabled = false;
+            document.getElementById('chatFileInput').disabled = false;
+        }
+        
+        async function processCommand(message) {
+            const parts = message.split(' ');
+            const command = parts[0].toLowerCase();
+            const args = parts.slice(1);
+            
+            switch(command) {
+                case '/ban':
+                    return await handleBanCommand(args);
+                case '/kick':
+                    return await handleKickCommand(args);
+                case '/votar':
+                case '/vote':
+                    return await handleVoteCommand(args);
+                case '/votos':
+                case '/votes':
+                    return await handleCheckVotesCommand(args);
+                case '/help':
+                case '/ayuda':
+                    return await handleHelpCommand();
+                default:
+                    return false;
+            }
+        }
+        
+        async function handleBanCommand(args) {
+            if (args.length === 0) {
+                showCommandMessage('⚠️ Uso: /ban @usuario [razón]', 'warning');
+                return true;
+            }
+            
+            let targetUser = args[0];
+            if (targetUser.startsWith('@')) {
+                targetUser = targetUser.substring(1);
+            }
+            
+            const reason = args.slice(1).join(' ') || 'Sin razón especificada';
+            
+            if (targetUser === chatUserName) {
+                showCommandMessage('😅 No puedes banearte a ti mismo!', 'error');
+                return true;
+            }
+            
+            try {
+                const { error } = await supabaseClient
+                    .from('ban_votes')
+                    .insert([{
+                        target_user: targetUser,
+                        voter_user: chatUserName,
+                        reason: reason
+                    }]);
+                
+                if (error) {
+                    if (error.message.includes('duplicate')) {
+                        showCommandMessage('⚠️ Ya votaste para banear a este usuario', 'warning');
+                        return true;
+                    }
+                    throw error;
+                }
+                
+                const { data: voteCount } = await supabaseClient
+                    .rpc('count_ban_votes', { p_target_user: targetUser });
+                
+                const votesNeeded = 3 - (voteCount || 0);
+                
+                if (votesNeeded <= 0) {
+                    await supabaseClient.rpc('check_and_auto_ban', { p_target_user: targetUser });
+                    showCommandMessage(`✅ ${targetUser} ha sido baneado por votación!`, 'success');
+                } else {
+                    showCommandMessage(`🗳️ Voto registrado! Faltan ${votesNeeded} votos para banear a ${targetUser}`, 'info');
+                }
+                
+                return true;
+                
+            } catch (error) {
+                console.error('Error en comando ban:', error);
+                showCommandMessage('❌ Error al procesar el comando', 'error');
+                return true;
+            }
+        }
+        
+        async function handleKickCommand(args) {
+            if (args.length === 0) {
+                showCommandMessage('⚠️ Uso: /kick @usuario [razón]', 'warning');
+                return true;
+            }
+            
+            let targetUser = args[0];
+            if (targetUser.startsWith('@')) {
+                targetUser = targetUser.substring(1);
+            }
+            
+            const reason = args.slice(1).join(' ') || 'Kick por votación';
+            
+            if (targetUser === chatUserName) {
+                showCommandMessage('😅 No puedes kickearte a ti mismo!', 'error');
+                return true;
+            }
+            
+            try {
+                const { data, error } = await supabaseClient
+                    .from('chat_bans')
+                    .insert([{
+                        user_name: targetUser,
+                        reason: reason,
+                        banned_until: new Date(Date.now() + 5 * 60000).toISOString(),
+                        is_permanent: false,
+                        ban_type: 'command',
+                        banned_by: chatUserName
+                    }])
+                    .select()
+                    .single();
+                
+                if (error) throw error;
+                
+                if (chatChannel) {
+                    chatChannel.send({
+                        type: 'broadcast',
+                        event: 'user_banned',
+                        payload: {
+                            user_name: targetUser,
+                            reason: reason,
+                            banned_until: new Date(Date.now() + 5 * 60000).toISOString(),
+                            is_permanent: false
+                        }
+                    });
+                }
+                
+                showCommandMessage(`👢 ${targetUser} ha sido kickeado por 5 minutos!`, 'success');
+                return true;
+                
+            } catch (error) {
+                console.error('Error en comando kick:', error);
+                showCommandMessage('❌ Error al procesar el comando', 'error');
+                return true;
+            }
+        }
+        
+        async function handleVoteCommand(args) {
+            return await handleBanCommand(args);
+        }
+        
+        async function handleCheckVotesCommand(args) {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('ban_votes')
+                    .select('target_user')
+                    .gt('voted_at', new Date(Date.now() - 5 * 60000).toISOString());
+                
+                if (error) throw error;
+                
+                if (!data || data.length === 0) {
+                    showCommandMessage('🗳️ No hay votaciones activas', 'info');
+                    return true;
+                }
+                
+                const voteCounts = {};
+                data.forEach(vote => {
+                    voteCounts[vote.target_user] = (voteCounts[vote.target_user] || 0) + 1;
+                });
+                
+                let message = '🗳️ Votaciones activas:\n';
+                for (const [user, count] of Object.entries(voteCounts)) {
+                    message += `${user}: ${count}/3 votos\n`;
+                }
+                
+                showCommandMessage(message, 'info');
+                return true;
+                
+            } catch (error) {
+                console.error('Error verificando votos:', error);
+                showCommandMessage('❌ Error al verificar votos', 'error');
+                return true;
+            }
+        }
+        
+        async function handleHelpCommand() {
+            const helpText = `
+📜 Comandos disponibles:
+
+/ban @usuario [razón] - Votar para banear (3 votos = 15 min)
+/kick @usuario [razón] - Kick rápido (5 minutos)
+/votos - Ver votaciones activas
+/help - Mostrar esta ayuda
+
+Ejemplos:
+/ban @JuanPajero spam
+/kick @Pedro molesto
+            `.trim();
+            
+            showCommandMessage(helpText, 'info');
+            return true;
+        }
+        
+        function showCommandMessage(text, type = 'info') {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message';
+            
+            const colors = {
+                info: '#3b82f6',
+                success: '#10b981',
+                warning: '#f59e0b',
+                error: '#ef4444'
+            };
+            
+            const icons = {
+                info: 'ℹ️',
+                success: '✅',
+                warning: '⚠️',
+                error: '❌'
+            };
+            
+            messageDiv.innerHTML = `
+                <div style="
+                    background: ${colors[type]}15;
+                    border-left: 4px solid ${colors[type]};
+                    padding: 12px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    font-size: 0.9rem;
+                    white-space: pre-line;
+                ">
+                    <strong style="color: ${colors[type]};">${icons[type]} Sistema</strong>
+                    <div style="margin-top: 4px; color: var(--jota-text-color);">${text}</div>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        let autocompleteSelectedIndex = -1;
+        let autocompleteItems = [];
+        
+        const commandSuggestions = [
+            { command: '/ban', icon: '🚫', description: 'Votar para banear usuario (3 votos = 15 min)' },
+            { command: '/kick', icon: '👢', description: 'Kick rápido (5 minutos)' },
+            { command: '/votos', icon: '🗳️', description: 'Ver votaciones activas' },
+            { command: '/help', icon: '❓', description: 'Mostrar ayuda de comandos' }
+        ];
+        
+        function handleAutocomplete(event) {
+            const input = event.target;
+            const value = input.value;
+            const cursorPos = input.selectionStart;
+            
+            const textBeforeCursor = value.substring(0, cursorPos);
+            
+            if (textBeforeCursor.startsWith('/')) {
+                showCommandAutocomplete(textBeforeCursor);
+            } else if (textBeforeCursor.includes('@')) {
+                const lastAtIndex = textBeforeCursor.lastIndexOf('@');
+                const searchTerm = textBeforeCursor.substring(lastAtIndex + 1);
+                showMentionAutocomplete(searchTerm);
+            } else {
+                hideAutocomplete();
+            }
+        }
+        
+        function showCommandAutocomplete(text) {
+            const searchTerm = text.toLowerCase();
+            const filtered = commandSuggestions.filter(cmd => 
+                cmd.command.startsWith(searchTerm)
+            );
+            
+            if (filtered.length === 0 || text === filtered[0]?.command) {
+                hideAutocomplete();
+                return;
+            }
+            
+            autocompleteItems = filtered;
+            autocompleteSelectedIndex = -1;
+            
+            const menu = document.getElementById('autocompleteMenu');
+            menu.innerHTML = filtered.map((cmd, index) => `
+                <div class="autocomplete-item" data-index="${index}" onclick="selectAutocomplete(${index})">
+                    <div class="autocomplete-icon">${cmd.icon}</div>
+                    <div class="autocomplete-main">
+                        <div class="autocomplete-title">${cmd.command}</div>
+                        <div class="autocomplete-description">${cmd.description}</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            menu.classList.add('active');
+        }
+        
+        async function showMentionAutocomplete(searchTerm) {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('chat_messages')
+                    .select('user_name')
+                    .order('created_at', { ascending: false })
+                    .limit(50);
+                
+                if (error) throw error;
+                
+                const uniqueUsers = [...new Set(data.map(msg => msg.user_name))];
+                const filtered = uniqueUsers.filter(name => 
+                    name.toLowerCase().includes(searchTerm.toLowerCase())
+                ).slice(0, 5);
+                
+                if (filtered.length === 0) {
+                    hideAutocomplete();
+                    return;
+                }
+                
+                autocompleteItems = filtered.map(name => ({ user: name }));
+                autocompleteSelectedIndex = -1;
+                
+                const menu = document.getElementById('autocompleteMenu');
+                menu.innerHTML = filtered.map((name, index) => `
+                    <div class="autocomplete-item" data-index="${index}" onclick="selectAutocomplete(${index})">
+                        <div class="autocomplete-icon">👤</div>
+                        <div class="autocomplete-main">
+                            <div class="autocomplete-title">@${name}</div>
+                            <div class="autocomplete-description">Mencionar usuario</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                menu.classList.add('active');
+                
+            } catch (error) {
+                console.error('Error cargando usuarios:', error);
+            }
+        }
+        
+        function hideAutocomplete() {
+            const menu = document.getElementById('autocompleteMenu');
+            menu.classList.remove('active');
+            menu.innerHTML = '';
+            autocompleteItems = [];
+            autocompleteSelectedIndex = -1;
+        }
+        
+        function handleAutocompleteKeydown(event) {
+            const menu = document.getElementById('autocompleteMenu');
+            
+            if (!menu.classList.contains('active')) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    sendMessage();
+                }
+                return;
+            }
+            
+            if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                autocompleteSelectedIndex = Math.min(autocompleteSelectedIndex + 1, autocompleteItems.length - 1);
+                updateAutocompleteSelection();
+            } else if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                autocompleteSelectedIndex = Math.max(autocompleteSelectedIndex - 1, -1);
+                updateAutocompleteSelection();
+            } else if (event.key === 'Enter') {
+                event.preventDefault();
+                if (autocompleteSelectedIndex >= 0) {
+                    selectAutocomplete(autocompleteSelectedIndex);
+                } else {
+                    sendMessage();
+                }
+            } else if (event.key === 'Escape') {
+                event.preventDefault();
+                hideAutocomplete();
+            }
+        }
+        
+        function updateAutocompleteSelection() {
+            const items = document.querySelectorAll('.autocomplete-item');
+            items.forEach((item, index) => {
+                if (index === autocompleteSelectedIndex) {
+                    item.classList.add('selected');
+                } else {
+                    item.classList.remove('selected');
+                }
+            });
+        }
+        
+        function selectAutocomplete(index) {
+            const input = document.getElementById('chatInput');
+            const value = input.value;
+            const cursorPos = input.selectionStart;
+            
+            if (autocompleteItems[index].command) {
+                input.value = autocompleteItems[index].command + ' ';
+                input.setSelectionRange(input.value.length, input.value.length);
+            } else if (autocompleteItems[index].user) {
+                const textBeforeCursor = value.substring(0, cursorPos);
+                const lastAtIndex = textBeforeCursor.lastIndexOf('@');
+                const textAfterCursor = value.substring(cursorPos);
+                
+                const newValue = value.substring(0, lastAtIndex) + '@' + autocompleteItems[index].user + ' ' + textAfterCursor;
+                input.value = newValue;
+                
+                const newCursorPos = lastAtIndex + autocompleteItems[index].user.length + 2;
+                input.setSelectionRange(newCursorPos, newCursorPos);
+            }
+            
+            hideAutocomplete();
+            input.focus();
+        }
+        
+        async function checkIfUserIsBanned(username) {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('chat_bans')
+                    .select('*')
+                    .eq('user_name', username)
+                    .order('banned_at', { ascending: false })
+                    .limit(1);
+                
+                if (error) throw error;
+                
+                if (!data || data.length === 0) return false;
+                
+                const ban = data[0];
+                
+                if (ban.is_permanent) return true;
+                
+                if (new Date(ban.banned_until) > new Date()) {
+                    return true;
+                }
+                
+                return false;
+                
+            } catch (error) {
+                console.error('Error verificando ban:', error);
+                return false;
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', () => {
 
             setTimeout(() => {
