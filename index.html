@@ -6,17 +6,40 @@
     <title>TempFiles</title>
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         
         :root {
-            --jota-primary-color: #4f46e5; 
-            --jota-secondary-color: #ecfeff; 
-            --jota-accent-color: #06b6d4; 
-            --jota-text-color: #1f2937;
-            --jota-background: #f3f4f6; 
-            --jota-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            --jota-border-radius: 16px; 
-            --jota-font-family: 'Inter', 'Roboto', system-ui, -apple-system, sans-serif; 
+            --jota-primary-color: #0078d4; 
+            --jota-secondary-color: #f3f2f1; 
+            --jota-accent-color: #106ebe; 
+            --jota-text-color: #323130;
+            --jota-background: #ffffff; 
+            --jota-shadow: 0 1.6px 3.6px rgba(0, 0, 0, 0.13), 0 0.3px 0.9px rgba(0, 0, 0, 0.11);
+            --jota-border-radius: 6px; 
+            --jota-font-family: 'Inter', -apple-system, system-ui, sans-serif; 
+            --jota-card-bg: #ffffff;
+            --jota-hover-color: #f3f2f1;
+            --jota-border-color: #edebe9;
+            --jota-nav-bg: #ffffff;
+            --jota-sidebar-bg: #fafafa;
+        }
+
+        /* Dark Theme */
+        body.dark-theme {
+            --jota-primary-color: #4db8ff;
+            --jota-secondary-color: #1a1a1a;
+            --jota-accent-color: #60cdff;
+            --jota-text-color: #e1e1e1;
+            --jota-background: #0d0d0d;
+            --jota-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+            --jota-card-bg: #1a1a1a;
+            --jota-hover-color: #2a2a2a;
+            --jota-border-color: #2d2d2d;
+            --jota-nav-bg: #0d0d0d;
+            --jota-sidebar-bg: #141414;
         }
 
         
@@ -28,23 +51,22 @@
         }
 
         body {
-            background-color: var(--jota-background);
-            background-image: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%); 
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background: var(--jota-background);
             color: var(--jota-text-color);
-            line-height: 1.6;
+            line-height: 1.5;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            transition: background-image 0.5s ease; 
+            font-size: 14px;
+            font-weight: 400;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         
         .top-nav {
-            background: var(--jota-secondary-color);
-            padding: 16px 24px;
+            background: var(--jota-nav-bg);
+            padding: 0 24px;
+            min-height: 48px;
             box-shadow: var(--jota-shadow);
             position: sticky;
             top: 0;
@@ -52,37 +74,84 @@
             display: flex;
             align-items: center;
             gap: 16px;
-            flex-wrap: wrap;
+            border-bottom: 1px solid var(--jota-border-color);
+            transition: all 0.3s ease;
         }
 
         .top-nav h1 {
-            font-size: 1.8rem;
+            font-size: 18px;
             color: var(--jota-primary-color);
             font-weight: 700;
+            letter-spacing: -0.5px;
+            margin: 0;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            width: 40px;
+            height: 32px;
+            border: 1px solid var(--jota-border-color);
+            background: var(--jota-card-bg);
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--jota-hover-color);
+            border-color: var(--jota-primary-color);
         }
 
         .nav-actions {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             flex-grow: 1;
             justify-content: flex-end;
             align-items: center;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 4px 0;
+        }
+
+        .nav-actions::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .nav-actions::-webkit-scrollbar-thumb {
+            background: var(--jota-primary-color);
+            border-radius: 2px;
+        }
+
+        .nav-actions > * {
+            flex-shrink: 0;
         }
 
         .search-input {
-            padding: 10px 16px;
-            border: 2px solid var(--jota-accent-color);
-            border-radius: 12px;
-            width: 300px;
+            padding: 6px 12px 6px 32px;
+            border: 1px solid var(--jota-border-color);
+            border-radius: 20px;
+            width: 320px;
             max-width: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(8px);
-            transition: all 0.3s ease;
+            background: var(--jota-card-bg);
+            color: var(--jota-text-color);
+            transition: all 0.2s ease;
+            font-size: 14px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%23999" d="M11.5 6.5a5 5 0 1 1-10 0 5 5 0 0 1 10 0zm-.82 4.74a6 6 0 1 1 1.06-1.06l3.04 3.04a.75.75 0 1 1-1.06 1.06l-3.04-3.04z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: 10px center;
+        }
+
+        .search-input::placeholder {
+            color: #888;
         }
 
         .search-input:focus {
             border-color: var(--jota-primary-color);
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.2);
             outline: none;
         }
 
@@ -90,25 +159,24 @@
         .main-container {
             display: flex;
             flex-grow: 1;
-            gap: 24px;
-            padding: 24px;
-            max-width: 1400px;
-            margin: 0 auto;
+            gap: 0;
+            max-width: 100%;
+            margin: 0;
             width: 100%;
-            transition: margin-left 0.3s ease; 
+            background: var(--jota-background);
+            transition: background 0.3s ease;
         }
 
         .folder-tree {
-            width: 250px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border-radius: var(--jota-border-radius);
-            padding: 20px;
-            transition: transform 0.3s ease;
+            width: 260px;
+            background: var(--jota-sidebar-bg);
+            padding: 12px 0;
+            transition: all 0.2s ease;
             position: sticky;
-            top: 80px;
-            height: fit-content;
-            box-shadow: var(--jota-shadow);
+            top: 48px;
+            height: calc(100vh - 48px);
+            border-right: 1px solid var(--jota-border-color);
+            overflow-y: auto;
         }
 
         .folder-tree.collapsed {
@@ -120,50 +188,119 @@
         }
 
         .folder-tree h2 {
-            font-size: 1.4rem;
-            color: var(--jota-primary-color);
-            margin-bottom: 16px;
+            font-size: 11px;
+            color: #888;
+            margin-bottom: 12px;
+            padding: 0 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .folder-tree a {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 12px;
+            gap: 10px;
+            padding: 8px 16px;
             color: var(--jota-text-color);
             text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            transition: all 0.15s ease;
+            font-weight: 500;
+            font-size: 14px;
+            position: relative;
+            margin: 2px 8px;
+            border-radius: 6px;
+        }
+
+        .folder-tree a .folder-icon {
+            font-size: 18px;
+            transition: transform 0.2s ease;
+        }
+
+        .folder-tree a:hover .folder-icon {
+            transform: scale(1.15);
+        }
+
+        .folder-tree a .folder-count {
+            margin-left: auto;
+            font-size: 11px;
+            color: #888;
+            background: var(--jota-hover-color);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
         }
 
         .folder-tree a:hover {
-            background: var(--jota-accent-color);
+            background: var(--jota-hover-color);
+        }
+
+        .folder-tree a.active {
+            background: var(--jota-primary-color);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .folder-tree a.active .folder-count {
+            background: rgba(255, 255, 255, 0.2);
             color: #fff;
-            transform: translateX(4px);
         }
 
         .toggle-folder-btn {
-            position: absolute;
-            top: 20px;
-            right: -40px;
-            background: var(--jota-primary-color);
-            color: #fff;
-            border: none;
-            border-radius: 0 8px 8px 0;
-            padding: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            display: none;
         }
 
-        .toggle-folder-btn:hover {
-            background: var(--jota-accent-color);
-        }
 
         
         .content-area {
             flex-grow: 1;
-            padding: 20px;
-            transition: width 0.3s ease;
+            padding: 32px 40px;
+            background: var(--jota-background);
+            overflow-y: auto;
+        }
+
+        .content-header {
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .content-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--jota-text-color);
+            letter-spacing: -0.5px;
+        }
+
+        .view-options {
+            display: flex;
+            gap: 8px;
+        }
+
+        .view-btn {
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--jota-border-color);
+            background: var(--jota-card-bg);
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .view-btn:hover {
+            background: var(--jota-hover-color);
+            border-color: var(--jota-primary-color);
+        }
+
+        .view-btn.active {
+            background: var(--jota-primary-color);
+            color: #fff;
+            border-color: var(--jota-primary-color);
         }
 
         .document-grid {
@@ -172,38 +309,90 @@
             gap: 20px;
         }
 
+        .document-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
         .document-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: var(--jota-border-radius);
-            padding: 16px;
+            background: var(--jota-card-bg);
+            border-radius: 8px;
+            padding: 20px;
             box-shadow: var(--jota-shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.2s ease;
             cursor: pointer;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            gap: 12px;
+            border: 1px solid var(--jota-border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .document-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--jota-primary-color);
+            transform: scaleY(0);
+            transition: transform 0.2s ease;
+        }
+
+        .document-card:hover::before {
+            transform: scaleY(1);
         }
 
         .document-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-color: var(--jota-primary-color);
+        }
+
+        body.dark-theme .document-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .document-icon {
+            font-size: 48px;
+            margin-bottom: 8px;
+            text-align: center;
         }
 
         .document-card h3 {
-            font-size: 1.1rem;
-            color: var(--jota-primary-color);
-            margin-bottom: 8px;
+            font-size: 15px;
+            color: var(--jota-text-color);
+            margin: 0;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 100%;
+            font-weight: 600;
+            letter-spacing: -0.2px;
         }
 
         .document-meta {
-            font-size: 0.85rem;
-            color: #6b7280;
-            margin-bottom: 12px;
+            font-size: 12px;
+            color: #888;
+            line-height: 1.7;
+            font-weight: 400;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .document-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .document-meta-item .icon {
+            font-size: 14px;
+            opacity: 0.7;
         }
 
         .document-actions {
@@ -215,30 +404,44 @@
 
         
         button {
-            padding: 10px 16px;
-            border: none;
+            padding: 8px 20px;
+            height: 36px;
+            border: 1px solid transparent;
             background: var(--jota-primary-color);
             color: #fff;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            position: relative;
+            letter-spacing: -0.2px;
         }
 
         button:hover {
             background: var(--jota-accent-color);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 120, 212, 0.3);
+        }
+
+        body.dark-theme button:hover {
+            box-shadow: 0 4px 12px rgba(77, 184, 255, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
         }
 
         button.secondary {
-            background: transparent;
-            color: var(--jota-primary-color);
-            border: 2px solid var(--jota-primary-color);
+            background: var(--jota-card-bg);
+            color: var(--jota-text-color);
+            border: 1px solid var(--jota-border-color);
         }
 
         button.secondary:hover {
-            background: var(--jota-primary-color);
-            color: #fff;
+            background: var(--jota-hover-color);
+            border-color: var(--jota-primary-color);
+            box-shadow: none;
         }
 
         
@@ -261,21 +464,31 @@
         }
 
         .modal-content {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            padding: 24px;
-            border-radius: var(--jota-border-radius);
-            box-shadow: var(--jota-shadow);
+            background: var(--jota-card-bg);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             max-width: 600px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
-            animation: popIn 0.4s ease;
+            animation: fadeIn 0.25s ease;
+            border: 1px solid var(--jota-border-color);
         }
 
-        @keyframes popIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        body.dark-theme .modal-content {
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.7);
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
         }
 
         .modal-header {
@@ -299,20 +512,33 @@
         }
 
         input, select, textarea {
-            width: 100%;
-            padding: 12px;
+            padding: 10px 12px;
+            height: 40px;
             margin: 8px 0;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 1rem;
-            background: rgba(255, 255, 255, 0.8);
-            transition: all 0.3s ease;
+            border: 1px solid var(--jota-border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            background: var(--jota-card-bg);
+            color: var(--jota-text-color);
+            transition: all 0.2s ease;
+            font-weight: 400;
+        }
+
+        select {
+            cursor: pointer;
+            padding-right: 32px;
         }
 
         input:focus, select:focus, textarea:focus {
-            border-color: var(--jota-accent-color);
+            border-color: var(--jota-primary-color);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
+            box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.1);
+        }
+
+        body.dark-theme input:focus,
+        body.dark-theme select:focus,
+        body.dark-theme textarea:focus {
+            box-shadow: 0 0 0 3px rgba(77, 184, 255, 0.2);
         }
 
         textarea {
@@ -321,37 +547,39 @@
         }
 
         .upload-area {
-            border: 2px dashed var(--jota-accent-color);
-            border-radius: 12px;
+            border: 2px dashed #c8c6c4;
+            border-radius: var(--jota-border-radius);
             padding: 40px;
             text-align: center;
             margin: 16px 0;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(8px);
-            transition: all 0.3s ease;
+            background: var(--jota-secondary-color);
+            transition: border-color 0.1s ease, background 0.1s ease;
             cursor: pointer;
         }
 
         .upload-area:hover {
-            background: rgba(6, 182, 212, 0.1);
-            transform: scale(1.02);
+            border-color: var(--jota-primary-color);
+            background: #e1dfdd;
         }
 
         .no-documents {
             text-align: center;
-            padding: 48px;
-            background: rgba(255, 255, 255, 0.9);
+            padding: 48px 32px;
+            background: #ffffff;
             border-radius: var(--jota-border-radius);
             margin-top: 24px;
+            border: 1px solid var(--jota-border-color);
         }
 
         .no-documents svg {
             width: 80px;
             height: 80px;
             margin-bottom: 16px;
+            stroke: #605e5c;
+            opacity: 0.5;
         }
 
-        
+        /* Fondo */
         .background-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -375,15 +603,15 @@
         }
 
         .background-option:hover {
-            transform: scale(1.05);
+            opacity: 0.8;
         }
 
         .background-option.selected::after {
             content: '✔';
             position: absolute;
-            top: 8px;
-            right: 8px;
-            background: var(--jota-accent-color);
+            top: 4px;
+            right: 4px;
+            background: var(--jota-primary-color);
             color: #fff;
             border-radius: 50%;
             width: 24px;
@@ -392,33 +620,35 @@
             align-items: center;
             justify-content: center;
             font-size: 14px;
+            font-weight: bold;
         }
 
-        
+        /* Pie de página */
         .footer {
             position: sticky;
             bottom: 0;
-            background: var(--jota-primary-color);
-            color: #fff;
+            background: var(--jota-secondary-color);
+            color: #605e5c;
             text-align: center;
             padding: 12px;
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 400;
+            border-top: 1px solid var(--jota-border-color);
         }
 
         .footer span {
             font-size: 1.2rem;
         }
 
-        
+        /* Cargando */
         .loading {
             display: inline-block;
-            width: 24px;
-            height: 24px;
-            border: 3px solid #e5e7eb;
-            border-top: 3px solid var(--jota-primary-color);
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--jota-border-color);
+            border-top: 2px solid var(--jota-primary-color);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin {
@@ -434,7 +664,7 @@
             margin: 16px 0;
         }
 
-        
+        /* Responsive */
         @media (max-width: 768px) {
             .main-container {
                 flex-direction: column;
@@ -473,10 +703,12 @@
 
             .document-grid {
                 grid-template-columns: 1fr;
+                gap: 16px;
             }
 
             .background-grid {
                 grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 10px;
             }
         }
 
@@ -494,12 +726,12 @@
             border-radius: 5px;
         }
 
-        
+        /* Personalización de colores */
         .color-customization {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin: 16px 0;
+            gap: 20px;
+            margin: 20px 0;
         }
 
         .color-picker-group {
@@ -509,20 +741,26 @@
         }
 
         .color-picker-group label {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--jota-text-color);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
         }
 
         .color-picker-group input[type="color"] {
             width: 100%;
-            height: 50px;
-            border: 2px solid var(--jota-accent-color);
-            border-radius: 8px;
+            height: 48px;
+            border: 1px solid var(--jota-border-color);
+            border-radius: var(--jota-border-radius);
             cursor: pointer;
+            transition: border-color 0.1s ease;
         }
 
-        
+        .color-picker-group input[type="color"]:hover {
+            border-color: var(--jota-primary-color);
+        }
+
+        /* Control de posición de fondo */
         .background-position-controls {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -552,14 +790,14 @@
             border: 2px solid var(--jota-accent-color);
         }
 
-        
+        /* Editor de vista previa de fondo */
         .background-preview-editor {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 3000;
             display: none;
             flex-direction: column;
@@ -571,7 +809,7 @@
 
         .preview-header {
             background: var(--jota-primary-color);
-            padding: 16px 24px;
+            padding: 12px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -597,11 +835,10 @@
             position: relative;
             width: 90%;
             height: 90%;
-            border: 3px solid var(--jota-accent-color);
-            border-radius: 12px;
+            border: 2px solid var(--jota-border-color);
+            border-radius: var(--jota-border-radius);
             overflow: hidden;
             background: #000;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
         .preview-image {
@@ -612,12 +849,12 @@
         }
 
         .preview-controls {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 24px;
+            background: #ffffff;
+            padding: 16px 24px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 16px;
-            border-top: 2px solid var(--jota-accent-color);
+            border-top: 1px solid var(--jota-border-color);
         }
 
         .control-group {
@@ -646,10 +883,10 @@
 
         .control-group input[type="range"]::-webkit-slider-thumb {
             appearance: none;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
-            background: var(--jota-accent-color);
+            background: var(--jota-primary-color);
             cursor: pointer;
         }
 
@@ -678,10 +915,10 @@
             left: 16px;
             background: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
+            padding: 6px 12px;
+            border-radius: var(--jota-border-radius);
+            font-weight: 400;
+            font-size: 12px;
         }
 
         .help-text {
@@ -691,27 +928,509 @@
             transform: translateX(-50%);
             background: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 12px 24px;
+            padding: 8px 16px;
+            border-radius: var(--jota-border-radius);
+            font-size: 12px;
+            text-align: center;
+            font-weight: 400;
+        }
+
+        /* Meme Creator */
+        .meme-creator-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .meme-creator-modal.active {
+            display: flex;
+        }
+
+        .meme-creator-content {
+            background: var(--jota-card-bg);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--jota-border-color);
+        }
+
+        .meme-creator-header {
+            background: var(--jota-primary-color);
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .meme-creator-header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .meme-creator-body {
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .meme-preview-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .meme-canvas-container {
+            position: relative;
+            background: var(--jota-background);
+            border: 2px solid var(--jota-border-color);
             border-radius: 8px;
-            font-size: 0.9rem;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+
+        #memeCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .meme-controls-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .meme-templates {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .meme-template {
+            aspect-ratio: 1;
+            border: 2px solid var(--jota-border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .meme-template:hover {
+            border-color: var(--jota-primary-color);
+            transform: scale(1.05);
+        }
+
+        .meme-template.active {
+            border-color: var(--jota-primary-color);
+            border-width: 3px;
+        }
+
+        .meme-template img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .meme-control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .meme-control-group label {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--jota-text-color);
+        }
+
+        .meme-control-group input[type="text"],
+        .meme-control-group input[type="number"] {
+            padding: 8px 12px;
+            height: 36px;
+            margin: 0;
+        }
+
+        .meme-control-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .meme-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .meme-actions button {
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .meme-creator-body {
+                grid-template-columns: 1fr;
+            }
+            
+            .meme-templates {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Juego del Dinosaurio */
+        .game-container {
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+            min-height: calc(100vh - 48px);
+            overflow-y: auto;
+        }
+
+        .game-container.active {
+            display: block;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            background: linear-gradient(135deg, var(--jota-primary-color), var(--jota-accent-color));
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .game-header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .game-header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        /* Layout responsive para el juego */
+        @media (max-width: 1200px) {
+            .game-container > div:first-of-type {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        .game-canvas-wrapper {
+            background: var(--jota-card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 3px solid var(--jota-primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .game-canvas-wrapper:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            transform: translateY(-2px);
+        }
+
+        #gameCanvas {
+            display: block;
+            border: 3px solid var(--jota-border-color);
+            border-radius: 12px;
+            background: var(--jota-background);
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .game-info {
+            background: linear-gradient(135deg, var(--jota-card-bg), var(--jota-secondary-color));
+            padding: 24px 32px;
+            border-radius: 12px;
+            border: 2px solid var(--jota-primary-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 180px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .game-info:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .game-info-label {
+            font-size: 14px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .game-info-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--jota-primary-color);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-leaderboard {
+            background: var(--jota-card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            width: 100%;
+            border: 1px solid var(--jota-border-color);
+            box-shadow: var(--jota-shadow);
+        }
+
+        .game-leaderboard h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--jota-primary-color);
+            margin: 0 0 12px 0;
             text-align: center;
         }
 
+        .leaderboard-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--jota-secondary-color);
+            border-radius: 8px;
+            border: 1px solid var(--jota-border-color);
+            transition: all 0.2s ease;
+        }
+
+        .leaderboard-item:hover {
+            background: var(--jota-hover-color);
+        }
+
+        .leaderboard-rank {
+            font-size: 18px;
+            font-weight: 700;
+            width: 40px;
+            text-align: center;
+        }
+
+        .leaderboard-rank.first {
+            color: #ffd700;
+        }
+
+        .leaderboard-rank.second {
+            color: #c0c0c0;
+        }
+
+        .leaderboard-rank.third {
+            color: #cd7f32;
+        }
+
+        .leaderboard-player {
+            flex: 1;
+            font-weight: 600;
+            color: var(--jota-text-color);
+        }
+
+        .leaderboard-score {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--jota-primary-color);
+        }
+
+        .game-instructions {
+            text-align: center;
+            margin-top: 20px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .character-selector {
+            background: var(--jota-card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 2px solid var(--jota-border-color);
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .character-selector h3 {
+            margin: 0 0 20px 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--jota-text-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .character-option {
+            width: 100%;
+            aspect-ratio: 1;
+            max-width: 95px;
+            margin: 0 auto;
+            border: 3px solid var(--jota-border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--jota-secondary-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
         
+        .character-option:hover {
+            border-color: var(--jota-primary-color);
+            transform: scale(1.15);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .character-option.selected {
+            border-color: var(--jota-primary-color);
+            border-width: 4px;
+            background: var(--jota-primary-color);
+            box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.3), 0 6px 20px rgba(0, 0, 0, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .other-players {
+            opacity: 0.6;
+        }
+
+        /* Votación de Mapas */
+        .map-selector {
+            background: var(--jota-card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            border: 2px solid var(--jota-border-color);
+        }
+
+        .map-selector h3 {
+            margin: 0 0 20px 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--jota-text-color);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .map-voting {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .map-vote-btn {
+            flex: 1 1 calc(20% - 12px);
+            min-width: 120px;
+            max-width: 160px;
+            padding: 16px;
+            border-radius: 12px;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            text-align: center;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .map-vote-btn:hover {
+            transform: scale(1.08) !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .vote-count {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .current-map-info {
+            text-align: center;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, rgba(0,120,212,0.1), rgba(16,110,190,0.15));
+            border-radius: 12px;
+            margin-top: 10px;
+            font-size: 16px;
+            color: var(--jota-text-color);
+            border: 2px solid var(--jota-primary-color);
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .current-map-info strong {
+            color: var(--jota-primary-color);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .current-map-info #currentMapName {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* Chat */
         .chat-container {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 380px;
-            height: 500px;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(12px);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            bottom: 16px;
+            right: 16px;
+            width: 360px;
+            height: 480px;
+            background: var(--jota-card-bg);
+            border-radius: var(--jota-border-radius);
+            box-shadow: var(--jota-shadow);
             display: none;
             flex-direction: column;
             z-index: 1500;
             overflow: hidden;
+            border: 1px solid var(--jota-border-color);
         }
 
         .chat-container.active {
@@ -720,23 +1439,24 @@
         }
 
         @keyframes slideUp {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .chat-header {
             background: var(--jota-primary-color);
             color: white;
-            padding: 16px;
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-radius: 16px 16px 0 0;
+            border-radius: var(--jota-border-radius) var(--jota-border-radius) 0 0;
         }
 
         .chat-header h3 {
             margin: 0;
-            font-size: 1.2rem;
+            font-size: 14px;
+            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -756,7 +1476,7 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            background: #f9fafb;
+            background: var(--jota-background);
         }
 
         .chat-message {
@@ -790,7 +1510,7 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            border: 2px solid white;
+            border: 2px solid var(--jota-card-bg);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
@@ -800,28 +1520,29 @@
         }
 
         .chat-timestamp {
-            color: #9ca3af;
+            color: #888;
             font-size: 0.75rem;
         }
 
         .chat-message-content {
-            background: white;
-            padding: 10px 14px;
-            border-radius: 12px;
+            background: var(--jota-secondary-color);
+            padding: 8px 12px;
+            border-radius: var(--jota-border-radius);
             max-width: 80%;
             word-wrap: break-word;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--jota-border-color);
         }
 
         .chat-message.own .chat-message-content {
             background: var(--jota-primary-color);
             color: white;
+            border-color: var(--jota-primary-color);
         }
 
         .chat-input-container {
             padding: 16px;
-            background: white;
-            border-top: 1px solid #e5e7eb;
+            background: var(--jota-card-bg);
+            border-top: 1px solid var(--jota-border-color);
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
@@ -836,9 +1557,9 @@
 
         .chat-attach-btn {
             padding: 10px;
-            background: #f3f4f6;
+            background: var(--jota-secondary-color);
             color: var(--jota-text-color);
-            border: 2px solid #e5e7eb;
+            border: 2px solid var(--jota-border-color);
             border-radius: 12px;
             cursor: pointer;
             font-size: 1.2rem;
@@ -849,20 +1570,20 @@
         }
 
         .chat-attach-btn:hover {
-            background: var(--jota-accent-color);
-            color: white;
-            border-color: var(--jota-accent-color);
+            background: var(--jota-hover-color);
+            border-color: var(--jota-primary-color);
         }
 
         .chat-file-preview {
             width: 100%;
             padding: 8px;
-            background: #f3f4f6;
+            background: var(--jota-secondary-color);
             border-radius: 8px;
             display: none;
             align-items: center;
             gap: 8px;
             margin-bottom: 8px;
+            border: 1px solid var(--jota-border-color);
         }
 
         .chat-file-preview.active {
@@ -892,7 +1613,7 @@
 
         .chat-file-size {
             font-size: 0.75rem;
-            color: #9ca3af;
+            color: #888;
         }
 
         .chat-file-remove {
@@ -942,10 +1663,16 @@
         .chat-input {
             flex: 1;
             padding: 10px 14px;
-            border: 2px solid #e5e7eb;
+            border: 2px solid var(--jota-border-color);
             border-radius: 12px;
             font-size: 0.95rem;
+            background: var(--jota-card-bg);
+            color: var(--jota-text-color);
             transition: all 0.3s ease;
+        }
+
+        .chat-input::placeholder {
+            color: #888;
         }
 
         .chat-input:focus {
@@ -955,35 +1682,35 @@
         }
 
         .chat-send-btn {
-            padding: 10px 20px;
-            background: var(--jota-accent-color);
+            padding: 6px 16px;
+            height: 32px;
+            background: var(--jota-primary-color);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: var(--jota-border-radius);
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-weight: 400;
+            transition: background 0.1s ease;
         }
 
         .chat-send-btn:hover {
-            background: var(--jota-primary-color);
-            transform: scale(1.05);
+            background: var(--jota-accent-color);
         }
 
         .chat-toggle-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: var(--jota-accent-color);
+            bottom: 16px;
+            right: 16px;
+            width: 56px;
+            height: 56px;
+            background: var(--jota-primary-color);
             color: white;
             border: none;
             border-radius: 50%;
             cursor: pointer;
             font-size: 1.5rem;
-            box-shadow: 0 4px 16px rgba(6, 182, 212, 0.4);
-            transition: all 0.3s ease;
+            box-shadow: var(--jota-shadow);
+            transition: background 0.1s ease;
             z-index: 1400;
             display: flex;
             align-items: center;
@@ -991,8 +1718,7 @@
         }
 
         .chat-toggle-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.6);
+            background: var(--jota-accent-color);
         }
 
         .chat-toggle-btn.active {
@@ -1030,15 +1756,14 @@
             }
         }
 
-        
+        /* Configuración del chat */
         .chat-setup-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.5);
             display: none;
             justify-content: center;
             align-items: center;
@@ -1050,13 +1775,18 @@
         }
 
         .chat-setup-content {
-            background: white;
-            padding: 32px;
-            border-radius: 16px;
+            background: var(--jota-card-bg);
+            padding: 24px;
+            border-radius: var(--jota-border-radius);
             max-width: 400px;
             width: 90%;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            animation: popIn 0.4s ease;
+            box-shadow: 0 6.4px 14.4px rgba(0, 0, 0, 0.13);
+            animation: fadeIn 0.2s ease;
+            border: 1px solid var(--jota-border-color);
+        }
+
+        body.dark-theme .chat-setup-content {
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.7);
         }
 
         .chat-setup-content h2 {
@@ -1066,8 +1796,9 @@
         }
 
         .chat-setup-content p {
-            color: #6b7280;
-            margin-bottom: 24px;
+            color: #888;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
         }
 
         .chat-setup-field {
@@ -1081,12 +1812,15 @@
             margin-bottom: 8px;
         }
 
-        .chat-setup-field input {
+        .chat-setup-field input[type="text"] {
             width: 100%;
             padding: 12px;
-            border: 2px solid #e5e7eb;
+            border: 2px solid var(--jota-border-color);
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 0.95rem;
+            background: var(--jota-card-bg);
+            color: var(--jota-text-color);
+            transition: all 0.3s ease;
         }
 
         .chat-setup-field input:focus {
@@ -1096,27 +1830,27 @@
 
         .color-preview {
             display: flex;
-            align-items: center;
             gap: 12px;
+            align-items: center;
         }
 
         .color-preview input[type="color"] {
             width: 60px;
             height: 40px;
-            border: 2px solid #e5e7eb;
+            border: 2px solid var(--jota-border-color);
             border-radius: 8px;
             cursor: pointer;
+            background: var(--jota-card-bg);
         }
 
         .color-preview-box {
             flex: 1;
-            height: 40px;
+            padding: 12px;
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            text-align: center;
             color: white;
             font-weight: 600;
+            border: 1px solid var(--jota-border-color);
         }
 
         .chat-setup-actions {
@@ -1144,29 +1878,29 @@
             background: var(--jota-primary-color);
         }
 
-        
+        /* Notificación de chat */
         .chat-notification-toast {
             position: fixed;
-            top: 80px;
-            right: 20px;
-            background: white;
-            padding: 16px 20px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            top: 64px;
+            right: 16px;
+            background: var(--jota-card-bg);
+            padding: 12px 16px;
+            border-radius: var(--jota-border-radius);
+            box-shadow: var(--jota-shadow);
             display: none;
             align-items: center;
             gap: 12px;
             z-index: 2500;
             min-width: 300px;
             max-width: 400px;
-            animation: slideInRight 0.3s ease;
+            animation: slideInRight 0.2s ease;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.1s ease;
+            border: 1px solid var(--jota-border-color);
         }
 
         .chat-notification-toast:hover {
-            transform: translateX(-4px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+            background: var(--jota-hover-color);
         }
 
         .chat-notification-toast.active {
@@ -1195,18 +1929,17 @@
         }
 
         .chat-notification-name {
-            font-weight: 700;
+            font-weight: 600;
             color: var(--jota-text-color);
             font-size: 0.95rem;
-            margin-bottom: 4px;
         }
 
         .chat-notification-message {
-            color: #6b7280;
-            font-size: 0.9rem;
-            white-space: nowrap;
+            color: #888;
+            font-size: 0.85rem;
             overflow: hidden;
             text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .chat-notification-close {
@@ -1248,24 +1981,25 @@
         }
 
         .sound-option {
-            padding: 10px;
-            background: white;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
+            padding: 8px;
+            background: var(--jota-secondary-color);
+            border: 1px solid var(--jota-border-color);
+            border-radius: var(--jota-border-radius);
             cursor: pointer;
             text-align: center;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
+            transition: all 0.1s ease;
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--jota-text-color);
         }
 
         .sound-option:hover {
-            border-color: var(--jota-accent-color);
-            background: rgba(6, 182, 212, 0.1);
+            background: var(--jota-hover-color);
         }
 
         .sound-option.selected {
-            border-color: var(--jota-accent-color);
-            background: var(--jota-accent-color);
+            border-color: var(--jota-primary-color);
+            background: var(--jota-primary-color);
             color: white;
             font-weight: 600;
         }
@@ -1302,14 +2036,15 @@
         .admin-panel {
             position: fixed;
             top: 0;
-            right: -450px;
-            width: 450px;
+            right: -400px;
+            width: 400px;
             height: 100vh;
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+            background: #ffffff;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.13);
             z-index: 10000;
-            transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: right 0.2s ease;
             overflow-y: auto;
+            border-left: 1px solid var(--jota-border-color);
         }
 
         .admin-panel.active {
@@ -1317,21 +2052,22 @@
         }
 
         .admin-header {
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-            padding: 20px;
+            background: #d13438;
+            padding: 16px;
             color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 3px solid #7f1d1d;
+            border-bottom: 1px solid #b32e32;
         }
 
         .admin-header h2 {
             margin: 0;
-            font-size: 1.5rem;
+            font-size: 16px;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .admin-close {
@@ -1356,17 +2092,18 @@
         }
 
         .admin-section {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--jota-secondary-color);
+            border-radius: var(--jota-border-radius);
+            padding: 16px;
+            margin: 16px;
+            border: 1px solid var(--jota-border-color);
         }
 
         .admin-section h3 {
-            color: white;
-            margin: 0 0 15px 0;
-            font-size: 1.1rem;
+            color: var(--jota-text-color);
+            margin: 0 0 12px 0;
+            font-size: 14px;
+            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -1374,20 +2111,19 @@
 
         .admin-input {
             width: 100%;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            color: white;
-            font-size: 0.95rem;
-            margin-bottom: 10px;
-            transition: all 0.3s ease;
+            padding: 6px 12px;
+            background: #ffffff;
+            border: 1px solid var(--jota-border-color);
+            border-radius: var(--jota-border-radius);
+            color: var(--jota-text-color);
+            font-size: 14px;
+            margin-bottom: 8px;
+            transition: border-color 0.1s ease;
         }
 
         .admin-input:focus {
             outline: none;
-            border-color: #dc2626;
-            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--jota-primary-color);
         }
 
         .admin-input::placeholder {
@@ -1413,29 +2149,29 @@
 
         .admin-btn {
             width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            padding: 6px 16px;
+            height: 32px;
+            background: #d13438;
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
+            border-radius: var(--jota-border-radius);
+            font-size: 14px;
+            font-weight: 400;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
+            transition: background 0.1s ease;
+            margin-top: 8px;
         }
 
         .admin-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4);
+            background: #a52a2e;
         }
 
         .admin-btn.unban {
-            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            background: #107c10;
         }
 
         .admin-btn.unban:hover {
-            box-shadow: 0 5px 20px rgba(22, 163, 74, 0.4);
+            background: #0d5e0d;
         }
 
         .banned-list {
@@ -1518,12 +2254,12 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 99999;
             display: none;
             align-items: center;
             justify-content: center;
-            animation: banFadeIn 0.5s ease;
+            animation: fadeIn 0.3s ease;
         }
 
         .ban-notification.active {
@@ -1542,14 +2278,12 @@
         }
 
         .ban-content {
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-            padding: 60px;
-            border-radius: 24px;
+            background: #d13438;
+            padding: 48px;
+            border-radius: var(--jota-border-radius);
             text-align: center;
             max-width: 600px;
-            box-shadow: 0 20px 60px rgba(220, 38, 38, 0.6);
-            border: 3px solid #7f1d1d;
-            animation: banShake 0.5s ease;
+            border: 2px solid #b32e32;
         }
 
         @keyframes banShake {
@@ -1649,8 +2383,7 @@
 
         .autocomplete-item:hover,
         .autocomplete-item.selected {
-            background: var(--jota-accent-color);
-            color: white;
+            background: var(--jota-hover-color);
         }
 
         .autocomplete-icon {
@@ -1683,7 +2416,8 @@
 <body>
     
     <div class="top-nav">
-        <h1 id="adminTrigger" style="cursor: pointer; user-select: none;" title="TempFiles">TempFiles</h1>
+        <h1 style="cursor: pointer; user-select: none;" title="TempFiles">TempFiles</h1>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Cambiar tema">☀️</button>
         <div class="nav-actions">
             <input type="text" class="search-input" id="jotaSearchInput" placeholder="🔍 Buscar documentos..." oninput="applyFilters()">
             <select id="jotaModuleFilter" onchange="applyFilters()">
@@ -1697,10 +2431,10 @@
                 <option value="audio">Audio</option>
             </select>
             <button onclick="openModal('upload-modal')">📤 Subir Documento</button>
-            <button onclick="openModal('background-modal')">🖼️ Selecciona tu fondo</button>
+            <button onclick="alert('⚠️ Función de fondos deshabilitada temporalmente')" style="opacity: 0.5; cursor: not-allowed;">🖼️ Fondo (Deshabilitado)</button>
             <button onclick="openModal('customization-modal')">🎨 Personalizar</button>
             <button onclick="toggleChat()">💬 Chat en Vivo</button>
-            <button onclick="toggleMobileView()">📱 Vista Móvil</button>
+            <button onclick="alert('🚧 Juego en desarrollo, pesa mucho el icono del que paja xd')" style="opacity: 0.5; cursor: not-allowed;">🦖 Jugar (Deshabilitado)</button>
             <button onclick="exportSelection()">📋 Exportar</button>
         </div>
     </div>
@@ -1726,6 +2460,92 @@
                         Sube tu primer documento para comenzar a organizar tu trabajo académico
                     </p>
                     <button onclick="openModal('upload-modal')">📤 Subir primer documento</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Juego del Dinosaurio -->
+    <div class="game-container" id="gameContainer">
+        <div class="game-header">
+            <h1>Temp Jump - Multijugador</h1>
+            <p>Juego pa fome pero igual e juga</p>
+            <button onclick="toggleGame()" style="position: absolute; top: 20px; right: 20px; padding: 8px 16px; background: var(--jota-accent-color); color: white; border: none; border-radius: 6px; cursor: pointer;">⬅️ Volver</button>
+        </div>
+
+        <!-- Contenedor principal del juego -->
+        <div style="display: grid; grid-template-columns: 1fr 300px; gap: 20px; max-width: 1400px; margin: 0 auto;">
+            
+            <!-- Columna izquierda: Juego -->
+            <div>
+                <!-- Selector de Mapa con Votación -->
+                <div class="map-selector" style="margin-bottom: 20px;">
+                    <h3>🗺️ Votación de Mapa</h3>
+                    <div class="map-voting" id="mapVoting">
+                        <p style="text-align: center; color: #888;">Cargando mapas...</p>
+                    </div>
+                    <div class="current-map-info" id="currentMapInfo" style="margin-top: 10px; text-align: center; padding: 10px; background: rgba(0,0,0,0.1); border-radius: 8px;">
+                        <strong>Mapa actual:</strong> <span id="currentMapName">Ninguno</span>
+                    </div>
+                </div>
+
+                <!-- Canvas del Juego -->
+                <div class="game-canvas-wrapper" style="margin-bottom: 20px;">
+                    <canvas id="gameCanvas" width="1000" height="300"></canvas>
+                </div>
+
+                <!-- Controles e Info -->
+                <div class="game-controls">
+                    <div class="game-info">
+                        <div class="game-info-label">Puntuación</div>
+                        <div class="game-info-value" id="currentScore">0</div>
+                    </div>
+                    <div class="game-info">
+                        <div class="game-info-label">Mejor Puntuación</div>
+                        <div class="game-info-value" id="bestScore">0</div>
+                    </div>
+                    <div class="game-info">
+                        <div class="game-info-label">Estado</div>
+                        <div class="game-info-value" id="gameStatus" style="font-size: 16px;">🏁 Inicio</div>
+                    </div>
+                </div>
+
+                <div class="game-instructions" style="margin-top: 15px;">
+                    <p><strong>Controles:</strong> Presiona ESPACIO o click para saltar | ESC para volver</p>
+                </div>
+            </div>
+
+            <!-- Columna derecha: Personajes y Ranking -->
+            <div>
+                <div class="character-selector" style="margin-bottom: 20px;">
+                    <h3>🎭 Selecciona tu Personaje</h3>
+            <div class="character-grid" id="characterGrid">
+                <div class="character-option selected" data-char="dino1" onclick="selectCharacter('dino1')">
+                    <img src="https://i.ibb.co/pjvXyyW4/100.jpg" alt="Personaje 1" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="character-option" data-char="dino2" onclick="selectCharacter('dino2')">
+                    <img src="https://i.ibb.co/RGCg5WdN/Imagen-de-Whats-App-2025-10-30-a-las-16-16-33-6a972600.jpg" alt="Personaje 2" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="character-option" data-char="dino3" onclick="selectCharacter('dino3')">
+                    <img src="https://i.imgur.com/rPJLqvO.png" alt="Personaje 3" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="character-option" data-char="dino4" onclick="selectCharacter('dino4')">
+                    <img src="https://i.imgur.com/xvKYEKS.png" alt="Personaje 4" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="character-option" data-char="dino5" onclick="selectCharacter('dino5')">
+                    <img src="https://i.imgur.com/wStTkSM.png" alt="Personaje 5" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="character-option" data-char="dino6" onclick="selectCharacter('dino6')">
+                    <img src="https://i.imgur.com/GlnKOIa.png" alt="Personaje 6" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+                </div>
+
+                <div class="game-leaderboard">
+                    <h2>🏆 Ranking Pajero</h2>
+                    <div class="leaderboard-list" id="leaderboardList">
+                        <p style="text-align: center; color: #888;">Cargando ranking...</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1799,7 +2619,7 @@
     <div class="modal" id="background-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>🖼️ Selecciona tu fondo</h2>
+                <h2>🖼️ Selecciona tu fondo (No funciona en esta version, se arreglara mas adelante)</h2>
                 <button class="close-btn" onclick="closeModal('background-modal')">&times;</button>
             </div>
             <div class="upload-area" onclick="document.getElementById('jotaBackgroundInput').click()">
@@ -1872,19 +2692,19 @@
             <div class="color-customization">
                 <div class="color-picker-group">
                     <label>Color Principal</label>
-                    <input type="color" id="primaryColor" value="#4f46e5" onchange="updateColors()">
+                    <input type="color" id="primaryColor" value="#0078d4" onchange="updateColors()">
                 </div>
                 <div class="color-picker-group">
                     <label>Color Secundario</label>
-                    <input type="color" id="secondaryColor" value="#ecfeff" onchange="updateColors()">
+                    <input type="color" id="secondaryColor" value="#f3f2f1" onchange="updateColors()">
                 </div>
                 <div class="color-picker-group">
                     <label>Color de Acento</label>
-                    <input type="color" id="accentColor" value="#06b6d4" onchange="updateColors()">
+                    <input type="color" id="accentColor" value="#106ebe" onchange="updateColors()">
                 </div>
                 <div class="color-picker-group">
                     <label>Color de Texto</label>
-                    <input type="color" id="textColor" value="#1f2937" onchange="updateColors()">
+                    <input type="color" id="textColor" value="#323130" onchange="updateColors()">
                 </div>
             </div>
             <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 16px;">
@@ -1983,6 +2803,7 @@
             </div>
             <div class="chat-input-wrapper">
                 <button class="chat-attach-btn" onclick="document.getElementById('chatFileInput').click()" title="Adjuntar imagen o GIF">📎</button>
+                <button class="chat-attach-btn" onclick="openMemeCreator()" title="Crear meme" style="margin-left: 4px;">67</button>
                 <input type="file" id="chatFileInput" accept="image/*,.gif" style="display: none;" onchange="handleChatFileSelect(event)">
                 <input 
                     type="text" 
@@ -2006,6 +2827,63 @@
             <div class="chat-notification-message" id="notificationMessage">Mensaje...</div>
         </div>
         <button class="chat-notification-close" onclick="closeNotificationToast(event)">✖</button>
+    </div>
+
+    <!-- Creador de Memes -->
+    <div class="meme-creator-modal" id="memeCreatorModal">
+        <div class="meme-creator-content">
+            <div class="meme-creator-header">
+                <h2>😂 Creador de Memes</h2>
+                <button onclick="closeMemeCreator()" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">✖</button>
+            </div>
+            <div class="meme-creator-body">
+                <!-- Vista Previa -->
+                <div class="meme-preview-section">
+                    <h3 style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600;">📸 Vista Previa</h3>
+                    <div class="meme-canvas-container">
+                        <canvas id="memeCanvas" width="500" height="500"></canvas>
+                    </div>
+                    <button onclick="downloadMeme()" class="secondary" style="width: 100%;">💾 Descargar Meme</button>
+                </div>
+
+                <!-- Controles -->
+                <div class="meme-controls-section">
+                    <div class="meme-control-group">
+                        <label>🖼️ Plantillas Populares</label>
+                        <div class="meme-templates" id="memeTemplates">
+                            <!-- Las plantillas se cargarán aquí -->
+                        </div>
+                        <input type="file" id="memeImageInput" accept="image/*" style="margin-top: 8px;" onchange="handleMemeImageUpload(event)">
+                    </div>
+
+                    <div class="meme-control-group">
+                        <label>📝 Texto Superior</label>
+                        <input type="text" id="memeTopText" placeholder="TEXTO SUPERIOR" oninput="updateMeme()" maxlength="50">
+                    </div>
+
+                    <div class="meme-control-group">
+                        <label>📝 Texto Inferior</label>
+                        <input type="text" id="memeBottomText" placeholder="TEXTO INFERIOR" oninput="updateMeme()" maxlength="50">
+                    </div>
+
+                    <div class="meme-control-row">
+                        <div class="meme-control-group">
+                            <label>📏 Tamaño de Texto</label>
+                            <input type="number" id="memeFontSize" value="40" min="20" max="80" oninput="updateMeme()">
+                        </div>
+                        <div class="meme-control-group">
+                            <label>🎨 Color de Texto</label>
+                            <input type="color" id="memeTextColor" value="#FFFFFF" oninput="updateMeme()" style="height: 36px;">
+                        </div>
+                    </div>
+
+                    <div class="meme-actions">
+                        <button class="secondary" onclick="closeMemeCreator()">❌ Cancelar</button>
+                        <button onclick="sendMemeToChat()">📤 Enviar al Chat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Notificación de Baneo en Pantalla Completa -->
@@ -2104,7 +2982,7 @@
     </div>
 
     
-    <div class="footer">
+    <div class="footer" id="adminTrigger" style="cursor: default;" title="TempFiles Manager">
         Made in Jota <span>😎</span>
     </div>
 
@@ -2131,11 +3009,53 @@
         let jotaSelectedBackgroundFile = null;
         document.addEventListener('DOMContentLoaded', async () => {
             if (typeof supabase === 'undefined') return showError('Supabase no disponible');
+            
+            // Cargar tema guardado
+            loadSavedTheme();
+            
             await initializeApp();
             applySavedBackground();
             applySavedColors();
             loadBackgroundPosition();
         });
+
+        // Función para cambiar el tema
+        function toggleTheme() {
+            const body = document.body;
+            const isDark = body.classList.toggle('dark-theme');
+            localStorage.setItem('jotaTheme', isDark ? 'dark' : 'light');
+            
+            // Actualizar icono del botón
+            const themeBtn = document.querySelector('.theme-toggle');
+            if (themeBtn) {
+                themeBtn.textContent = isDark ? '🌙' : '☀️';
+            }
+            
+            // Si el juego está activo, actualizar color de fondo del body
+            const gameContainer = document.getElementById('gameContainer');
+            if (gameContainer && gameContainer.classList.contains('active')) {
+                document.body.style.backgroundImage = 'none';
+                document.body.style.backgroundColor = isDark ? '#0d0d0d' : '#f3f4f6';
+            }
+            
+            // Reaplicar colores personalizados después de cambiar el tema
+            setTimeout(() => {
+                applySavedColors();
+            }, 50);
+        }
+
+        // Cargar tema guardado
+        function loadSavedTheme() {
+            const savedTheme = localStorage.getItem('jotaTheme');
+            const themeBtn = document.querySelector('.theme-toggle');
+            
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+                if (themeBtn) themeBtn.textContent = '🌙';
+            } else {
+                if (themeBtn) themeBtn.textContent = '☀️';
+            }
+        }
 
         async function initializeApp() {
             try {
@@ -2146,9 +3066,39 @@
                 setupBackgroundDragAndDrop();
                 await loadFilters();
                 
+                // Inicializar sincronización de fondos en tiempo real
+                subscribeToBackgroundSync();
+                await loadSharedBackground();
+                
             } catch (error) {
                 console.error('Error inicializando:', error);
                 showError('Error al iniciar la aplicación: ' + error.message);
+            }
+        }
+
+        // Función para actualizar contadores de archivos en carpetas
+        async function updateFolderCounts() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('documents')
+                    .select('folder_id');
+                    
+                if (error) throw error;
+                
+                const counts = {};
+                data.forEach(doc => {
+                    const folderId = doc.folder_id || 'root';
+                    counts[folderId] = (counts[folderId] || 0) + 1;
+                });
+                
+                document.querySelectorAll('.folder-tree a[data-folder-id]').forEach(link => {
+                    const folderId = link.dataset.folderId;
+                    const count = counts[folderId] || 0;
+                    const countEl = link.querySelector('.folder-count');
+                    if (countEl) countEl.textContent = count;
+                });
+            } catch (error) {
+                console.error('Error actualizando contadores:', error);
             }
         }
         async function loadDirectories() {
@@ -2174,10 +3124,21 @@
                     parentFolderSelect.appendChild(option);
                     const folderLink = document.createElement('a');
                     folderLink.href = '#';
-                    folderLink.innerHTML = `📁 ${folder.name}`;
-                    folderLink.onclick = () => loadFolder(folder.id);
+                    folderLink.innerHTML = `<span class="folder-icon">📁</span><span>${folder.name}</span><span class="folder-count">0</span>`;
+                    folderLink.onclick = (e) => {
+                        e.preventDefault();
+                        // Remover active de todos
+                        document.querySelectorAll('.folder-tree a').forEach(a => a.classList.remove('active'));
+                        // Agregar active al seleccionado
+                        folderLink.classList.add('active');
+                        loadFolder(folder.id);
+                    };
+                    folderLink.dataset.folderId = folder.id;
                     folderList.appendChild(folderLink);
                 });
+                
+                // Actualizar contadores de archivos
+                updateFolderCounts();
                 console.log('Richard basta de errores xd - Directorios cargados:', jotaDirectories.length);
             } catch (error) {
                 console.error('Error cargando directorios:', error);
@@ -2257,21 +3218,99 @@
         }
         function getFileType(filename) {
             const ext = filename.split('.').pop().toLowerCase();
+            
+            // Documentos
             if (['pdf'].includes(ext)) return 'pdf';
-            if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) return 'image';
-            if (['mp4', 'avi', 'mov', 'wmv'].includes(ext)) return 'video';
-            if (['mp3', 'wav', 'ogg'].includes(ext)) return 'audio';
+            if (['doc', 'docx'].includes(ext)) return 'word';
+            if (['xls', 'xlsx'].includes(ext)) return 'excel';
+            if (['ppt', 'pptx'].includes(ext)) return 'powerpoint';
+            if (['txt', 'md', 'markdown'].includes(ext)) return 'text';
+            
+            // Imágenes
+            if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'ico'].includes(ext)) return 'image';
+            
+            // Video y Audio
+            if (['mp4', 'avi', 'mov', 'wmv', 'mkv', 'webm', 'flv'].includes(ext)) return 'video';
+            if (['mp3', 'wav', 'ogg', 'flac', 'aac', 'm4a'].includes(ext)) return 'audio';
+            
+            // Código
+            if (['py', 'pyw'].includes(ext)) return 'python';
+            if (['js', 'jsx'].includes(ext)) return 'javascript';
+            if (['ts', 'tsx'].includes(ext)) return 'typescript';
+            if (['html', 'htm'].includes(ext)) return 'html';
+            if (['css', 'scss', 'sass', 'less'].includes(ext)) return 'css';
+            if (['json'].includes(ext)) return 'json';
+            if (['xml'].includes(ext)) return 'xml';
+            if (['java'].includes(ext)) return 'java';
+            if (['cpp', 'c', 'h', 'hpp'].includes(ext)) return 'cpp';
+            if (['cs'].includes(ext)) return 'csharp';
+            if (['php'].includes(ext)) return 'php';
+            if (['rb'].includes(ext)) return 'ruby';
+            if (['go'].includes(ext)) return 'go';
+            if (['rs'].includes(ext)) return 'rust';
+            if (['swift'].includes(ext)) return 'swift';
+            if (['kt', 'kts'].includes(ext)) return 'kotlin';
+            if (['sql'].includes(ext)) return 'sql';
+            if (['sh', 'bash'].includes(ext)) return 'shell';
+            if (['yml', 'yaml'].includes(ext)) return 'yaml';
+            
+            // Comprimidos
+            if (['zip'].includes(ext)) return 'zip';
+            if (['rar'].includes(ext)) return 'rar';
+            if (['7z'].includes(ext)) return '7zip';
+            if (['tar', 'gz', 'tgz', 'bz2'].includes(ext)) return 'archive';
+            
             return 'other';
         }
+        
         function getFileIcon(type) {
             const icons = {
+                // Documentos
                 pdf: '📄',
+                word: '📝',
+                excel: '📊',
+                powerpoint: '📽️',
+                text: '📃',
+                
+                // Multimedia
                 image: '🖼️',
                 video: '🎥',
                 audio: '🎵',
+                
+                // Código
+                python: '🐍',
+                javascript: '🟨',
+                typescript: '🔷',
+                html: '🌐',
+                css: '🎨',
+                json: '📋',
+                xml: '📰',
+                java: '☕',
+                cpp: '⚙️',
+                csharp: '#️⃣',
+                php: '🐘',
+                ruby: '💎',
+                go: '🔵',
+                rust: '🦀',
+                swift: '🍎',
+                kotlin: '🔶',
+                sql: '🗄️',
+                shell: '💻',
+                yaml: '📝',
+                
+                // Comprimidos
+                zip: '🗜️',
+                rar: '📦',
+                '7zip': '📦',
+                archive: '📦',
+                
                 other: '📎'
             };
             return icons[type] || '📎';
+        }
+        
+        function getFileExtension(filename) {
+            return filename.split('.').pop().toLowerCase();
         }
         async function loadFilters() {
             try {
@@ -2624,6 +3663,10 @@
             const posX = settings.positionX || 50;
             const posY = settings.positionY || 50;
             
+            // Verificar si el juego está activo
+            const gameContainer = document.getElementById('gameContainer');
+            const isGameActive = gameContainer && gameContainer.classList.contains('active');
+            
             bgOverlay.style.cssText = `
                 position: fixed;
                 top: 0;
@@ -2639,6 +3682,7 @@
                 filter: brightness(${brightness}%) contrast(${contrast}%);
                 transform: rotate(${rotation}deg);
                 transform-origin: center;
+                display: ${isGameActive ? 'none' : 'block'};
             `;
             
             document.body.prepend(bgOverlay);
@@ -2671,68 +3715,85 @@
             const accentColor = document.getElementById('accentColor').value;
             const textColor = document.getElementById('textColor').value;
 
-            document.documentElement.style.setProperty('--jota-primary-color', primaryColor);
-            document.documentElement.style.setProperty('--jota-secondary-color', secondaryColor);
-            document.documentElement.style.setProperty('--jota-accent-color', accentColor);
-            document.documentElement.style.setProperty('--jota-text-color', textColor);
+            // Aplicar con !important para sobrescribir el tema
+            document.documentElement.style.setProperty('--jota-primary-color', primaryColor, 'important');
+            document.documentElement.style.setProperty('--jota-secondary-color', secondaryColor, 'important');
+            document.documentElement.style.setProperty('--jota-accent-color', accentColor, 'important');
+            document.documentElement.style.setProperty('--jota-text-color', textColor, 'important');
 
             localStorage.setItem('jotaPrimaryColor', primaryColor);
             localStorage.setItem('jotaSecondaryColor', secondaryColor);
             localStorage.setItem('jotaAccentColor', accentColor);
             localStorage.setItem('jotaTextColor', textColor);
-
-            
         }
 
         function applySavedColors() {
-            const primaryColor = localStorage.getItem('jotaPrimaryColor');
-            const secondaryColor = localStorage.getItem('jotaSecondaryColor');
-            const accentColor = localStorage.getItem('jotaAccentColor');
-            const textColor = localStorage.getItem('jotaTextColor');
+            try {
+                const primaryColor = localStorage.getItem('jotaPrimaryColor');
+                const secondaryColor = localStorage.getItem('jotaSecondaryColor');
+                const accentColor = localStorage.getItem('jotaAccentColor');
+                const textColor = localStorage.getItem('jotaTextColor');
 
-            if (primaryColor) {
-                document.documentElement.style.setProperty('--jota-primary-color', primaryColor);
-                document.getElementById('primaryColor').value = primaryColor;
-            }
-            if (secondaryColor) {
-                document.documentElement.style.setProperty('--jota-secondary-color', secondaryColor);
-                document.getElementById('secondaryColor').value = secondaryColor;
-            }
-            if (accentColor) {
-                document.documentElement.style.setProperty('--jota-accent-color', accentColor);
-                document.getElementById('accentColor').value = accentColor;
-            }
-            if (textColor) {
-                document.documentElement.style.setProperty('--jota-text-color', textColor);
-                document.getElementById('textColor').value = textColor;
+                if (primaryColor) {
+                    document.documentElement.style.setProperty('--jota-primary-color', primaryColor, 'important');
+                    const primaryInput = document.getElementById('primaryColor');
+                    if (primaryInput) primaryInput.value = primaryColor;
+                }
+                if (secondaryColor) {
+                    document.documentElement.style.setProperty('--jota-secondary-color', secondaryColor, 'important');
+                    const secondaryInput = document.getElementById('secondaryColor');
+                    if (secondaryInput) secondaryInput.value = secondaryColor;
+                }
+                if (accentColor) {
+                    document.documentElement.style.setProperty('--jota-accent-color', accentColor, 'important');
+                    const accentInput = document.getElementById('accentColor');
+                    if (accentInput) accentInput.value = accentColor;
+                }
+                if (textColor) {
+                    document.documentElement.style.setProperty('--jota-text-color', textColor, 'important');
+                    const textInput = document.getElementById('textColor');
+                    if (textInput) textInput.value = textColor;
+                }
+            } catch (error) {
+                console.error('Error aplicando colores guardados:', error);
             }
         }
 
         function resetColors() {
-            const defaults = {
-                primary: '#4f46e5',
-                secondary: '#ecfeff',
-                accent: '#06b6d4',
-                text: '#1f2937'
+            // Limpiar localStorage
+            localStorage.removeItem('jotaPrimaryColor');
+            localStorage.removeItem('jotaSecondaryColor');
+            localStorage.removeItem('jotaAccentColor');
+            localStorage.removeItem('jotaTextColor');
+            
+            // Remover los estilos inline para volver a los del tema
+            document.documentElement.style.removeProperty('--jota-primary-color');
+            document.documentElement.style.removeProperty('--jota-secondary-color');
+            document.documentElement.style.removeProperty('--jota-accent-color');
+            document.documentElement.style.removeProperty('--jota-text-color');
+            
+            // Actualizar valores en los inputs según el tema activo
+            const isDark = document.body.classList.contains('dark-theme');
+            const defaults = isDark ? {
+                primary: '#4db8ff',
+                secondary: '#1a1a1a',
+                accent: '#60cdff',
+                text: '#e1e1e1'
+            } : {
+                primary: '#0078d4',
+                secondary: '#f3f2f1',
+                accent: '#106ebe',
+                text: '#323130'
             };
 
             document.getElementById('primaryColor').value = defaults.primary;
             document.getElementById('secondaryColor').value = defaults.secondary;
             document.getElementById('accentColor').value = defaults.accent;
             document.getElementById('textColor').value = defaults.text;
-
-            document.documentElement.style.setProperty('--jota-primary-color', defaults.primary);
-            document.documentElement.style.setProperty('--jota-secondary-color', defaults.secondary);
-            document.documentElement.style.setProperty('--jota-accent-color', defaults.accent);
-            document.documentElement.style.setProperty('--jota-text-color', defaults.text);
-
-            localStorage.removeItem('jotaPrimaryColor');
-            localStorage.removeItem('jotaSecondaryColor');
-            localStorage.removeItem('jotaAccentColor');
-            localStorage.removeItem('jotaTextColor');
-
             
+            alert('✅ Colores restablecidos a los valores por defecto del tema');
         }
+        
         function updateBackgroundPosition() {
             const posX = document.getElementById('bgPosX').value;
             const posY = document.getElementById('bgPosY').value;
@@ -2914,31 +3975,130 @@
 
                 const previewContent = document.getElementById('jotaPreviewContent');
                 const fileType = getFileType(data.file_name);
+                const ext = getFileExtension(data.file_name);
+                const { data: { publicUrl } } = supabaseClient.storage
+                    .from('documents-bucket')
+                    .getPublicUrl(data.file_path);
+                
+                // Imágenes
                 if (fileType === 'image') {
-                    const { data: { publicUrl } } = supabaseClient.storage
-                        .from('documents-bucket')
-                        .getPublicUrl(data.file_path);
-                    previewContent.innerHTML = `<img src="${publicUrl}" style="max-width: 100%; border-radius: 8px;" alt="${data.file_name}">`;
-                } else if (fileType === 'pdf') {
-                    const { data: { publicUrl } } = supabaseClient.storage
-                        .from('documents-bucket')
-                        .getPublicUrl(data.file_path);
-                    previewContent.innerHTML = `<iframe src="${publicUrl}" style="width: 100%; height: 400px; border: none; border-radius: 8px;"></iframe>`;
-                } else {
+                    previewContent.innerHTML = `
+                        <div style="text-align: center;">
+                            <img src="${publicUrl}" style="max-width: 100%; max-height: 500px; border-radius: 8px;" alt="${data.file_name}">
+                        </div>`;
+                } 
+                // PDFs
+                else if (fileType === 'pdf') {
+                    previewContent.innerHTML = `
+                        <iframe src="${publicUrl}" style="width: 100%; height: 500px; border: none; border-radius: 8px;"></iframe>`;
+                } 
+                // Videos
+                else if (fileType === 'video') {
+                    previewContent.innerHTML = `
+                        <video controls style="width: 100%; max-height: 500px; border-radius: 8px;">
+                            <source src="${publicUrl}" type="video/${ext}">
+                            Tu navegador no soporta videos.
+                        </video>`;
+                } 
+                // Audio
+                else if (fileType === 'audio') {
                     previewContent.innerHTML = `
                         <div style="text-align: center; padding: 32px;">
-                            <div style="font-size: 2.5rem; margin-bottom: 12px;">${getFileIcon(fileType)}</div>
+                            <div style="font-size: 3rem; margin-bottom: 16px;">🎵</div>
                             <h3>${data.file_name}</h3>
-                            <p>Tipo: ${fileType.toUpperCase()}</p>
-                            <p>Descripción: ${data.description || 'Sin descripción'}</p>
-                            <p>Tamaño: ${(data.file_size / 1024 / 1024).toFixed(2)} MB</p>
+                            <audio controls style="width: 100%; margin-top: 20px;">
+                                <source src="${publicUrl}" type="audio/${ext}">
+                                Tu navegador no soporta audio.
+                            </audio>
                         </div>`;
+                } 
+                // Archivos de código (Python, JS, etc.)
+                else if (['python', 'javascript', 'typescript', 'html', 'css', 'json', 'xml', 'java', 'cpp', 'csharp', 'php', 'ruby', 'go', 'rust', 'swift', 'kotlin', 'sql', 'shell', 'yaml', 'text'].includes(fileType)) {
+                    // Descargar y mostrar el contenido del código
+                    try {
+                        const response = await fetch(publicUrl);
+                        const code = await response.text();
+                        const languageMap = {
+                            python: 'Python', javascript: 'JavaScript', typescript: 'TypeScript',
+                            html: 'HTML', css: 'CSS', json: 'JSON', xml: 'XML',
+                            java: 'Java', cpp: 'C++', csharp: 'C#', php: 'PHP',
+                            ruby: 'Ruby', go: 'Go', rust: 'Rust', swift: 'Swift',
+                            kotlin: 'Kotlin', sql: 'SQL', shell: 'Shell', yaml: 'YAML', text: 'Text'
+                        };
+                        const lines = code.split('\n').length;
+                        previewContent.innerHTML = `
+                            <div style="background: var(--jota-card-bg); border-radius: 8px; overflow: hidden;">
+                                <div style="background: var(--jota-hover-color); padding: 12px 16px; border-bottom: 1px solid var(--jota-border-color); display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <span style="font-weight: 600;">${getFileIcon(fileType)} ${data.file_name}</span>
+                                        <span style="margin-left: 12px; color: #888; font-size: 12px;">${languageMap[fileType] || fileType.toUpperCase()} • ${lines} líneas</span>
+                                    </div>
+                                    <button onclick="copyCode()" style="padding: 4px 12px; height: 28px; font-size: 12px;" title="Copiar código">📋 Copiar</button>
+                                </div>
+                                <pre id="codePreview" style="margin: 0; padding: 20px; overflow-x: auto; max-height: 400px; background: var(--jota-background); color: var(--jota-text-color); font-family: 'Consolas', 'Monaco', monospace; font-size: 13px; line-height: 1.6;">${escapeHtml(code)}</pre>
+                            </div>`;
+                    } catch (e) {
+                        previewContent.innerHTML = createDefaultPreview(data, fileType, ext);
+                    }
+                } 
+                // Archivos ZIP y comprimidos
+                else if (['zip', 'rar', '7zip', 'archive'].includes(fileType)) {
+                    previewContent.innerHTML = `
+                        <div style="text-align: center; padding: 32px;">
+                            <div style="font-size: 4rem; margin-bottom: 16px;">${getFileIcon(fileType)}</div>
+                            <h3>${data.file_name}</h3>
+                            <p style="color: #888; margin: 12px 0;">Archivo comprimido ${ext.toUpperCase()}</p>
+                            <p style="color: #888;">Tamaño: ${(data.file_size / 1024 / 1024).toFixed(2)} MB</p>
+                            <div style="margin-top: 24px; padding: 16px; background: var(--jota-hover-color); border-radius: 8px; text-align: left;">
+                                <p style="margin: 8px 0; font-weight: 600;">📦 Contenido del archivo:</p>
+                                <p style="margin: 8px 0; color: #888; font-size: 13px;">Los archivos comprimidos deben descargarse para ver su contenido.</p>
+                                <button onclick="downloadDocument('${docId}')" style="margin-top: 12px; width: 100%;">⬇️ Descargar y Extraer</button>
+                            </div>
+                        </div>`;
+                } 
+                // Otros archivos
+                else {
+                    previewContent.innerHTML = createDefaultPreview(data, fileType, ext);
                 }
+                
                 openModal('preview-modal');
             } catch (error) {
                 console.error('Error en vista previa:', error);
                 alert('Error al cargar vista previa: ' + error.message);
             }
+        }
+        
+        function createDefaultPreview(data, fileType, ext) {
+            return `
+                <div style="text-align: center; padding: 32px;">
+                    <div style="font-size: 4rem; margin-bottom: 16px;">${getFileIcon(fileType)}</div>
+                    <h3>${data.file_name}</h3>
+                    <p style="color: #888; margin: 12px 0;">Tipo: ${fileType.toUpperCase()} (${ext})</p>
+                    <p style="color: #888;">Tamaño: ${(data.file_size / 1024 / 1024).toFixed(2)} MB</p>
+                    ${data.description ? `<p style="margin: 16px 0; padding: 16px; background: var(--jota-hover-color); border-radius: 8px;">${data.description}</p>` : ''}
+                    <button onclick="downloadDocument('${data.id}')" style="margin-top: 20px;">⬇️ Descargar Archivo</button>
+                </div>`;
+        }
+        
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+        
+        function copyCode() {
+            const codeElement = document.getElementById('codePreview');
+            const code = codeElement.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('✅ Código copiado al portapapeles');
+            }).catch(err => {
+                console.error('Error al copiar:', err);
+            });
         }
         async function downloadDocument(docId) {
             try {
@@ -3103,6 +4263,7 @@
             }
         });
         let chatChannel = null;
+        let backgroundSyncChannel = null;
         let chatUserId = null;
         let chatUserName = '';
         let chatUserColor = '';
@@ -3111,9 +4272,958 @@
         let chatSelectedFile = null;
         let chatTimerInterval = null;
         let chatTimeRemaining = 3600;
-        let backgroundSyncChannel = null;
         let notificationSound = 'sound1';
         let audioContext = null;
+        
+        // ===== JUEGO DEL DINOSAURIO MULTIJUGADOR =====
+        let gameCanvas, gameCtx;
+        let gameRunning = false;
+        let gameScore = 0;
+        let gameBestScore = 0;
+        let gameSpeed = 5;
+        let gameFrameCount = 0;
+        let gamePlayerId = null;
+        let gamePlayerName = '';
+        let selectedCharacter = 'dino1';
+        let gameLiveChannel = null;
+        let gameScoresChannel = null;
+        let gameMapVotingChannel = null;
+        let updatePositionInterval = null;
+        let otherPlayers = {};
+        let currentMapId = 'desert';
+        let mapVotes = {};
+        let savedBodyBackground = null; // Guardar fondo del body al abrir juego
+        
+        // URLs de imágenes de personajes (cuadradas)
+        const characterImages = {
+            'dino1': 'https://i.ibb.co/pjvXyyW4/100.jpg',
+            'dino2': 'https://i.ibb.co/RGCg5WdN/Imagen-de-Whats-App-2025-10-30-a-las-16-16-33-6a972600.jpg',
+            'dino3': 'https://i.imgur.com/rPJLqvO.png',
+            'dino4': 'https://i.imgur.com/xvKYEKS.png',
+            'dino5': 'https://i.imgur.com/wStTkSM.png',
+            'dino6': 'https://i.imgur.com/GlnKOIa.png'
+        };
+        
+        // MAPAS CON OBSTÁCULOS ÚNICOS Y COLORES
+        const gameMaps = {
+            'desert': {
+                name: '🏜️ Desierto',
+                bgColor: { light: '#fef3c7', dark: '#78350f' },
+                groundColor: { light: '#d97706', dark: '#92400e' },
+                obstacles: [
+                    'https://i.imgur.com/2HCQkiR.png',
+                    'https://i.imgur.com/KMz8RPu.png',
+                    'https://i.imgur.com/p3JaxSl.png'
+                ]
+            },
+            'forest': {
+                name: '🌲 Bosque',
+                bgColor: { light: '#d1fae5', dark: '#064e3b' },
+                groundColor: { light: '#059669', dark: '#065f46' },
+                obstacles: [
+                    'https://i.imgur.com/8zfBk9g.png',
+                    'https://i.imgur.com/yDnXKjL.png',
+                    'https://i.imgur.com/hHnLp0c.png'
+                ]
+            },
+            'snow': {
+                name: '❄️ Nieve',
+                bgColor: { light: '#f0f9ff', dark: '#0c4a6e' },
+                groundColor: { light: '#93c5fd', dark: '#1e3a8a' },
+                obstacles: [
+                    'https://i.imgur.com/VqXdgyM.png',
+                    'https://i.imgur.com/rPJLqvO.png',
+                    'https://i.imgur.com/xvKYEKS.png'
+                ]
+            },
+            'lava': {
+                name: '🌋 Lava',
+                bgColor: { light: '#fee2e2', dark: '#7f1d1d' },
+                groundColor: { light: '#ef4444', dark: '#991b1b' },
+                obstacles: [
+                    'https://i.imgur.com/wStTkSM.png',
+                    'https://i.imgur.com/GlnKOIa.png',
+                    'https://i.imgur.com/8KpNqXJ.png'
+                ]
+            },
+            'space': {
+                name: '🚀 Espacio',
+                bgColor: { light: '#e0e7ff', dark: '#1e1b4b' },
+                groundColor: { light: '#6366f1', dark: '#312e81' },
+                obstacles: [
+                    'https://i.imgur.com/2HCQkiR.png',
+                    'https://i.imgur.com/yDnXKjL.png',
+                    'https://i.imgur.com/rPJLqvO.png'
+                ]
+            }
+        };
+        
+        // Objetos Image precargados
+        let characterImagesLoaded = {};
+        let obstacleImagesLoaded = [];
+        let imagesLoaded = false;
+        
+        const dino = {
+            x: 80,
+            y: 230,
+            width: 60,
+            height: 60,
+            velocityY: 0,
+            gravity: 0.9,
+            jumpPower: -18,
+            isJumping: false
+        };
+        
+        let obstacles = [];
+        let gameAnimationFrame;
+        
+        function toggleGame() {
+            const mainContainer = document.querySelector('.main-container');
+            const gameContainer = document.getElementById('gameContainer');
+            
+            if (gameContainer.classList.contains('active')) {
+                // Volver a archivos
+                gameContainer.classList.remove('active');
+                mainContainer.style.display = 'flex';
+                stopGame();
+                
+                // Restaurar imagen de fondo del body si había
+                if (savedBodyBackground) {
+                    document.body.style.backgroundImage = savedBodyBackground.image;
+                    document.body.style.backgroundSize = savedBodyBackground.size;
+                    document.body.style.backgroundPosition = savedBodyBackground.position;
+                    document.body.style.backgroundAttachment = savedBodyBackground.attachment;
+                    savedBodyBackground = null;
+                }
+                
+                // Restaurar overlay de fondo si existía
+                const bgOverlay = document.getElementById('bgOverlay');
+                if (bgOverlay) {
+                    bgOverlay.style.display = 'block';
+                }
+            } else {
+                // Ir al juego
+                mainContainer.style.display = 'none';
+                gameContainer.classList.add('active');
+                
+                // Guardar y remover imagen de fondo del body
+                const currentBg = getComputedStyle(document.body).backgroundImage;
+                if (currentBg && currentBg !== 'none') {
+                    savedBodyBackground = {
+                        image: document.body.style.backgroundImage,
+                        size: document.body.style.backgroundSize,
+                        position: document.body.style.backgroundPosition,
+                        attachment: document.body.style.backgroundAttachment
+                    };
+                }
+                
+                // Ocultar el overlay de fondo de imagen (#bgOverlay) si existe
+                const bgOverlay = document.getElementById('bgOverlay');
+                if (bgOverlay) {
+                    bgOverlay.style.display = 'none';
+                }
+                
+                // Poner solo color sólido según tema
+                const isDark = document.body.classList.contains('dark-theme');
+                document.body.style.backgroundImage = 'none';
+                document.body.style.backgroundColor = isDark ? '#0d0d0d' : '#f3f4f6';
+                
+                initGame();
+            }
+        }
+        
+        function selectCharacter(charId) {
+            selectedCharacter = charId;
+            document.querySelectorAll('.character-option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelector(`[data-char="${charId}"]`).classList.add('selected');
+            localStorage.setItem('selectedCharacter', charId);
+        }
+        
+        function preloadImages() {
+            let loadedCount = 0;
+            // Recolectar todas las URLs únicas de obstáculos de todos los mapas
+            const allObstacleUrls = new Set();
+            Object.values(gameMaps).forEach(map => {
+                map.obstacles.forEach(url => allObstacleUrls.add(url));
+            });
+            
+            const totalImages = Object.keys(characterImages).length + allObstacleUrls.size;
+            
+            // Precargar personajes
+            Object.keys(characterImages).forEach(key => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => {
+                    loadedCount++;
+                    if (loadedCount === totalImages) {
+                        imagesLoaded = true;
+                        updateGameStatus('✅ Listo - Presiona ESPACIO');
+                    }
+                };
+                img.onerror = () => {
+                    console.error('Error cargando personaje:', key);
+                    loadedCount++;
+                };
+                img.src = characterImages[key];
+                characterImagesLoaded[key] = img;
+            });
+            
+            // Precargar obstáculos (todos los mapas)
+            allObstacleUrls.forEach(url => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => {
+                    loadedCount++;
+                    if (loadedCount === totalImages) {
+                        imagesLoaded = true;
+                        updateGameStatus('✅ Listo - Presiona ESPACIO');
+                    }
+                };
+                img.onerror = () => {
+                    console.error('Error cargando obstáculo:', url);
+                    loadedCount++;
+                };
+                img.src = url;
+                obstacleImagesLoaded.push({ url, img });
+            });
+        }
+        
+        function initGame() {
+            gameCanvas = document.getElementById('gameCanvas');
+            gameCtx = gameCanvas.getContext('2d');
+            
+            // Generar ID único para el jugador
+            gamePlayerId = localStorage.getItem('gamePlayerId');
+            if (!gamePlayerId) {
+                gamePlayerId = 'player_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('gamePlayerId', gamePlayerId);
+            }
+            
+            // Obtener nombre del jugador
+            gamePlayerName = chatUserName || localStorage.getItem('chatUserName') || 'Jugador';
+            
+            // Cargar personaje seleccionado
+            selectedCharacter = localStorage.getItem('selectedCharacter') || 'dino1';
+            selectCharacter(selectedCharacter);
+            
+            // Cargar mejor puntuación
+            gameBestScore = parseInt(localStorage.getItem('dinoBestScore')) || 0;
+            document.getElementById('bestScore').textContent = gameBestScore;
+            
+            // Cargar leaderboard
+            loadLeaderboard();
+            
+            // Precargar imágenes
+            updateGameStatus('⏳ Cargando imágenes...');
+            preloadImages();
+            
+            // Inicializar sistema de votación de mapas
+            initMapVoting();
+            
+            // Suscribirse a canal de juego en vivo
+            subscribeToLiveGame();
+            
+            // Suscribirse a cambios en el ranking en tiempo real
+            subscribeToLeaderboardUpdates();
+            
+            // Event listeners
+            document.addEventListener('keydown', handleGameKeyPress);
+            gameCanvas.addEventListener('click', handleGameClick);
+            
+            resetGame();
+        }
+        
+        function handleGameKeyPress(e) {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (!gameRunning) {
+                    startGame();
+                } else {
+                    jump();
+                }
+            }
+            if (e.code === 'Escape') {
+                toggleGame();
+            }
+        }
+        
+        function handleGameClick() {
+            if (!gameRunning) {
+                startGame();
+            } else {
+                jump();
+            }
+        }
+        
+        function startGame() {
+            if (gameRunning) return;
+            
+            gameRunning = true;
+            gameScore = 0;
+            gameSpeed = 5;
+            obstacles = [];
+            dino.y = 230;
+            dino.velocityY = 0;
+            dino.isJumping = false;
+            
+            updateGameStatus('🏃 Jugando...');
+            
+            // Registrar jugador en el juego en vivo
+            registerPlayerLive();
+            
+            // Actualizar posición cada 100ms
+            updatePositionInterval = setInterval(updatePlayerPosition, 100);
+            
+            gameLoop();
+        }
+        
+        function stopGame() {
+            gameRunning = false;
+            if (gameAnimationFrame) {
+                cancelAnimationFrame(gameAnimationFrame);
+            }
+            if (updatePositionInterval) {
+                clearInterval(updatePositionInterval);
+            }
+            document.removeEventListener('keydown', handleGameKeyPress);
+            if (gameCanvas) {
+                gameCanvas.removeEventListener('click', handleGameClick);
+            }
+            
+            // Eliminar jugador del juego en vivo
+            removePlayerLive();
+            
+            // Desuscribirse del canal de ranking
+            if (gameScoresChannel) {
+                supabaseClient.removeChannel(gameScoresChannel);
+                gameScoresChannel = null;
+            }
+        }
+        
+        function resetGame() {
+            gameScore = 0;
+            gameSpeed = 5;
+            obstacles = [];
+            dino.y = 230;
+            dino.velocityY = 0;
+            dino.isJumping = false;
+            gameFrameCount = 0;
+            
+            document.getElementById('currentScore').textContent = gameScore;
+        }
+        
+        function jump() {
+            if (!dino.isJumping) {
+                dino.velocityY = dino.jumpPower;
+                dino.isJumping = true;
+            }
+        }
+        
+        function gameLoop() {
+            if (!gameRunning || !imagesLoaded) return;
+            
+            gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+            
+            // Fondo según mapa seleccionado
+            const isDark = document.body.classList.contains('dark-theme');
+            const currentMap = gameMaps[currentMapId];
+            gameCtx.fillStyle = isDark ? currentMap.bgColor.dark : currentMap.bgColor.light;
+            gameCtx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+            
+            // Suelo según mapa
+            gameCtx.fillStyle = isDark ? currentMap.groundColor.dark : currentMap.groundColor.light;
+            gameCtx.fillRect(0, 290, gameCanvas.width, 3);
+            
+            // Actualizar dinosaurio
+            dino.velocityY += dino.gravity;
+            dino.y += dino.velocityY;
+            
+            if (dino.y >= 230) {
+                dino.y = 230;
+                dino.velocityY = 0;
+                dino.isJumping = false;
+            }
+            
+            // Dibujar dinosaurio del jugador actual (imagen cuadrada)
+            const charImg = characterImagesLoaded[selectedCharacter];
+            if (charImg && charImg.complete) {
+                gameCtx.drawImage(charImg, dino.x, dino.y, dino.width, dino.height);
+            }
+            
+            // Dibujar nombre del jugador
+            gameCtx.font = 'bold 14px Arial';
+            gameCtx.fillStyle = '#0078d4';
+            gameCtx.textAlign = 'center';
+            gameCtx.fillText(gamePlayerName, dino.x + dino.width / 2, dino.y - 10);
+            
+            // Dibujar otros jugadores en tiempo real
+            Object.values(otherPlayers).forEach(player => {
+                if (player.player_id === gamePlayerId) return;
+                
+                // Dibujar otros jugadores con opacidad menor
+                gameCtx.globalAlpha = 0.7;
+                const otherCharImg = characterImagesLoaded[player.character_id || 'dino1'];
+                if (otherCharImg && otherCharImg.complete) {
+                    gameCtx.drawImage(otherCharImg, player.position_x, player.position_y, 60, 60);
+                }
+                
+                gameCtx.font = 'bold 12px Arial';
+                gameCtx.fillStyle = '#888';
+                gameCtx.textAlign = 'center';
+                gameCtx.fillText(player.player_name, player.position_x + 30, player.position_y - 10);
+                gameCtx.globalAlpha = 1.0;
+            });
+            
+            // Generar obstáculos del mapa actual
+            gameFrameCount++;
+            if (gameFrameCount % 100 === 0) {
+                const currentMapObstacles = gameMaps[currentMapId].obstacles;
+                const randomUrl = currentMapObstacles[Math.floor(Math.random() * currentMapObstacles.length)];
+                obstacles.push({
+                    x: gameCanvas.width,
+                    y: 240,
+                    width: 50,
+                    height: 50,
+                    imageUrl: randomUrl
+                });
+            }
+            
+            // Actualizar y dibujar obstáculos
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                const obs = obstacles[i];
+                obs.x -= gameSpeed;
+                
+                // Dibujar obstáculo (imagen cuadrada)
+                const obsData = obstacleImagesLoaded.find(o => o.url === obs.imageUrl);
+                if (obsData && obsData.img && obsData.img.complete) {
+                    gameCtx.drawImage(obsData.img, obs.x, obs.y, obs.width, obs.height);
+                }
+                
+                // Verificar colisión
+                if (checkCollision(dino, obs)) {
+                    gameOver();
+                    return;
+                }
+                
+                // Eliminar obstáculos fuera de pantalla
+                if (obs.x + obs.width < 0) {
+                    obstacles.splice(i, 1);
+                    gameScore += 10;
+                    document.getElementById('currentScore').textContent = gameScore;
+                    
+                    // Aumentar velocidad gradualmente
+                    if (gameScore % 100 === 0) {
+                        gameSpeed += 0.5;
+                    }
+                }
+            }
+            
+            gameAnimationFrame = requestAnimationFrame(gameLoop);
+        }
+        
+        function checkCollision(rect1, rect2) {
+            return rect1.x < rect2.x + rect2.width &&
+                   rect1.x + rect1.width > rect2.x &&
+                   rect1.y < rect2.y + rect2.height &&
+                   rect1.y + rect1.height > rect2.y;
+        }
+        
+        async function gameOver() {
+            gameRunning = false;
+            updateGameStatus('💀 Game Over!');
+            
+            // SIEMPRE guardar puntuación en Supabase (el UPSERT se encarga de actualizar si es mejor)
+            await saveScoreToDatabase(gameScore);
+            
+            // Actualizar mejor puntuación local solo si es mayor
+            if (gameScore > gameBestScore) {
+                gameBestScore = gameScore;
+                localStorage.setItem('dinoBestScore', gameBestScore);
+                document.getElementById('bestScore').textContent = gameBestScore;
+            }
+            
+            // Recargar leaderboard para mostrar actualización
+            await loadLeaderboard();
+            
+            // Mostrar mensaje
+            setTimeout(() => {
+                updateGameStatus('🎮 Presiona ESPACIO para jugar de nuevo');
+            }, 1500);
+        }
+        
+        function updateGameStatus(text) {
+            document.getElementById('gameStatus').textContent = text;
+        }
+        
+        async function saveScoreToDatabase(score) {
+            if (!supabaseClient) return;
+            
+            try {
+                // Primero, verificar si ya existe una puntuación para este jugador
+                const { data: existing, error: fetchError } = await supabaseClient
+                    .from('game_scores')
+                    .select('score')
+                    .eq('player_id', gamePlayerId)
+                    .single();
+                
+                // Si hay error y no es "no encontrado", salir
+                if (fetchError && fetchError.code !== 'PGRST116') {
+                    console.error('Error consultando puntuación:', fetchError);
+                    return;
+                }
+                
+                // Decidir si guardar o no
+                let shouldSave = false;
+                if (!existing) {
+                    // No existe registro, insertar
+                    shouldSave = true;
+                } else if (score > existing.score) {
+                    // Existe pero la nueva puntuación es mayor, actualizar
+                    shouldSave = true;
+                }
+                
+                if (shouldSave) {
+                    const { error } = await supabaseClient
+                        .from('game_scores')
+                        .upsert({
+                            player_id: gamePlayerId,
+                            player_name: gamePlayerName,
+                            score: score,
+                            character_id: selectedCharacter,
+                            updated_at: new Date().toISOString()
+                        }, {
+                            onConflict: 'player_id'
+                        });
+                    
+                    if (error) {
+                        console.error('Error guardando puntuación:', error);
+                    } else {
+                        console.log('✅ Puntuación guardada/actualizada correctamente:', score);
+                    }
+                } else {
+                    console.log('ℹ️ Puntuación no actualizada (no supera el récord):', score, 'vs', existing.score);
+                }
+            } catch (error) {
+                console.error('Error en saveScoreToDatabase:', error);
+            }
+        }
+        
+        async function loadLeaderboard() {
+            if (!supabaseClient) {
+                document.getElementById('leaderboardList').innerHTML = '<p style="text-align: center; color: #888;">Ranking no disponible</p>';
+                return;
+            }
+            
+            try {
+                const { data, error } = await supabaseClient
+                    .from('game_scores')
+                    .select('*')
+                    .order('score', { ascending: false })
+                    .limit(10);
+                
+                if (error && !error.message.includes('does not exist')) {
+                    throw error;
+                }
+                
+                const leaderboardList = document.getElementById('leaderboardList');
+                
+                if (!data || data.length === 0) {
+                    leaderboardList.innerHTML = '<p style="text-align: center; color: #888;">No hay puntuaciones aún. ¡Sé el primero!</p>';
+                    return;
+                }
+                
+                leaderboardList.innerHTML = '';
+                data.forEach((entry, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'leaderboard-item';
+                    
+                    let rankClass = '';
+                    let medal = '';
+                    if (index === 0) { rankClass = 'first'; medal = '🥇'; }
+                    else if (index === 1) { rankClass = 'second'; medal = '🥈'; }
+                    else if (index === 2) { rankClass = 'third'; medal = '🥉'; }
+                    
+                    const charIcon = '🎮';
+                    
+                    item.innerHTML = `
+                        <div class="leaderboard-rank ${rankClass}">${medal || (index + 1)}</div>
+                        <div class="leaderboard-player">${charIcon} ${entry.player_name}</div>
+                        <div class="leaderboard-score">${entry.score}</div>
+                    `;
+                    
+                    leaderboardList.appendChild(item);
+                });
+            } catch (error) {
+                console.error('Error cargando leaderboard:', error);
+                document.getElementById('leaderboardList').innerHTML = '<p style="text-align: center; color: #888;">Error cargando ranking</p>';
+            }
+        }
+        
+        // ===== FUNCIONES DE MULTIJUGADOR EN TIEMPO REAL =====
+        
+        function subscribeToLiveGame() {
+            if (!supabaseClient) return;
+            
+            try {
+                gameLiveChannel = supabaseClient.channel('game_live')
+                    .on('broadcast', { event: 'player_update' }, (payload) => {
+                        const player = payload.payload;
+                        if (player.player_id !== gamePlayerId) {
+                            otherPlayers[player.player_id] = player;
+                        }
+                    })
+                    .on('broadcast', { event: 'player_left' }, (payload) => {
+                        delete otherPlayers[payload.payload.player_id];
+                    })
+                    .subscribe((status) => {
+                        if (status === 'SUBSCRIBED') {
+                            console.log('✅ Conectado al juego multijugador');
+                        }
+                    });
+            } catch (error) {
+                console.error('Error suscribiéndose al juego en vivo:', error);
+            }
+        }
+        
+        async function registerPlayerLive() {
+            if (!supabaseClient) return;
+            
+            try {
+                await supabaseClient
+                    .from('game_players_live')
+                    .upsert({
+                        player_id: gamePlayerId,
+                        player_name: gamePlayerName,
+                        character_id: selectedCharacter,
+                        position_x: dino.x,
+                        position_y: dino.y,
+                        score: gameScore,
+                        is_jumping: dino.isJumping,
+                        last_seen: new Date().toISOString()
+                    }, {
+                        onConflict: 'player_id'
+                    });
+            } catch (error) {
+                console.error('Error registrando jugador:', error);
+            }
+        }
+        
+        function updatePlayerPosition() {
+            if (!gameRunning || !gameLiveChannel) return;
+            
+            // Broadcast posición a otros jugadores
+            gameLiveChannel.send({
+                type: 'broadcast',
+                event: 'player_update',
+                payload: {
+                    player_id: gamePlayerId,
+                    player_name: gamePlayerName,
+                    character_id: selectedCharacter,
+                    position_x: dino.x,
+                    position_y: dino.y,
+                    score: gameScore,
+                    is_jumping: dino.isJumping
+                }
+            });
+        }
+        
+        async function removePlayerLive() {
+            if (!supabaseClient || !gamePlayerId) return;
+            
+            try {
+                // Eliminar de la base de datos
+                await supabaseClient
+                    .from('game_players_live')
+                    .delete()
+                    .eq('player_id', gamePlayerId);
+                
+                // Broadcast que el jugador se fue
+                if (gameLiveChannel) {
+                    gameLiveChannel.send({
+                        type: 'broadcast',
+                        event: 'player_left',
+                        payload: { player_id: gamePlayerId }
+                    });
+                }
+            } catch (error) {
+                console.error('Error eliminando jugador:', error);
+            }
+        }
+        
+        // ===== SISTEMA DE VOTACIÓN DE MAPAS =====
+        
+        function initMapVoting() {
+            const votingDiv = document.getElementById('mapVoting');
+            votingDiv.innerHTML = '';
+            
+            // Crear botones de votación para cada mapa
+            Object.keys(gameMaps).forEach(mapId => {
+                const map = gameMaps[mapId];
+                const button = document.createElement('button');
+                button.className = 'map-vote-btn';
+                button.dataset.mapId = mapId;
+                button.innerHTML = `
+                    <div style="font-size: 20px; margin-bottom: 5px;">${map.name}</div>
+                    <div class="vote-count" id="votes-${mapId}">0 votos</div>
+                `;
+                button.onclick = () => voteForMap(mapId);
+                
+                // Aplicar colores del mapa al botón
+                const isDark = document.body.classList.contains('dark-theme');
+                button.style.background = `linear-gradient(135deg, ${isDark ? map.bgColor.dark : map.bgColor.light}, ${isDark ? map.groundColor.dark : map.groundColor.light})`;
+                button.style.color = isDark ? '#fff' : '#000';
+                button.style.border = '2px solid transparent';
+                button.style.borderRadius = '8px';
+                button.style.padding = '10px';
+                button.style.cursor = 'pointer';
+                button.style.transition = 'all 0.3s ease';
+                button.style.margin = '5px';
+                button.style.minWidth = '100px';
+                
+                votingDiv.appendChild(button);
+            });
+            
+            // Suscribirse a votación en tiempo real
+            subscribeToMapVoting();
+            
+            // Cargar mapa inicial
+            currentMapId = localStorage.getItem('currentMapId') || 'desert';
+            updateCurrentMapDisplay();
+        }
+        
+        function voteForMap(mapId) {
+            if (!gameMapVotingChannel) return;
+            
+            // Enviar voto
+            gameMapVotingChannel.send({
+                type: 'broadcast',
+                event: 'map_vote',
+                payload: {
+                    player_id: gamePlayerId,
+                    map_id: mapId
+                }
+            });
+            
+            // Actualizar localmente
+            mapVotes[gamePlayerId] = mapId;
+            updateMapVoteCount();
+            
+            console.log(`🗳️ Votaste por: ${gameMaps[mapId].name}`);
+        }
+        
+        function subscribeToMapVoting() {
+            if (!supabaseClient) return;
+            
+            try {
+                gameMapVotingChannel = supabaseClient
+                    .channel('game_map_voting')
+                    .on('broadcast', { event: 'map_vote' }, (payload) => {
+                        const { player_id, map_id } = payload.payload;
+                        mapVotes[player_id] = map_id;
+                        updateMapVoteCount();
+                        checkMapChange();
+                    })
+                    .on('broadcast', { event: 'map_changed' }, (payload) => {
+                        const { map_id } = payload.payload;
+                        currentMapId = map_id;
+                        updateCurrentMapDisplay();
+                        showMapChangeNotification(gameMaps[map_id].name);
+                    })
+                    .subscribe((status) => {
+                        if (status === 'SUBSCRIBED') {
+                            console.log('✅ Conectado a votación de mapas');
+                        }
+                    });
+            } catch (error) {
+                console.error('Error suscribiéndose a votación de mapas:', error);
+            }
+        }
+        
+        function updateMapVoteCount() {
+            // Contar votos por mapa
+            const voteCounts = {};
+            Object.values(mapVotes).forEach(mapId => {
+                voteCounts[mapId] = (voteCounts[mapId] || 0) + 1;
+            });
+            
+            // Actualizar UI
+            Object.keys(gameMaps).forEach(mapId => {
+                const voteEl = document.getElementById(`votes-${mapId}`);
+                const count = voteCounts[mapId] || 0;
+                if (voteEl) {
+                    voteEl.textContent = `${count} voto${count !== 1 ? 's' : ''}`;
+                }
+                
+                // Resaltar el botón si tiene votos
+                const btn = document.querySelector(`[data-map-id="${mapId}"]`);
+                if (btn) {
+                    if (count > 0) {
+                        btn.style.borderColor = 'gold';
+                        btn.style.transform = 'scale(1.05)';
+                    } else {
+                        btn.style.borderColor = 'transparent';
+                        btn.style.transform = 'scale(1)';
+                    }
+                }
+            });
+        }
+        
+        function checkMapChange() {
+            // Contar votos
+            const voteCounts = {};
+            Object.values(mapVotes).forEach(mapId => {
+                voteCounts[mapId] = (voteCounts[mapId] || 0) + 1;
+            });
+            
+            // Encontrar el mapa con más votos
+            let maxVotes = 0;
+            let winningMap = currentMapId;
+            Object.entries(voteCounts).forEach(([mapId, count]) => {
+                if (count > maxVotes) {
+                    maxVotes = count;
+                    winningMap = mapId;
+                }
+            });
+            
+            // Cambiar mapa si hay al menos 2 votos y es diferente
+            if (maxVotes >= 2 && winningMap !== currentMapId) {
+                currentMapId = winningMap;
+                localStorage.setItem('currentMapId', currentMapId);
+                updateCurrentMapDisplay();
+                
+                // Broadcast cambio de mapa
+                if (gameMapVotingChannel) {
+                    gameMapVotingChannel.send({
+                        type: 'broadcast',
+                        event: 'map_changed',
+                        payload: { map_id: currentMapId }
+                    });
+                }
+                
+                showMapChangeNotification(gameMaps[currentMapId].name);
+                
+                // Resetear votos después del cambio
+                setTimeout(() => {
+                    mapVotes = {};
+                    updateMapVoteCount();
+                }, 3000);
+            }
+        }
+        
+        function updateCurrentMapDisplay() {
+            const mapNameEl = document.getElementById('currentMapName');
+            if (mapNameEl) {
+                mapNameEl.textContent = gameMaps[currentMapId].name;
+            }
+        }
+        
+        function showMapChangeNotification(mapName) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                z-index: 10000;
+                font-size: 14px;
+                font-weight: 600;
+                animation: slideInRight 0.3s ease;
+            `;
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 20px;">🗺️</span>
+                    <div>
+                        <div style="font-weight: 700;">Mapa cambiado</div>
+                        <div style="font-size: 12px; opacity: 0.9;">${mapName}</div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        // ===== RANKING EN TIEMPO REAL =====
+        
+        function subscribeToLeaderboardUpdates() {
+            if (!supabaseClient) return;
+            
+            try {
+                // Suscribirse a cambios en la tabla game_scores
+                gameScoresChannel = supabaseClient
+                    .channel('game_scores_changes')
+                    .on(
+                        'postgres_changes',
+                        {
+                            event: '*', // INSERT, UPDATE, DELETE
+                            schema: 'public',
+                            table: 'game_scores'
+                        },
+                        (payload) => {
+                            console.log('🔄 Cambio detectado en ranking:', payload);
+                            // Recargar leaderboard automáticamente
+                            loadLeaderboard();
+                            
+                            // Mostrar notificación si no es el jugador actual
+                            if (payload.new && payload.new.player_id !== gamePlayerId) {
+                                showLeaderboardUpdateNotification(payload.new.player_name, payload.new.score);
+                            }
+                        }
+                    )
+                    .subscribe((status) => {
+                        if (status === 'SUBSCRIBED') {
+                            console.log('✅ Suscrito a actualizaciones del ranking en tiempo real');
+                        }
+                    });
+            } catch (error) {
+                console.error('Error suscribiéndose a actualizaciones del ranking:', error);
+            }
+        }
+        
+        function showLeaderboardUpdateNotification(playerName, score) {
+            // Crear notificación temporal
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                z-index: 10000;
+                font-size: 14px;
+                font-weight: 600;
+                animation: slideInRight 0.3s ease;
+                max-width: 300px;
+            `;
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 20px;">🏆</span>
+                    <div>
+                        <div style="font-weight: 700;">${playerName}</div>
+                        <div style="font-size: 12px; opacity: 0.9;">${score} puntos</div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
         function handleChatFileSelect(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -3282,6 +5392,213 @@
                 console.error('Error en loadRecentMessages:', error);
             }
         }
+        // ===== CREADOR DE MEMES =====
+        let memeCanvas, memeCtx;
+        let memeImage = null;
+        const memeTemplates = [
+            'https://i.imgflip.com/30b1gx.jpg', // Drake
+            'https://i.imgflip.com/1bij.jpg', // Success Kid
+            'https://i.imgflip.com/26am.jpg', // Distracted Boyfriend
+            'https://i.imgflip.com/1g8my4.jpg', // Change My Mind
+            'https://i.imgflip.com/3oevdk.jpg', // Bernie Sanders
+            'https://i.imgflip.com/4t0m5.jpg', // Woman Yelling at Cat
+        ];
+
+        function initMemeCreator() {
+            memeCanvas = document.getElementById('memeCanvas');
+            memeCtx = memeCanvas.getContext('2d');
+            
+            // Cargar plantillas
+            const templatesContainer = document.getElementById('memeTemplates');
+            templatesContainer.innerHTML = '';
+            
+            memeTemplates.forEach((url, index) => {
+                const template = document.createElement('div');
+                template.className = 'meme-template';
+                if (index === 0) template.classList.add('active');
+                
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = `Plantilla ${index + 1}`;
+                
+                template.appendChild(img);
+                template.onclick = () => selectMemeTemplate(url, template);
+                templatesContainer.appendChild(template);
+            });
+            
+            // Cargar primera plantilla por defecto
+            if (memeTemplates.length > 0) {
+                loadMemeImage(memeTemplates[0]);
+            }
+        }
+
+        function openMemeCreator() {
+            document.getElementById('memeCreatorModal').classList.add('active');
+            if (!memeCanvas) {
+                initMemeCreator();
+            }
+        }
+
+        function closeMemeCreator() {
+            document.getElementById('memeCreatorModal').classList.remove('active');
+        }
+
+        function selectMemeTemplate(url, element) {
+            document.querySelectorAll('.meme-template').forEach(t => t.classList.remove('active'));
+            element.classList.add('active');
+            loadMemeImage(url);
+        }
+
+        function loadMemeImage(src) {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => {
+                memeImage = img;
+                updateMeme();
+            };
+            img.onerror = () => {
+                console.error('Error cargando imagen');
+                // Si falla, usar una imagen de respaldo
+                memeCtx.fillStyle = '#cccccc';
+                memeCtx.fillRect(0, 0, memeCanvas.width, memeCanvas.height);
+                memeCtx.fillStyle = '#000000';
+                memeCtx.font = '20px Arial';
+                memeCtx.textAlign = 'center';
+                memeCtx.fillText('Error al cargar imagen', memeCanvas.width / 2, memeCanvas.height / 2);
+            };
+            img.src = src;
+        }
+
+        function handleMemeImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    loadMemeImage(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function updateMeme() {
+            if (!memeImage) return;
+            
+            // Limpiar canvas
+            memeCtx.clearRect(0, 0, memeCanvas.width, memeCanvas.height);
+            
+            // Dibujar imagen
+            memeCtx.drawImage(memeImage, 0, 0, memeCanvas.width, memeCanvas.height);
+            
+            // Obtener valores
+            const topText = document.getElementById('memeTopText').value.toUpperCase();
+            const bottomText = document.getElementById('memeBottomText').value.toUpperCase();
+            const fontSize = parseInt(document.getElementById('memeFontSize').value);
+            const textColor = document.getElementById('memeTextColor').value;
+            
+            // Configurar estilo de texto
+            memeCtx.font = `bold ${fontSize}px Impact, Arial Black, sans-serif`;
+            memeCtx.fillStyle = textColor;
+            memeCtx.strokeStyle = '#000000';
+            memeCtx.lineWidth = fontSize / 20;
+            memeCtx.textAlign = 'center';
+            memeCtx.textBaseline = 'top';
+            
+            // Dibujar texto superior
+            if (topText) {
+                const topY = 20;
+                memeCtx.strokeText(topText, memeCanvas.width / 2, topY);
+                memeCtx.fillText(topText, memeCanvas.width / 2, topY);
+            }
+            
+            // Dibujar texto inferior
+            if (bottomText) {
+                const bottomY = memeCanvas.height - fontSize - 20;
+                memeCtx.strokeText(bottomText, memeCanvas.width / 2, bottomY);
+                memeCtx.fillText(bottomText, memeCanvas.width / 2, bottomY);
+            }
+        }
+
+        function downloadMeme() {
+            const link = document.createElement('a');
+            link.download = 'meme.png';
+            link.href = memeCanvas.toDataURL();
+            link.click();
+        }
+
+        async function sendMemeToChat() {
+            try {
+                // Convertir canvas a blob
+                memeCanvas.toBlob(async (blob) => {
+                    if (!blob) {
+                        alert('Error al generar el meme');
+                        return;
+                    }
+                    
+                    // Crear un archivo desde el blob
+                    const file = new File([blob], `meme_${Date.now()}.png`, { type: 'image/png' });
+                    
+                    // Subir a storage
+                    const filePath = `${Date.now()}_${chatUserId}_meme.png`;
+                    const { error: uploadError } = await supabaseClient.storage
+                        .from('chat-files')
+                        .upload(filePath, file, { cacheControl: '3600', upsert: false });
+                    
+                    if (uploadError) {
+                        console.error('Error subiendo meme:', uploadError);
+                        alert('Error al subir el meme');
+                        return;
+                    }
+                    
+                    const { data: { publicUrl } } = supabaseClient.storage
+                        .from('chat-files')
+                        .getPublicUrl(filePath);
+                    
+                    // Enviar mensaje con el meme
+                    const messageData = {
+                        user_id: chatUserId,
+                        user_name: chatUserName,
+                        user_color: chatUserColor,
+                        message: '😂 ¡Nuevo meme!',
+                        file_url: publicUrl,
+                        file_type: 'image',
+                        created_at: new Date().toISOString()
+                    };
+                    
+                    // Guardar en base de datos
+                    if (supabaseClient) {
+                        try {
+                            const { error } = await supabaseClient
+                                .from('chat_messages')
+                                .insert([messageData]);
+                            
+                            if (error && !error.message.includes('does not exist')) {
+                                console.error('Error guardando mensaje:', error);
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                        }
+                    }
+                    
+                    // Broadcast a través del channel
+                    if (chatChannel) {
+                        chatChannel.send({
+                            type: 'broadcast',
+                            event: 'new_message',
+                            payload: messageData
+                        });
+                    }
+                    
+                    // Cerrar creador de memes
+                    closeMemeCreator();
+                    
+                    alert('✅ ¡Meme enviado al chat!');
+                }, 'image/png');
+            } catch (error) {
+                console.error('Error enviando meme:', error);
+                alert('Error al enviar el meme');
+            }
+        }
+
         async function sendMessage() {
             const input = document.getElementById('chatInput');
             const message = input.value.trim();
@@ -3724,21 +6041,71 @@
             try {
                 backgroundSyncChannel = supabaseClient.channel('background_sync')
                     .on('broadcast', { event: 'background_changed' }, (payload) => {
+                        console.log('🎨 Nuevo fondo recibido en tiempo real');
                         const settings = payload.payload;
                         if (settings && settings.url) {
-                            applyBackgroundFromSettings(settings);
+                            // Guardar configuración pero no aplicar si el juego está activo
                             localStorage.setItem('jotaBackgroundSettings', JSON.stringify(settings));
                             localStorage.setItem('jotaBackground', settings.url);
+                            
+                            // Solo aplicar si el juego NO está activo
+                            const gameContainer = document.getElementById('gameContainer');
+                            const isGameActive = gameContainer && gameContainer.classList.contains('active');
+                            
+                            if (!isGameActive) {
+                                applyBackgroundFromSettings(settings);
+                                // Mostrar notificación
+                                showBackgroundChangeNotification();
+                            }
                         }
                     })
-                    .subscribe();
+                    .subscribe((status) => {
+                        if (status === 'SUBSCRIBED') {
+                            console.log('✅ Suscrito a sincronización de fondos en tiempo real');
+                        }
+                    });
             } catch (error) {
                 console.error('Error suscribiéndose a sincronización de fondo:', error);
             }
         }
+        
+        function showBackgroundChangeNotification() {
+            // Crear notificación temporal
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                background: var(--jota-primary-color);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                box-shadow: var(--jota-shadow);
+                z-index: 10000;
+                font-size: 14px;
+                font-weight: 600;
+                animation: slideInRight 0.3s ease;
+            `;
+            notification.textContent = '🎨 Fondo actualizado';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
 
         async function loadSharedBackground() {
             if (!supabaseClient) return;
+            
+            // No cargar fondo si el juego está activo
+            const gameContainer = document.getElementById('gameContainer');
+            const isGameActive = gameContainer && gameContainer.classList.contains('active');
+            if (isGameActive) {
+                console.log('⏸️ Juego activo, no se carga el fondo');
+                return;
+            }
             
             try {
                 const { data, error } = await supabaseClient
@@ -3747,12 +6114,25 @@
                     .eq('setting_key', 'background_config')
                     .single();
                 
-                if (error && !error.message.includes('does not exist')) {
-                    console.error('Error cargando fondo compartido:', error);
+                if (error) {
+                    if (!error.message.includes('does not exist')) {
+                        console.error('Error cargando fondo compartido:', error);
+                    }
+                    // Si no hay fondo compartido, usar el local si existe
+                    const localSettings = localStorage.getItem('jotaBackgroundSettings');
+                    if (localSettings) {
+                        try {
+                            const settings = JSON.parse(localSettings);
+                            applyBackgroundFromSettings(settings);
+                        } catch (e) {
+                            console.error('Error aplicando fondo local:', e);
+                        }
+                    }
                     return;
                 }
                 
                 if (data && data.setting_value && data.setting_value.url) {
+                    console.log('✅ Fondo compartido cargado desde la base de datos');
                     applyBackgroundFromSettings(data.setting_value);
                     localStorage.setItem('jotaBackgroundSettings', JSON.stringify(data.setting_value));
                     localStorage.setItem('jotaBackground', data.setting_value.url);
@@ -3766,20 +6146,28 @@
             if (!supabaseClient) return;
             
             try {
+                // Usar UPSERT para crear o actualizar
                 const { error } = await supabaseClient
                     .from('shared_settings')
-                    .update({ 
+                    .upsert({ 
+                        setting_key: 'background_config',
                         setting_value: settings,
                         updated_at: new Date().toISOString(),
-                        updated_by: chatUserId
-                    })
-                    .eq('setting_key', 'background_config');
+                        updated_by: chatUserId || 'anonymous'
+                    }, {
+                        onConflict: 'setting_key'
+                    });
                 
-                if (error && !error.message.includes('does not exist')) {
+                if (error) {
                     console.error('Error guardando fondo compartido:', error);
+                    // Intentar crear la tabla si no existe
+                    console.log('Nota: Asegúrate de crear la tabla shared_settings en Supabase');
                     return;
                 }
                 
+                console.log('✅ Fondo guardado y sincronizado para todos los usuarios');
+                
+                // Broadcast a todos los usuarios conectados
                 if (backgroundSyncChannel) {
                     backgroundSyncChannel.send({
                         type: 'broadcast',
@@ -3794,20 +6182,37 @@
 
         let adminClickCount = 0;
         let adminClickTimer = null;
+        let adminKeySequence = [];
+        const adminSecretKey = ['a', 'd', 'm', 'i', 'n']; // Escribir "admin"
         
+        // Triple click en el footer
         document.getElementById('adminTrigger').addEventListener('click', () => {
             adminClickCount++;
             
             if (adminClickTimer) clearTimeout(adminClickTimer);
             
-            if (adminClickCount === 3) {
+            if (adminClickCount === 5) {
                 toggleAdminPanel();
                 adminClickCount = 0;
             }
             
             adminClickTimer = setTimeout(() => {
                 adminClickCount = 0;
-            }, 500);
+            }, 800);
+        });
+        
+        // Teclas secretas: Escribir "admin" en cualquier momento
+        document.addEventListener('keydown', (e) => {
+            adminKeySequence.push(e.key.toLowerCase());
+            
+            if (adminKeySequence.length > adminSecretKey.length) {
+                adminKeySequence.shift();
+            }
+            
+            if (JSON.stringify(adminKeySequence) === JSON.stringify(adminSecretKey)) {
+                toggleAdminPanel();
+                adminKeySequence = [];
+            }
         });
         
         function toggleAdminPanel() {
