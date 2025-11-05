@@ -2411,9 +2411,574 @@
         .autocomplete-item.selected .autocomplete-description {
             opacity: 1;
         }
+
+        /* ===== MEJORAS DRAG AND DROP INTERACTIVO ===== */
+        .upload-area {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .upload-area.drag-active {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(16, 110, 190, 0.3)) !important;
+            transform: scale(1.02);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.4), 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 3px dashed var(--jota-primary-color) !important;
+        }
+
+        .upload-area.drag-active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(6, 182, 212, 0.1) 50%, transparent 70%);
+            animation: dragShimmer 2s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes dragShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .upload-area.upload-success {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(22, 163, 74, 0.2)) !important;
+            border-color: #22c55e !important;
+            animation: successPulse 0.6s ease;
+        }
+
+        @keyframes successPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .file-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--jota-secondary-color);
+            border: 1px solid var(--jota-border-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            animation: slideInFile 0.3s ease;
+        }
+
+        @keyframes slideInFile {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .file-item:hover {
+            background: var(--jota-hover-color);
+            border-color: var(--jota-primary-color);
+            transform: translateX(4px);
+        }
+
+        .file-item-icon {
+            font-size: 2rem;
+            animation: bounceIn 0.5s ease;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .file-item-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .file-item-name {
+            font-weight: 600;
+            color: var(--jota-text-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-item-size {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .file-item-remove {
+            padding: 6px 10px;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .file-item-remove:hover {
+            background: #b91c1c;
+            transform: scale(1.1);
+        }
+
+        .upload-progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--jota-secondary-color);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .upload-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--jota-primary-color), var(--jota-accent-color));
+            transition: width 0.3s ease;
+            animation: progressShine 2s infinite;
+        }
+
+        @keyframes progressShine {
+            0% { background-position: -200px 0; }
+            100% { background-position: 200px 0; }
+        }
+
+        /* ===== MODAL NOTIFICACIONES PERSONALIZADAS ===== */
+        .notification-upload-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 2100;
+            backdrop-filter: blur(6px);
+        }
+
+        .notification-upload-modal.active {
+            display: flex;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .notification-upload-content {
+            background: var(--jota-card-bg);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--jota-border-color);
+        }
+
+        .notification-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .notification-item {
+            background: var(--jota-secondary-color);
+            border: 2px solid var(--jota-border-color);
+            border-radius: 8px;
+            padding: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-item:hover {
+            border-color: var(--jota-primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .notification-item.selected {
+            border-color: var(--jota-primary-color);
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(16, 110, 190, 0.1));
+        }
+
+        .notification-item.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
+            background: var(--jota-primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .notification-item-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .notification-item-icon {
+            font-size: 2rem;
+        }
+
+        .notification-item-name {
+            font-weight: 600;
+            color: var(--jota-text-color);
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .notification-item-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .notification-play-btn, .notification-delete-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .notification-play-btn {
+            background: var(--jota-primary-color);
+            color: white;
+        }
+
+        .notification-play-btn:hover {
+            background: var(--jota-accent-color);
+        }
+
+        .notification-delete-btn {
+            background: #dc2626;
+            color: white;
+        }
+
+        .notification-delete-btn:hover {
+            background: #b91c1c;
+        }
+
+        .notification-upload-area {
+            border: 3px dashed var(--jota-border-color);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.3);
+            margin: 16px 0;
+        }
+
+        body.dark-theme .notification-upload-area {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .notification-upload-area:hover {
+            border-color: var(--jota-primary-color);
+            background: rgba(6, 182, 212, 0.1);
+            transform: scale(1.02);
+        }
+
+        .notification-upload-area.drag-active {
+            border-color: var(--jota-primary-color);
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(16, 110, 190, 0.2));
+            transform: scale(1.05);
+        }
+
+        .notification-selected-file {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--jota-secondary-color);
+            border: 1px solid var(--jota-border-color);
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+
+        .notification-file-icon {
+            font-size: 2rem;
+        }
+
+        .notification-file-info {
+            flex: 1;
+        }
+
+        .notification-file-name {
+            font-weight: 600;
+            color: var(--jota-text-color);
+        }
+
+        .notification-file-size {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        /* ===== DRAG & DROP DE ARCHIVOS ENTRE CARPETAS ===== */
+        .document-card[draggable="true"] {
+            cursor: grab;
+            user-select: none;
+        }
+
+        .document-card.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg) scale(0.95);
+            cursor: grabbing;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 2px dashed var(--jota-primary-color);
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(16, 110, 190, 0.2));
+        }
+
+        .folder-tree a.drag-over {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(16, 110, 190, 0.3)) !important;
+            border-left: 4px solid var(--jota-primary-color);
+            transform: translateX(4px);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+            animation: folderPulse 0.5s ease infinite;
+        }
+
+        @keyframes folderPulse {
+            0%, 100% { transform: translateX(4px) scale(1); }
+            50% { transform: translateX(4px) scale(1.02); }
+        }
+
+        .folder-tree a.can-drop {
+            border-left: 3px solid var(--jota-accent-color);
+            padding-left: 13px;
+        }
+
+        .document-card.drop-preview {
+            border: 2px dashed var(--jota-accent-color);
+            background: rgba(6, 182, 212, 0.1);
+            opacity: 0.7;
+        }
+
+        /* ===== SISTEMA DE SUBCARPETAS ===== */
+        .folder-tree a.subfolder {
+            padding-left: 40px;
+            font-size: 13px;
+            position: relative;
+        }
+
+        .folder-tree a.subfolder::before {
+            content: '└─';
+            position: absolute;
+            left: 20px;
+            color: var(--jota-border-color);
+            font-weight: 400;
+        }
+
+        .folder-tree a.subfolder.level-2 {
+            padding-left: 56px;
+        }
+
+        .folder-tree a.subfolder.level-2::before {
+            left: 36px;
+        }
+
+        .folder-tree a.subfolder.level-3 {
+            padding-left: 72px;
+        }
+
+        .folder-tree a.subfolder.level-3::before {
+            left: 52px;
+        }
+
+        .folder-icon.expandable {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .folder-icon.expandable.expanded {
+            transform: rotate(90deg);
+        }
+
+        .folder-actions {
+            display: none;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .folder-tree a:hover .folder-actions {
+            display: flex;
+        }
+
+        .folder-action-btn {
+            padding: 2px 6px;
+            background: var(--jota-hover-color);
+            border: 1px solid var(--jota-border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .folder-action-btn:hover {
+            background: var(--jota-primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* ===== INDICADORES VISUALES DE MOVIMIENTO ===== */
+        .move-indicator {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            background: var(--jota-primary-color);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: none;
+            animation: floatIndicator 0.3s ease;
+        }
+
+        .move-indicator.active {
+            display: block;
+        }
+
+        @keyframes floatIndicator {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .document-card .move-handle {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            cursor: grab;
+            font-size: 18px;
+            padding: 4px;
+            background: var(--jota-card-bg);
+            border-radius: 4px;
+            border: 1px solid var(--jota-border-color);
+        }
+
+        .document-card:hover .move-handle {
+            opacity: 1;
+        }
+
+        .document-card .move-handle:hover {
+            background: var(--jota-primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* ===== BREADCRUMB DE NAVEGACIÓN ===== */
+        .folder-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding: 8px 12px;
+            background: var(--jota-secondary-color);
+            border-radius: 8px;
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--jota-text-color);
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .breadcrumb-item:hover {
+            background: var(--jota-hover-color);
+            color: var(--jota-primary-color);
+        }
+
+        .breadcrumb-item.current {
+            background: var(--jota-primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .breadcrumb-separator {
+            color: #888;
+            font-size: 12px;
+        }
+
+        /* ===== EFECTOS DE CONTEXTO AL ARRASTRAR ===== */
+        .content-area.drag-mode {
+            background: repeating-linear-gradient(
+                45deg,
+                var(--jota-background),
+                var(--jota-background) 10px,
+                rgba(6, 182, 212, 0.05) 10px,
+                rgba(6, 182, 212, 0.05) 20px
+            );
+        }
+
+        .folder-tree.drag-mode {
+            border-right: 3px solid var(--jota-primary-color);
+            background: rgba(6, 182, 212, 0.05);
+        }
+
+        /* Animación de confirmación */
+        @keyframes successMove {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); background: rgba(34, 197, 94, 0.3); }
+            100% { transform: scale(1); }
+        }
+
+        .document-card.move-success {
+            animation: successMove 0.5s ease;
+        }
+
+        .folder-tree a.drop-success {
+            animation: successMove 0.5s ease;
+        }
     </style>
 </head>
 <body>
+    <!-- Indicador de movimiento de archivos -->
+    <div class="move-indicator" id="moveIndicator">📦 Moviendo archivo...</div>
     
     <div class="top-nav">
         <h1 style="cursor: pointer; user-select: none;" title="TempFiles">TempFiles</h1>
@@ -2445,7 +3010,8 @@
             <button class="toggle-folder-btn" onclick="toggleFolderTree()">⇆</button>
             <h2>📁 Carpetas</h2>
             <a href="#" onclick="openModal('new-folder-modal')">📁 Nueva Carpeta</a>
-            <a href="#" onclick="loadFolder('all')">📁 Todos los documentos</a>
+            <a href="#" id="allDocumentsLink" onclick="loadFolder('all')">📂 Todos los documentos</a>
+            <a href="#" id="rootFolderLink" data-folder-id="root" data-folder-name="Raíz" onclick="loadFolder('root')">📁 Raíz</a>
             <div id="jotaFolderList"></div>
         </div>
 
@@ -2760,10 +3326,65 @@
                 <div style="text-align: center; margin-top: 8px; font-size: 0.85rem; color: #6b7280;">
                     Click en un sonido para probarlo
                 </div>
+                <button class="secondary" onclick="openNotificationManager()" style="width: 100%; margin-top: 12px;">
+                    🎵 Gestionar Mis Notificaciones
+                </button>
             </div>
             
             <div class="chat-setup-actions">
                 <button class="primary" onclick="saveChatSetup()">✔ Comenzar a Chatear</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Notificaciones Personalizadas -->
+    <div class="notification-upload-modal" id="notificationUploadModal">
+        <div class="notification-upload-content">
+            <div class="modal-header">
+                <h2>🎵 Gestor de Notificaciones</h2>
+                <button onclick="closeNotificationManager()" style="background: none; border: none; color: var(--jota-text-color); font-size: 1.5rem; cursor: pointer;">✖</button>
+            </div>
+
+            <p style="color: #888; margin-bottom: 16px;">Sube tus propios sonidos de notificación personalizados (MP3, WAV, OGG - Máx 2MB)</p>
+
+            <!-- Área de subida -->
+            <div class="notification-upload-area" id="notificationDropZone" onclick="document.getElementById('notificationFileInput').click()">
+                <div style="font-size: 3rem; margin-bottom: 8px;">🎵</div>
+                <h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600;">Arrastra tu sonido aquí</h3>
+                <p style="margin: 0; font-size: 14px; color: #888;">o haz click para seleccionar</p>
+                <input type="file" id="notificationFileInput" accept="audio/mp3,audio/wav,audio/ogg,audio/mpeg" style="display: none;" onchange="handleNotificationFileSelect(event)">
+            </div>
+
+            <!-- Archivo seleccionado -->
+            <div id="notificationSelectedFileContainer" style="display: none;">
+                <div class="notification-selected-file">
+                    <div class="notification-file-icon">🔊</div>
+                    <div class="notification-file-info">
+                        <div class="notification-file-name" id="notificationFileName">audio.mp3</div>
+                        <div class="notification-file-size" id="notificationFileSize">0 KB</div>
+                    </div>
+                    <button onclick="clearNotificationFile()" class="file-item-remove">✖</button>
+                </div>
+                <input type="text" id="notificationNameInput" placeholder="Nombre de la notificación (ej: Mi Sonido)" style="width: 100%; padding: 10px; border: 2px solid var(--jota-border-color); border-radius: 8px; margin-top: 8px; background: var(--jota-card-bg); color: var(--jota-text-color);" maxlength="30">
+                <button onclick="uploadCustomNotification()" style="width: 100%; margin-top: 12px;">
+                    📤 Subir Notificación
+                </button>
+            </div>
+
+            <!-- Lista de notificaciones -->
+            <div style="margin-top: 24px;">
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">🔔 Mis Notificaciones</h3>
+                <div class="notification-list" id="customNotificationList">
+                    <!-- Las notificaciones personalizadas se cargarán aquí -->
+                </div>
+                <div id="noNotificationsMessage" style="text-align: center; padding: 32px; color: #888;">
+                    <p style="font-size: 2rem; margin-bottom: 8px;">🔕</p>
+                    <p>Aún no has subido notificaciones personalizadas</p>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button class="secondary" onclick="closeNotificationManager()" style="flex: 1;">Cerrar</button>
             </div>
         </div>
     </div>
@@ -3066,6 +3687,9 @@
                 setupBackgroundDragAndDrop();
                 await loadFilters();
                 
+                // Inicializar drop zones para carpetas especiales
+                setupSpecialFolderDropZones();
+                
                 // Inicializar sincronización de fondos en tiempo real
                 subscribeToBackgroundSync();
                 await loadSharedBackground();
@@ -3073,6 +3697,14 @@
             } catch (error) {
                 console.error('Error inicializando:', error);
                 showError('Error al iniciar la aplicación: ' + error.message);
+            }
+        }
+
+        // Configurar drop zones para carpetas especiales (Raíz)
+        function setupSpecialFolderDropZones() {
+            const rootFolderLink = document.getElementById('rootFolderLink');
+            if (rootFolderLink) {
+                setupFolderDropZone(rootFolderLink, 'root');
             }
         }
 
@@ -3116,26 +3748,62 @@
                 folderSelect.innerHTML = '<option value="root">Raíz</option>';
                 parentFolderSelect.innerHTML = '<option value="root">Raíz</option>';
                 folderList.innerHTML = '';
-                jotaDirectories.forEach(folder => {
-                    const option = document.createElement('option');
-                    option.value = folder.id;
-                    option.textContent = folder.name;
-                    folderSelect.appendChild(option.cloneNode(true));
-                    parentFolderSelect.appendChild(option);
-                    const folderLink = document.createElement('a');
-                    folderLink.href = '#';
-                    folderLink.innerHTML = `<span class="folder-icon">📁</span><span>${folder.name}</span><span class="folder-count">0</span>`;
-                    folderLink.onclick = (e) => {
-                        e.preventDefault();
-                        // Remover active de todos
-                        document.querySelectorAll('.folder-tree a').forEach(a => a.classList.remove('active'));
-                        // Agregar active al seleccionado
-                        folderLink.classList.add('active');
-                        loadFolder(folder.id);
-                    };
-                    folderLink.dataset.folderId = folder.id;
-                    folderList.appendChild(folderLink);
-                });
+
+                // Construir jerarquía de carpetas
+                const buildFolderHierarchy = (parentId = null, level = 0) => {
+                    const folders = jotaDirectories.filter(f => f.parent_id === parentId);
+                    
+                    folders.forEach(folder => {
+                        const option = document.createElement('option');
+                        option.value = folder.id;
+                        option.textContent = '  '.repeat(level) + folder.name;
+                        folderSelect.appendChild(option.cloneNode(true));
+                        parentFolderSelect.appendChild(option.cloneNode(true));
+
+                        const folderLink = document.createElement('a');
+                        folderLink.href = '#';
+                        folderLink.dataset.folderId = folder.id;
+                        folderLink.dataset.folderName = folder.name;
+                        
+                        // Agregar clase de nivel para subcarpetas
+                        if (level > 0) {
+                            folderLink.classList.add('subfolder', `level-${level}`);
+                        }
+
+                        // Verificar si tiene subcarpetas
+                        const hasChildren = jotaDirectories.some(f => f.parent_id === folder.id);
+                        const expandIcon = hasChildren ? '<span class="folder-icon expandable" onclick="event.stopPropagation(); toggleSubfolders(this, \'' + folder.id + '\')">▶</span>' : '<span class="folder-icon">📁</span>';
+                        
+                        folderLink.innerHTML = `
+                            ${expandIcon}
+                            <span>${folder.name}</span>
+                            <span class="folder-count">0</span>
+                            <div class="folder-actions">
+                                <button class="folder-action-btn" onclick="event.stopPropagation(); openCreateSubfolder('${folder.id}')" title="Nueva subcarpeta">➕</button>
+                                <button class="folder-action-btn" onclick="event.stopPropagation(); renameFolder('${folder.id}')" title="Renombrar">✏️</button>
+                            </div>
+                        `;
+                        
+                        folderLink.onclick = (e) => {
+                            e.preventDefault();
+                            document.querySelectorAll('.folder-tree a').forEach(a => a.classList.remove('active'));
+                            folderLink.classList.add('active');
+                            loadDocuments(folder.id);
+                        };
+
+                        // Hacer la carpeta un drop zone
+                        setupFolderDropZone(folderLink, folder.id);
+
+                        folderList.appendChild(folderLink);
+                        
+                        // Recursivamente cargar subcarpetas (ocultas inicialmente)
+                        if (hasChildren) {
+                            buildFolderHierarchy(folder.id, level + 1);
+                        }
+                    });
+                };
+
+                buildFolderHierarchy();
                 
                 // Actualizar contadores de archivos
                 updateFolderCounts();
@@ -3197,7 +3865,15 @@
                 const moduleName = doc.modules?.name || 'Sin módulo';
                 const folderName = doc.directories?.name || 'Raíz';
                 html += `
-                    <div class="document-card" onclick="previewDocument('${doc.id}')">
+                    <div class="document-card" 
+                         draggable="true" 
+                         data-doc-id="${doc.id}" 
+                         data-doc-name="${doc.file_name}"
+                         data-current-folder="${doc.folder_id || 'root'}"
+                         ondragstart="handleDocumentDragStart(event)"
+                         ondragend="handleDocumentDragEnd(event)"
+                         onclick="previewDocument('${doc.id}')">
+                        <div class="move-handle" title="Arrastrar a otra carpeta">⋮⋮</div>
                         <div class="document-info">
                             <h3 title="${doc.file_name}">${icon} ${doc.file_name}</h3>
                             <div class="document-meta">
@@ -4150,8 +4826,216 @@
                 alert('Error al eliminar: ' + error.message);
             }
         }
+
+        // ===== SISTEMA DE DRAG & DROP DE ARCHIVOS ENTRE CARPETAS =====
+        let draggedDocumentId = null;
+        let draggedDocumentName = null;
+        let draggedCurrentFolder = null;
+
+        function handleDocumentDragStart(event) {
+            draggedDocumentId = event.target.dataset.docId;
+            draggedDocumentName = event.target.dataset.docName;
+            draggedCurrentFolder = event.target.dataset.currentFolder;
+            
+            event.target.classList.add('dragging');
+            document.querySelector('.content-area').classList.add('drag-mode');
+            document.querySelector('.folder-tree').classList.add('drag-mode');
+            
+            // Mostrar indicador
+            const indicator = document.getElementById('moveIndicator');
+            indicator.textContent = `📦 Moviendo "${draggedDocumentName}"`;
+            indicator.classList.add('active');
+            
+            event.dataTransfer.effectAllowed = 'move';
+            event.dataTransfer.setData('text/html', event.target.innerHTML);
+        }
+
+        function handleDocumentDragEnd(event) {
+            event.target.classList.remove('dragging');
+            document.querySelector('.content-area').classList.remove('drag-mode');
+            document.querySelector('.folder-tree').classList.remove('drag-mode');
+            
+            // Ocultar indicador
+            const indicator = document.getElementById('moveIndicator');
+            indicator.classList.remove('active');
+            
+            // Limpiar todas las marcas de drag-over
+            document.querySelectorAll('.folder-tree a').forEach(link => {
+                link.classList.remove('drag-over', 'can-drop');
+            });
+        }
+
+        function setupFolderDropZone(folderElement, folderId) {
+            folderElement.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                
+                // Solo resaltar si no es la carpeta actual
+                if (draggedCurrentFolder !== folderId && draggedDocumentId) {
+                    folderElement.classList.add('drag-over');
+                }
+            });
+
+            folderElement.addEventListener('dragleave', (e) => {
+                folderElement.classList.remove('drag-over');
+            });
+
+            folderElement.addEventListener('drop', async (e) => {
+                e.preventDefault();
+                folderElement.classList.remove('drag-over');
+                
+                if (!draggedDocumentId) return;
+                
+                // No mover si es la misma carpeta
+                if (draggedCurrentFolder === folderId) {
+                    alert('El archivo ya está en esta carpeta');
+                    return;
+                }
+                
+                await moveDocumentToFolder(draggedDocumentId, folderId, folderElement.dataset.folderName);
+            });
+        }
+
+        async function moveDocumentToFolder(docId, targetFolderId, targetFolderName) {
+            try {
+                const { error } = await supabaseClient
+                    .from('documents')
+                    .update({ folder_id: targetFolderId === 'root' ? null : targetFolderId })
+                    .eq('id', docId);
+
+                if (error) throw error;
+
+                // Animación de éxito
+                const folderLink = document.querySelector(`[data-folder-id="${targetFolderId}"]`);
+                if (folderLink) {
+                    folderLink.classList.add('drop-success');
+                    setTimeout(() => folderLink.classList.remove('drop-success'), 500);
+                }
+
+                // Recargar documentos y actualizar contadores
+                await loadDocuments(jotaCurrentFolder);
+                await updateFolderCounts();
+
+                // Notificación visual
+                showSuccess(`📦 "${draggedDocumentName}" movido a "${targetFolderName || 'Raíz'}"`);
+                
+                draggedDocumentId = null;
+                draggedDocumentName = null;
+                draggedCurrentFolder = null;
+            } catch (error) {
+                console.error('Error moviendo documento:', error);
+                alert('❌ Error al mover el documento: ' + error.message);
+            }
+        }
+
+        function showSuccess(message) {
+            const indicator = document.getElementById('moveIndicator');
+            indicator.textContent = '✅ ' + message;
+            indicator.style.background = '#22c55e';
+            indicator.classList.add('active');
+            
+            setTimeout(() => {
+                indicator.classList.remove('active');
+                indicator.style.background = '';
+            }, 3000);
+        }
+
+        // ===== SISTEMA DE SUBCARPETAS =====
+        function toggleSubfolders(iconElement, folderId) {
+            iconElement.classList.toggle('expanded');
+            const isExpanded = iconElement.classList.contains('expanded');
+            
+            // Mostrar u ocultar subcarpetas
+            const allLinks = document.querySelectorAll('.folder-tree a');
+            const subfoldersToToggle = jotaDirectories.filter(f => f.parent_id === folderId);
+            
+            subfoldersToToggle.forEach(subfolder => {
+                const subfolderLink = document.querySelector(`[data-folder-id="${subfolder.id}"]`);
+                if (subfolderLink) {
+                    subfolderLink.style.display = isExpanded ? 'flex' : 'none';
+                    
+                    // Si estamos colapsando, también colapsar hijos
+                    if (!isExpanded) {
+                        const childIcon = subfolderLink.querySelector('.folder-icon.expandable');
+                        if (childIcon && childIcon.classList.contains('expanded')) {
+                            toggleSubfolders(childIcon, subfolder.id);
+                        }
+                    }
+                }
+            });
+        }
+
+        function openCreateSubfolder(parentFolderId) {
+            const folderName = prompt('Nombre de la nueva subcarpeta:');
+            if (!folderName || !folderName.trim()) return;
+            
+            createSubfolder(folderName.trim(), parentFolderId);
+        }
+
+        async function createSubfolder(name, parentId) {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('directories')
+                    .insert([{
+                        name: name,
+                        parent_id: parentId
+                    }])
+                    .select()
+                    .single();
+                    
+                if (error) throw error;
+
+                await loadDirectories();
+                showSuccess(`📁 Subcarpeta "${name}" creada`);
+                console.log('Subcarpeta creada:', data);
+            } catch (error) {
+                console.error('Error creando subcarpeta:', error);
+                alert('❌ Error al crear subcarpeta: ' + error.message);
+            }
+        }
+
+        async function renameFolder(folderId) {
+            const folder = jotaDirectories.find(f => f.id === folderId);
+            if (!folder) return;
+            
+            const newName = prompt('Nuevo nombre para la carpeta:', folder.name);
+            if (!newName || !newName.trim() || newName === folder.name) return;
+            
+            try {
+                const { error } = await supabaseClient
+                    .from('directories')
+                    .update({ name: newName.trim() })
+                    .eq('id', folderId);
+                    
+                if (error) throw error;
+
+                await loadDirectories();
+                showSuccess(`✏️ Carpeta renombrada a "${newName.trim()}"`);
+            } catch (error) {
+                console.error('Error renombrando carpeta:', error);
+                alert('❌ Error al renombrar carpeta: ' + error.message);
+            }
+        }
+
+        // ===== FUNCIONES AUXILIARES =====
+        function showError(message) {
+            const indicator = document.getElementById('moveIndicator');
+            indicator.textContent = '❌ ' + message;
+            indicator.style.background = '#dc2626';
+            indicator.classList.add('active');
+            
+            setTimeout(() => {
+                indicator.classList.remove('active');
+                indicator.style.background = '';
+            }, 3000);
+        }
+
         function setupDragAndDrop() {
             const uploadArea = document.querySelector('#upload-modal .upload-area');
+            if (!uploadArea) return;
+
+            let dragCounter = 0;
+
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                 uploadArea.addEventListener(eventName, preventDefaults, false);
             });
@@ -4161,19 +5045,27 @@
                 e.stopPropagation();
             }
 
-            ['dragenter', 'dragover'].forEach(eventName => {
-                uploadArea.addEventListener(eventName, () => {
-                    uploadArea.style.background = 'rgba(6, 182, 212, 0.2)';
-                }, false);
-            });
+            uploadArea.addEventListener('dragenter', (e) => {
+                dragCounter++;
+                uploadArea.classList.add('drag-active');
+            }, false);
 
-            ['dragleave', 'drop'].forEach(eventName => {
-                uploadArea.addEventListener(eventName, () => {
-                    uploadArea.style.background = 'rgba(255, 255, 255, 0.3)';
-                }, false);
-            });
+            uploadArea.addEventListener('dragover', (e) => {
+                e.dataTransfer.dropEffect = 'copy';
+            }, false);
 
-            uploadArea.addEventListener('drop', e => {
+            uploadArea.addEventListener('dragleave', (e) => {
+                dragCounter--;
+                if (dragCounter === 0) {
+                    uploadArea.classList.remove('drag-active');
+                }
+            }, false);
+
+            uploadArea.addEventListener('drop', (e) => {
+                dragCounter = 0;
+                uploadArea.classList.remove('drag-active');
+                uploadArea.classList.add('upload-success');
+                
                 const files = e.dataTransfer.files;
                 if (files.length > 0) {
                     const fileInput = document.getElementById('jotaFileInput');
@@ -4183,7 +5075,24 @@
                     }
                     fileInput.files = dataTransfer.files;
                     handleFileSelect({ target: fileInput });
+
+                    // Remover clase de éxito después de la animación
+                    setTimeout(() => {
+                        uploadArea.classList.remove('upload-success');
+                    }, 600);
                 }
+            });
+
+            // Efecto de hover mejorado
+            uploadArea.addEventListener('mouseenter', () => {
+                if (!uploadArea.classList.contains('drag-active')) {
+                    uploadArea.style.transform = 'scale(1.02)';
+                    uploadArea.style.transition = 'transform 0.3s ease';
+                }
+            });
+
+            uploadArea.addEventListener('mouseleave', () => {
+                uploadArea.style.transform = 'scale(1)';
             });
         }
         function openModal(modalId) {
@@ -5884,6 +6793,13 @@
                 if (notificationSound === 'none') {
                     return;
                 }
+
+                // Verificar si es una notificación personalizada
+                if (notificationSound.startsWith('custom_')) {
+                    const customId = parseInt(notificationSound.replace('custom_', ''));
+                    playCustomNotification(customId);
+                    return;
+                }
                 
                 const soundFiles = {
                     'sound1': 'sounds/notificacion1.mp3',
@@ -5931,6 +6847,283 @@
                 oscillator.stop(audioContext.currentTime + 0.2);
             } catch (e) {
                 console.log('Error con sonido de respaldo:', e);
+            }
+        }
+
+        // ===== GESTOR DE NOTIFICACIONES PERSONALIZADAS =====
+        let selectedNotificationFile = null;
+        let customNotifications = [];
+
+        function openNotificationManager() {
+            document.getElementById('notificationUploadModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setupNotificationDragAndDrop();
+            loadCustomNotifications();
+        }
+
+        function closeNotificationManager() {
+            document.getElementById('notificationUploadModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            clearNotificationFile();
+        }
+
+        function setupNotificationDragAndDrop() {
+            const dropZone = document.getElementById('notificationDropZone');
+            
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, () => {
+                    dropZone.classList.add('drag-active');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, () => {
+                    dropZone.classList.remove('drag-active');
+                }, false);
+            });
+
+            dropZone.addEventListener('drop', handleNotificationDrop, false);
+        }
+
+        function handleNotificationDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                handleNotificationFileSelect({ target: { files: files } });
+            }
+        }
+
+        function handleNotificationFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Validar tipo de archivo
+            const validTypes = ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/ogg'];
+            if (!validTypes.includes(file.type)) {
+                alert('❌ Solo se permiten archivos de audio (MP3, WAV, OGG)');
+                return;
+            }
+
+            // Validar tamaño (máx 2MB)
+            const maxSize = 2 * 1024 * 1024;
+            if (file.size > maxSize) {
+                alert('❌ El archivo es demasiado grande. Máximo 2MB.');
+                return;
+            }
+
+            selectedNotificationFile = file;
+            
+            // Mostrar preview
+            document.getElementById('notificationFileName').textContent = file.name;
+            document.getElementById('notificationFileSize').textContent = (file.size / 1024).toFixed(2) + ' KB';
+            document.getElementById('notificationSelectedFileContainer').style.display = 'block';
+            
+            // Ocultar zona de drop
+            document.getElementById('notificationDropZone').style.display = 'none';
+        }
+
+        function clearNotificationFile() {
+            selectedNotificationFile = null;
+            document.getElementById('notificationFileInput').value = '';
+            document.getElementById('notificationSelectedFileContainer').style.display = 'none';
+            document.getElementById('notificationDropZone').style.display = 'block';
+            document.getElementById('notificationNameInput').value = '';
+        }
+
+        async function uploadCustomNotification() {
+            if (!selectedNotificationFile) {
+                alert('❌ Por favor selecciona un archivo de audio');
+                return;
+            }
+
+            const notificationName = document.getElementById('notificationNameInput').value.trim();
+            if (!notificationName) {
+                alert('❌ Por favor ingresa un nombre para la notificación');
+                return;
+            }
+
+            try {
+                // Convertir archivo a base64 para almacenamiento local o subirlo a Supabase
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    const audioData = e.target.result;
+                    
+                    // Si hay Supabase, subir al storage
+                    if (supabaseClient) {
+                        try {
+                            const fileName = `notification_${chatUserId}_${Date.now()}_${selectedNotificationFile.name}`;
+                            const { data, error } = await supabaseClient.storage
+                                .from('notifications')
+                                .upload(fileName, selectedNotificationFile);
+
+                            if (error) throw error;
+
+                            // Obtener URL pública
+                            const { data: urlData } = supabaseClient.storage
+                                .from('notifications')
+                                .getPublicUrl(fileName);
+
+                            // Guardar en base de datos
+                            const { data: insertData, error: insertError } = await supabaseClient
+                                .from('custom_notifications')
+                                .insert({
+                                    user_id: chatUserId,
+                                    name: notificationName,
+                                    file_url: urlData.publicUrl,
+                                    file_name: fileName,
+                                    file_size: selectedNotificationFile.size
+                                });
+
+                            if (insertError) throw insertError;
+
+                            alert('✅ Notificación subida con éxito!');
+                        } catch (uploadError) {
+                            console.error('Error subiendo a Supabase:', uploadError);
+                            // Fallback a localStorage
+                            saveNotificationLocally(notificationName, audioData);
+                        }
+                    } else {
+                        // Guardar en localStorage
+                        saveNotificationLocally(notificationName, audioData);
+                    }
+
+                    clearNotificationFile();
+                    loadCustomNotifications();
+                };
+                reader.readAsDataURL(selectedNotificationFile);
+            } catch (error) {
+                console.error('Error subiendo notificación:', error);
+                alert('❌ Error al subir la notificación');
+            }
+        }
+
+        function saveNotificationLocally(name, audioData) {
+            const notifications = JSON.parse(localStorage.getItem('customNotifications') || '[]');
+            notifications.push({
+                id: Date.now(),
+                name: name,
+                data: audioData,
+                created_at: new Date().toISOString()
+            });
+            localStorage.setItem('customNotifications', JSON.stringify(notifications));
+            alert('✅ Notificación guardada localmente!');
+        }
+
+        async function loadCustomNotifications() {
+            const listContainer = document.getElementById('customNotificationList');
+            const noMessage = document.getElementById('noNotificationsMessage');
+            
+            customNotifications = [];
+
+            // Cargar de Supabase si está disponible
+            if (supabaseClient) {
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('custom_notifications')
+                        .select('*')
+                        .eq('user_id', chatUserId)
+                        .order('created_at', { ascending: false });
+
+                    if (!error && data) {
+                        customNotifications = data;
+                    }
+                } catch (e) {
+                    console.error('Error cargando de Supabase:', e);
+                }
+            }
+
+            // Cargar de localStorage como fallback o complemento
+            const localNotifications = JSON.parse(localStorage.getItem('customNotifications') || '[]');
+            customNotifications = [...customNotifications, ...localNotifications];
+
+            if (customNotifications.length === 0) {
+                listContainer.innerHTML = '';
+                noMessage.style.display = 'block';
+                return;
+            }
+
+            noMessage.style.display = 'none';
+            listContainer.innerHTML = customNotifications.map(notif => `
+                <div class="notification-item ${notificationSound === 'custom_' + notif.id ? 'selected' : ''}" onclick="selectCustomNotification(${notif.id})">
+                    <div class="notification-item-header">
+                        <div class="notification-item-icon">🔔</div>
+                        <div class="notification-item-name">${notif.name}</div>
+                    </div>
+                    <div class="notification-item-actions">
+                        <button class="notification-play-btn" onclick="event.stopPropagation(); playCustomNotification(${notif.id})">▶️ Probar</button>
+                        <button class="notification-delete-btn" onclick="event.stopPropagation(); deleteCustomNotification(${notif.id})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectCustomNotification(id) {
+            notificationSound = 'custom_' + id;
+            localStorage.setItem('notificationSound', notificationSound);
+            loadCustomNotifications();
+        }
+
+        function playCustomNotification(id) {
+            const notification = customNotifications.find(n => n.id === id);
+            if (!notification) return;
+
+            try {
+                const audioSrc = notification.file_url || notification.data;
+                const audio = new Audio(audioSrc);
+                audio.volume = 0.6;
+                audio.play().catch(e => {
+                    console.error('Error reproduciendo:', e);
+                    alert('❌ Error al reproducir el audio');
+                });
+            } catch (e) {
+                console.error('Error:', e);
+            }
+        }
+
+        async function deleteCustomNotification(id) {
+            if (!confirm('¿Estás seguro de eliminar esta notificación?')) return;
+
+            try {
+                const notification = customNotifications.find(n => n.id === id);
+                
+                // Eliminar de Supabase si existe
+                if (supabaseClient && notification.file_name) {
+                    await supabaseClient.storage
+                        .from('notifications')
+                        .remove([notification.file_name]);
+
+                    await supabaseClient
+                        .from('custom_notifications')
+                        .delete()
+                        .eq('id', id);
+                }
+
+                // Eliminar de localStorage
+                const localNotifications = JSON.parse(localStorage.getItem('customNotifications') || '[]');
+                const filtered = localNotifications.filter(n => n.id !== id);
+                localStorage.setItem('customNotifications', JSON.stringify(filtered));
+
+                // Si esta notificación estaba seleccionada, cambiar a default
+                if (notificationSound === 'custom_' + id) {
+                    notificationSound = 'sound1';
+                    localStorage.setItem('notificationSound', 'sound1');
+                }
+
+                loadCustomNotifications();
+                alert('✅ Notificación eliminada');
+            } catch (error) {
+                console.error('Error eliminando:', error);
+                alert('❌ Error al eliminar la notificación');
             }
         }
         function closeNotificationToast(event) {
